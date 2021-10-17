@@ -1,5 +1,6 @@
 package com.bookshop.features.user.entity;
 
+import com.bookshop.features.opinion.entity.OpinionEntity;
 import com.bookshop.features.order.entity.OrderEntity;
 
 import javax.persistence.*;
@@ -22,6 +23,10 @@ public class UserEntity {
     @OneToMany
     @JoinColumn(name = "user_id")
     private Set<OrderEntity> orders = new HashSet<>();
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private Set<OpinionEntity> opinions = new HashSet<>();
 
     //private Role roleId ENUM;
 

@@ -1,14 +1,14 @@
 package com.bookshop.features.order.entity;
 
 
+import com.bookshop.features.book.entity.BookEntity;
 import com.bookshop.features.user.entity.UserEntity;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -25,6 +25,10 @@ public class OrderEntity {
 
     @ManyToOne
     private UserEntity user;
+
+    @ManyToMany(mappedBy = "bookOrders")
+    private Set<BookEntity> orderedBooks = new HashSet<>();
+
    /*
     private BookEntity bookId;
     private DeliveryType deliveryType; ENUM

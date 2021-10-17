@@ -1,9 +1,9 @@
 package com.bookshop.features.opinion.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.bookshop.features.book.entity.BookEntity;
+import com.bookshop.features.user.entity.UserEntity;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -15,10 +15,17 @@ public class OpinionEntity {
 
     private String description;
     private LocalDate date;
+
     /*
     private BookEntity bookId;
     private UserEntity userId;
      */
+
+    @ManyToOne
+    private UserEntity user;
+
+    @ManyToOne
+    private BookEntity book;
 
     public OpinionEntity() {
     }
@@ -26,6 +33,14 @@ public class OpinionEntity {
     public OpinionEntity(String description, LocalDate date) {
         this.description = description;
         this.date = date;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public String getDescription() {

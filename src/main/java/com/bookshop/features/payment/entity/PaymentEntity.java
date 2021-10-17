@@ -20,6 +20,8 @@ public class PaymentEntity {
     private UUID id;
 
     private BigDecimal amount;
+
+
     /*
     private PaymentType paymentType; ENUM
     private OrderEntity orderid; - relations
