@@ -27,6 +27,14 @@ public class PublisherEntity {
         this.publicherCity = publicherCity;
     }
 
+    public Set<BookEntity> getPublisherBooks() {
+        return publisherBooks;
+    }
+
+    public void setPublisherBooks(Set<BookEntity> publisherBooks) {
+        this.publisherBooks = publisherBooks;
+    }
+
     public String getPublisherName() {
         return publisherName;
     }

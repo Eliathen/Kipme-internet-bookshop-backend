@@ -41,6 +41,14 @@ public class UserEntity {
         this.password = password;
     }
 
+    public Set<OpinionEntity> getOpinions() {
+        return opinions;
+    }
+
+    public void setOpinions(Set<OpinionEntity> opinions) {
+        this.opinions = opinions;
+    }
+
     public Set<OrderEntity> getOrders() {
         return orders;
     }

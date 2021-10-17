@@ -75,12 +75,36 @@ public class BookEntity {
         this.price = price;
     }
 
-    public Long getId() {
-        return id;
+    public Set<OpinionEntity> getBookOpinions() {
+        return bookOpinions;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBookOpinions(Set<OpinionEntity> bookOpinions) {
+        this.bookOpinions = bookOpinions;
+    }
+
+    public Set<OrderEntity> getBookOrders() {
+        return bookOrders;
+    }
+
+    public void setBookOrders(Set<OrderEntity> bookOrders) {
+        this.bookOrders = bookOrders;
+    }
+
+    public Set<AuthorEntity> getBookAuthors() {
+        return bookAuthors;
+    }
+
+    public void setBookAuthors(Set<AuthorEntity> bookAuthors) {
+        this.bookAuthors = bookAuthors;
+    }
+
+    public Set<PublisherEntity> getBookPublishers() {
+        return bookPublishers;
+    }
+
+    public void setBookPublishers(Set<PublisherEntity> bookPublishers) {
+        this.bookPublishers = bookPublishers;
     }
 
     public String getTitle() {

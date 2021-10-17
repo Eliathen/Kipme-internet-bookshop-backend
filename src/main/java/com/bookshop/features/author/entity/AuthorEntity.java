@@ -27,6 +27,14 @@ public class AuthorEntity {
         this.surname = surname;
     }
 
+    public Set<BookEntity> getAuthorsBooks() {
+        return authorsBooks;
+    }
+
+    public void setAuthorsBooks(Set<BookEntity> authorsBooks) {
+        this.authorsBooks = authorsBooks;
+    }
+
     public String getName() {
         return name;
     }

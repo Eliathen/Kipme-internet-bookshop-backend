@@ -2,6 +2,7 @@ package com.bookshop.features.order.entity;
 
 
 import com.bookshop.features.book.entity.BookEntity;
+import com.bookshop.features.payment.entity.PaymentEntity;
 import com.bookshop.features.user.entity.UserEntity;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,6 +30,9 @@ public class OrderEntity {
     @ManyToMany(mappedBy = "bookOrders")
     private Set<BookEntity> orderedBooks = new HashSet<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_id", referencedColumnName = "id")
+    private PaymentEntity payment;
    /*
     private BookEntity bookId;
     private DeliveryType deliveryType; ENUM
@@ -36,6 +40,22 @@ public class OrderEntity {
     */
 
     public OrderEntity() {
+    }
+
+    public Set<BookEntity> getOrderedBooks() {
+        return orderedBooks;
+    }
+
+    public void setOrderedBooks(Set<BookEntity> orderedBooks) {
+        this.orderedBooks = orderedBooks;
+    }
+
+    public PaymentEntity getPayment() {
+        return payment;
+    }
+
+    public void setPayment(PaymentEntity payment) {
+        this.payment = payment;
     }
 
     public OrderEntity(LocalDate orderDate) {

@@ -1,10 +1,12 @@
 package com.bookshop.features.payment.entity;
 
+import com.bookshop.features.order.entity.OrderEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -21,6 +23,8 @@ public class PaymentEntity {
 
     private BigDecimal amount;
 
+    @OneToOne(mappedBy = "payment")
+    private OrderEntity order;
 
     /*
     private PaymentType paymentType; ENUM
@@ -33,6 +37,14 @@ public class PaymentEntity {
 
     public PaymentEntity(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public OrderEntity getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderEntity order) {
+        this.order = order;
     }
 
     public BigDecimal getAmount() {

@@ -35,6 +35,14 @@ public class OpinionEntity {
         this.date = date;
     }
 
+    public BookEntity getBook() {
+        return book;
+    }
+
+    public void setBook(BookEntity book) {
+        this.book = book;
+    }
+
     public UserEntity getUser() {
         return user;
     }
