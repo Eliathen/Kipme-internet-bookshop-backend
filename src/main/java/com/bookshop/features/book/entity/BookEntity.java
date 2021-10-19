@@ -11,8 +11,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-@Table(name = "BookEntity")
-@Entity
+@Entity(name = "Book")
 public class BookEntity {
 
     @Id

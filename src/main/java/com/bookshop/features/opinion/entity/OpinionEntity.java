@@ -6,7 +6,7 @@ import com.bookshop.features.user.entity.UserEntity;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
+@Entity(name = "Opinion")
 public class OpinionEntity {
 
     @Id

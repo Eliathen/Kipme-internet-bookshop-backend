@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Payment")
 public class PaymentEntity {
 
     @Id
