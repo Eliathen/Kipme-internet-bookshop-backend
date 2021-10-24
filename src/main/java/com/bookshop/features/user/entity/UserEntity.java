@@ -1,34 +1,64 @@
 package com.bookshop.features.user.entity;
 
+import com.bookshop.features.address.entity.AddressEntity;
 import com.bookshop.features.opinion.entity.OpinionEntity;
 import com.bookshop.features.order.entity.OrderEntity;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@EqualsAndHashCode
 @Entity(name = "User")
 public class UserEntity {
 
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Getter
+    @Setter
     private String name;
+
+    @Getter
+    @Setter
     private String surname;
+
+    @Getter
+    @Setter
     private Integer phoneNumber;
+
+    @Getter
+    @Setter
     private String email;
+
+    @Getter
+    @Setter
     private String password;
 
+    @Getter
+    @Setter
     @OneToMany
     @JoinColumn(name = "user_id")
     private Set<OrderEntity> orders = new HashSet<>();
 
+    @Getter
+    @Setter
     @OneToMany
     @JoinColumn(name = "user_id")
     private Set<OpinionEntity> opinions = new HashSet<>();
 
     //private Role roleId ENUM;
+
+    @Getter
+    @Setter
+    @ManyToMany(mappedBy = "usersAddresses")
+    private Set<AddressEntity> addressesWithUsers = new HashSet<>();
 
     public UserEntity() {
     }
@@ -38,70 +68,6 @@ public class UserEntity {
         this.surname = surname;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.password = password;
-    }
-
-    public Set<OpinionEntity> getOpinions() {
-        return opinions;
-    }
-
-    public void setOpinions(Set<OpinionEntity> opinions) {
-        this.opinions = opinions;
-    }
-
-    public Set<OrderEntity> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<OrderEntity> orders) {
-        this.orders = orders;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public Integer getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(Integer phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -115,20 +81,5 @@ public class UserEntity {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UserEntity that = (UserEntity) o;
-
-        return id != null ? id.equals(that.id) : that.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
     }
 }

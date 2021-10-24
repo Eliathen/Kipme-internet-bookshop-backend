@@ -1,9 +1,13 @@
 package com.bookshop.features.order.entity;
 
 
+import com.bookshop.features.address.entity.AddressEntity;
 import com.bookshop.features.book.entity.BookEntity;
 import com.bookshop.features.payment.entity.PaymentEntity;
 import com.bookshop.features.user.entity.UserEntity;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,9 +16,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@EqualsAndHashCode
 @Entity(name = "Procurement")
 public class OrderEntity {
 
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -22,14 +29,28 @@ public class OrderEntity {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private UUID id;
+
+    @Getter
+    @Setter
     private LocalDate orderDate;
 
+    @Getter
+    @Setter
     @ManyToOne
     private UserEntity user;
 
+    @Getter
+    @Setter
+    @ManyToOne
+    private AddressEntity address;
+
+    @Getter
+    @Setter
     @ManyToMany(mappedBy = "bookOrders")
     private Set<BookEntity> orderedBooks = new HashSet<>();
 
+    @Getter
+    @Setter
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_id", referencedColumnName = "id")
     private PaymentEntity payment;
@@ -42,39 +63,7 @@ public class OrderEntity {
     public OrderEntity() {
     }
 
-    public Set<BookEntity> getOrderedBooks() {
-        return orderedBooks;
-    }
-
-    public void setOrderedBooks(Set<BookEntity> orderedBooks) {
-        this.orderedBooks = orderedBooks;
-    }
-
-    public PaymentEntity getPayment() {
-        return payment;
-    }
-
-    public void setPayment(PaymentEntity payment) {
-        this.payment = payment;
-    }
-
     public OrderEntity(LocalDate orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    public LocalDate getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -86,18 +75,4 @@ public class OrderEntity {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        OrderEntity that = (OrderEntity) o;
-
-        return id != null ? id.equals(that.id) : that.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
 }

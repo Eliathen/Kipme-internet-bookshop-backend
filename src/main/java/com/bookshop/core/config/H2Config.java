@@ -9,7 +9,7 @@ import org.h2.tools.Server;
 import java.sql.SQLException;
 
 @Configuration
-public class BeanConfig {
+public class H2Config {
 
     @Profile("dev")
     @Bean(initMethod = "start", destroyMethod = "stop")

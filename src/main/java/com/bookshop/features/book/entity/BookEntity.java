@@ -2,36 +2,64 @@ package com.bookshop.features.book.entity;
 
 
 import com.bookshop.features.author.entity.AuthorEntity;
+import com.bookshop.features.book.cover.BookCoverEntity;
 import com.bookshop.features.opinion.entity.OpinionEntity;
 import com.bookshop.features.order.entity.OrderEntity;
 import com.bookshop.features.publisher.entity.PublisherEntity;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+@EqualsAndHashCode
 @Entity(name = "Book")
 public class BookEntity {
 
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Getter
+    @Setter
     private String title;
+
+    @Getter
+    @Setter
     private String isbn;
+
+    @Getter
+    @Setter
     private Integer publishedYear;
+
+    @Getter
+    @Setter
     private String description;
+
+    @Getter
+    @Setter
     private Integer quantity;
+
+    @Getter
+    @Setter
     private BigDecimal price;
 
     //private Category categoryId;
     //private Language languageId; ENUM
 
+    @Getter
+    @Setter
     @OneToMany
     @JoinColumn(name = "book_id")
     private Set<OpinionEntity> bookOpinions = new HashSet<>();
 
+    @Getter
+    @Setter
     @ManyToMany(
             cascade = {CascadeType.MERGE, CascadeType.PERSIST}
     )
@@ -42,6 +70,8 @@ public class BookEntity {
     )
     private Set<OrderEntity> bookOrders = new HashSet<>();
 
+    @Getter
+    @Setter
     @ManyToMany(
             cascade = {CascadeType.MERGE, CascadeType.PERSIST}
     )
@@ -52,6 +82,8 @@ public class BookEntity {
     )
     private Set<AuthorEntity> bookAuthors = new HashSet<>();
 
+    @Getter
+    @Setter
     @ManyToMany(
             cascade = {CascadeType.MERGE, CascadeType.PERSIST}
     )
@@ -62,6 +94,12 @@ public class BookEntity {
     )
     private Set<PublisherEntity> bookPublishers = new HashSet<>();
 
+    @Getter
+    @Setter
+    @OneToMany
+    @JoinColumn(name = "cover_id")
+    private Set<BookCoverEntity> booksWithCovers = new HashSet<>();
+
     public BookEntity() {
     }
 
@@ -71,86 +109,6 @@ public class BookEntity {
         this.publishedYear = publishedYear;
         this.description = description;
         this.quantity = quantity;
-        this.price = price;
-    }
-
-    public Set<OpinionEntity> getBookOpinions() {
-        return bookOpinions;
-    }
-
-    public void setBookOpinions(Set<OpinionEntity> bookOpinions) {
-        this.bookOpinions = bookOpinions;
-    }
-
-    public Set<OrderEntity> getBookOrders() {
-        return bookOrders;
-    }
-
-    public void setBookOrders(Set<OrderEntity> bookOrders) {
-        this.bookOrders = bookOrders;
-    }
-
-    public Set<AuthorEntity> getBookAuthors() {
-        return bookAuthors;
-    }
-
-    public void setBookAuthors(Set<AuthorEntity> bookAuthors) {
-        this.bookAuthors = bookAuthors;
-    }
-
-    public Set<PublisherEntity> getBookPublishers() {
-        return bookPublishers;
-    }
-
-    public void setBookPublishers(Set<PublisherEntity> bookPublishers) {
-        this.bookPublishers = bookPublishers;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public Integer getPublishedYear() {
-        return publishedYear;
-    }
-
-    public void setPublishedYear(Integer publishedYear) {
-        this.publishedYear = publishedYear;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -165,20 +123,5 @@ public class BookEntity {
                 ", quantity=" + quantity +
                 ", price=" + price +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        BookEntity that = (BookEntity) o;
-
-        return id != null ? id.equals(that.id) : that.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
     }
 }

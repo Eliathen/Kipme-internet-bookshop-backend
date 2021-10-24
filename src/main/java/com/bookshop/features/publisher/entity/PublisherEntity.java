@@ -1,21 +1,34 @@
 package com.bookshop.features.publisher.entity;
 
 import com.bookshop.features.book.entity.BookEntity;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@EqualsAndHashCode
 @Entity(name = "Publisher")
 public class PublisherEntity {
 
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Getter
+    @Setter
     private String publisherName;
+
+    @Getter
+    @Setter
     private String publicherCity;
 
+    @Getter
+    @Setter
     @ManyToMany(mappedBy = "bookPublishers")
     private Set<BookEntity> publisherBooks = new HashSet<>();
 
@@ -27,30 +40,6 @@ public class PublisherEntity {
         this.publicherCity = publicherCity;
     }
 
-    public Set<BookEntity> getPublisherBooks() {
-        return publisherBooks;
-    }
-
-    public void setPublisherBooks(Set<BookEntity> publisherBooks) {
-        this.publisherBooks = publisherBooks;
-    }
-
-    public String getPublisherName() {
-        return publisherName;
-    }
-
-    public void setPublisherName(String publisherName) {
-        this.publisherName = publisherName;
-    }
-
-    public String getPublicherCity() {
-        return publicherCity;
-    }
-
-    public void setPublicherCity(String publicherCity) {
-        this.publicherCity = publicherCity;
-    }
-
     @Override
     public String toString() {
         return "PublisherEntity{" +
@@ -58,20 +47,5 @@ public class PublisherEntity {
                 ", publisherName='" + publisherName + '\'' +
                 ", publicherCity='" + publicherCity + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PublisherEntity that = (PublisherEntity) o;
-
-        return id != null ? id.equals(that.id) : that.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
     }
 }

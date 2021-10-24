@@ -1,21 +1,34 @@
 package com.bookshop.features.author.entity;
 
 import com.bookshop.features.book.entity.BookEntity;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@EqualsAndHashCode
 @Entity(name = "Author")
 public class AuthorEntity {
 
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Getter
+    @Setter
     private String name;
+
+    @Getter
+    @Setter
     private String surname;
 
+    @Getter
+    @Setter
     @ManyToMany(mappedBy = "bookAuthors")
     private Set<BookEntity> authorsBooks = new HashSet<>();
 
@@ -27,30 +40,6 @@ public class AuthorEntity {
         this.surname = surname;
     }
 
-    public Set<BookEntity> getAuthorsBooks() {
-        return authorsBooks;
-    }
-
-    public void setAuthorsBooks(Set<BookEntity> authorsBooks) {
-        this.authorsBooks = authorsBooks;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     @Override
     public String toString() {
         return "AuthorEntity{" +
@@ -58,20 +47,5 @@ public class AuthorEntity {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        AuthorEntity that = (AuthorEntity) o;
-
-        return id != null ? id.equals(that.id) : that.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
     }
 }
