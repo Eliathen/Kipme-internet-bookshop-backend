@@ -1,4 +1,4 @@
-package com.bookshop.features.book.cover;
+package com.bookshop.features.book.entity;
 
 import com.bookshop.features.book.entity.BookEntity;
 import lombok.EqualsAndHashCode;
@@ -9,8 +9,8 @@ import javax.persistence.*;
 import java.sql.Blob;
 
 @EqualsAndHashCode
-@Entity(name = "Book_Cover")
-public class BookCoverEntity {
+@Entity(name = "Cover")
+public class CoverEntity {
 
     @Getter
     @Setter
@@ -20,11 +20,15 @@ public class BookCoverEntity {
 
     @Getter
     @Setter
-    @Lob
-    private Blob bookCover;
+    private String name;
 
     @Getter
     @Setter
-    @ManyToOne
-    private BookEntity book;
+    @Lob
+    private byte[] data;
+
+    @Getter
+    @Setter
+    private String type;
+
 }

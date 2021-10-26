@@ -93,9 +93,9 @@ public class BookEntity {
 
     @Getter
     @Setter
-    @OneToMany
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_id")
-    private Set<BookCoverEntity> booksWithCovers = new HashSet<>();
+    private CoverEntity cover;
 
     @Getter
     @Setter
