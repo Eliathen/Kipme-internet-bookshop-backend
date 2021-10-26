@@ -109,16 +109,14 @@ public class BookEntity {
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryEntity category;
 
-    @Override
-    public String toString() {
-        return "BookEntity{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", publishedYear=" + publishedYear +
-                ", description='" + description + '\'' +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                '}';
-    }
+
+    @Getter
+    @Setter
+    @ManyToMany
+    @JoinTable(
+            name = "book_subcategory",
+            joinColumns = @JoinColumn(name = "subcategory_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private Set<SubcategoryEntity> subcategories;
 }
