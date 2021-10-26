@@ -3,14 +3,14 @@ package com.bookshop.features.user.entity;
 import com.bookshop.features.address.entity.AddressEntity;
 import com.bookshop.features.opinion.entity.OpinionEntity;
 import com.bookshop.features.order.entity.OrderEntity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 @Entity(name = "User")
 public class UserEntity {
@@ -53,33 +53,13 @@ public class UserEntity {
     @JoinColumn(name = "user_id")
     private Set<OpinionEntity> opinions = new HashSet<>();
 
-    //private Role roleId ENUM;
+    @Getter
+    @Setter
+    @Column(nullable = false)
+    private UserRole role;
 
     @Getter
     @Setter
     @ManyToMany(mappedBy = "usersAddresses")
     private Set<AddressEntity> addressesWithUsers = new HashSet<>();
-
-    public UserEntity() {
-    }
-
-    public UserEntity(String name, String surname, Integer phoneNumber, String email, String password) {
-        this.name = name;
-        this.surname = surname;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", phoneNumber=" + phoneNumber +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }
