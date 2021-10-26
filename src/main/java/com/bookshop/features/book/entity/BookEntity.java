@@ -2,19 +2,18 @@ package com.bookshop.features.book.entity;
 
 
 import com.bookshop.features.author.entity.AuthorEntity;
-import com.bookshop.features.book.cover.BookCoverEntity;
 import com.bookshop.features.opinion.entity.OpinionEntity;
 import com.bookshop.features.order.entity.OrderEntity;
 import com.bookshop.features.publisher.entity.PublisherEntity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 @Entity(name = "Book")
 public class BookEntity {
@@ -31,6 +30,7 @@ public class BookEntity {
 
     @Getter
     @Setter
+    @Column(unique = true)
     private String isbn;
 
     @Getter
@@ -48,9 +48,6 @@ public class BookEntity {
     @Getter
     @Setter
     private BigDecimal price;
-
-    //private Category categoryId;
-    //private Language languageId; ENUM
 
     @Getter
     @Setter
@@ -103,14 +100,11 @@ public class BookEntity {
     public BookEntity() {
     }
 
-    public BookEntity(String title, String isbn, Integer publishedYear, String description, Integer quantity, BigDecimal price) {
-        this.title = title;
-        this.isbn = isbn;
-        this.publishedYear = publishedYear;
-        this.description = description;
-        this.quantity = quantity;
-        this.price = price;
-    }
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private CategoryEntity category;
 
     @Override
     public String toString() {
