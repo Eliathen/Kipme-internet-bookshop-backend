@@ -97,8 +97,11 @@ public class BookEntity {
     @JoinColumn(name = "cover_id")
     private Set<BookCoverEntity> booksWithCovers = new HashSet<>();
 
-    public BookEntity() {
-    }
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "language_id", nullable = false)
+    private LanguageEntity language;
 
     @Getter
     @Setter
