@@ -42,8 +42,10 @@ public class PaymentEntity {
     @Enumerated(EnumType.STRING)
     private PaymentTypeEntity paymentType;
 
-    public PaymentEntity() {
-    }
+    @Getter
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private PaymentStatusEntity paymentStatus;
 
     @Override
     public String toString() {
