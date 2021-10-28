@@ -66,16 +66,9 @@ public class OrderEntity {
     @JoinColumn(name = "delivery_type_id")
     private DeliveryTypeEntity deliveryType;
 
-    public OrderEntity(LocalDate orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderEntity{" +
-                "id=" + id +
-                ", orderDate=" + orderDate +
-                '}';
-    }
+    @Getter
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private OrderStatusEntity orderStatus;
 
 }
