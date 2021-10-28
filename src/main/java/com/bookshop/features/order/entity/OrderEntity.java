@@ -5,17 +5,17 @@ import com.bookshop.features.address.entity.AddressEntity;
 import com.bookshop.features.book.entity.BookEntity;
 import com.bookshop.features.payment.entity.PaymentEntity;
 import com.bookshop.features.user.entity.UserEntity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 @Entity(name = "Procurement")
 public class OrderEntity {
@@ -54,11 +54,6 @@ public class OrderEntity {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "payment_id")
     private PaymentEntity payment;
-   /*
-    private BookEntity bookId;
-    private DeliveryType deliveryType; ENUM
-    private OrderStatus orderStatus; ENUM
-    */
 
     @Getter
     @Setter
