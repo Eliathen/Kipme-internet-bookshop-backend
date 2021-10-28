@@ -36,11 +36,11 @@ public class PaymentEntity {
     @OneToOne(mappedBy = "payment")
     private OrderEntity order;
 
-    /*
-    private PaymentType paymentType; ENUM
-    private OrderEntity orderid; - relations
-    private PaymentStatus paymentStatus; ENUM
-     */
+
+    @Getter
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private PaymentTypeEntity paymentType;
 
     public PaymentEntity() {
     }
