@@ -43,14 +43,12 @@ public class UserEntity {
 
     @Getter
     @Setter
-    @OneToMany
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<OrderEntity> orders = new HashSet<>();
 
     @Getter
     @Setter
-    @OneToMany
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<OpinionEntity> opinions = new HashSet<>();
 
     @Getter
