@@ -93,6 +93,11 @@ public class BookEntity {
 
     @Getter
     @Setter
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, orphanRemoval = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private Set<OpinionEntity> opinions = new HashSet<>();
+
+    @Getter
+    @Setter
     @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_id")
     private CoverEntity cover;
