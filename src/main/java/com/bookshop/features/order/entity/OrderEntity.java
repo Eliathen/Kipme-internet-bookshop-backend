@@ -60,8 +60,11 @@ public class OrderEntity {
     private OrderStatus orderStatus; ENUM
     */
 
-    public OrderEntity() {
-    }
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "delivery_type_id")
+    private DeliveryTypeEntity deliveryType;
 
     public OrderEntity(LocalDate orderDate) {
         this.orderDate = orderDate;
