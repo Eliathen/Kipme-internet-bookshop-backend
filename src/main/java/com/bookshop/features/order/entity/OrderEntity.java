@@ -32,7 +32,7 @@ public class OrderEntity {
 
     @Getter
     @Setter
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
 
     @Getter
     @Setter
@@ -51,8 +51,8 @@ public class OrderEntity {
 
     @Getter
     @Setter
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "payment_id", referencedColumnName = "id")
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn(name = "payment_id")
     private PaymentEntity payment;
    /*
     private BookEntity bookId;
