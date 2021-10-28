@@ -26,7 +26,7 @@ public class PublisherEntity {
 
     @Getter
     @Setter
-    private String publicherCity;
+    private String publisherCity;
 
     @Getter
     @Setter
