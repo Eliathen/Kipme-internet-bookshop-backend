@@ -1,6 +1,6 @@
 package com.bookshop.features.user.entity;
 
-import com.bookshop.features.address.entity.AddressEntity;
+import com.bookshop.features.order.entity.AddressEntity;
 import com.bookshop.features.opinion.entity.OpinionEntity;
 import com.bookshop.features.order.entity.OrderEntity;
 import lombok.*;

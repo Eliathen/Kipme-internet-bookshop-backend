@@ -1,4 +1,4 @@
-package com.bookshop.features.address.entity;
+package com.bookshop.features.order.entity;
 
 import com.bookshop.features.order.entity.OrderEntity;
 import com.bookshop.features.user.entity.UserEntity;

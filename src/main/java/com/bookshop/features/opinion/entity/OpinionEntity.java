@@ -27,11 +27,6 @@ public class OpinionEntity {
     @Setter
     private LocalDate date;
 
-    /*
-    private BookEntity bookId;
-    private UserEntity userId;
-     */
-
     @Getter
     @Setter
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)

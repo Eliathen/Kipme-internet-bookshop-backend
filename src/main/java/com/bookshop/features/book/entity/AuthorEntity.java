@@ -1,4 +1,4 @@
-package com.bookshop.features.author.entity;
+package com.bookshop.features.book.entity;
 
 import com.bookshop.features.book.entity.BookEntity;
 import lombok.EqualsAndHashCode;

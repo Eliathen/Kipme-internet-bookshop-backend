@@ -1,10 +1,8 @@
 package com.bookshop.features.book.entity;
 
 
-import com.bookshop.features.author.entity.AuthorEntity;
 import com.bookshop.features.opinion.entity.OpinionEntity;
 import com.bookshop.features.order.entity.OrderEntity;
-import com.bookshop.features.publisher.entity.PublisherEntity;
 import lombok.*;
 
 import javax.persistence.*;

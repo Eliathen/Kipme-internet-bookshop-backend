@@ -1,7 +1,6 @@
 package com.bookshop.features.order.entity;
 
 
-import com.bookshop.features.address.entity.AddressEntity;
 import com.bookshop.features.book.entity.BookEntity;
 import com.bookshop.features.payment.entity.PaymentEntity;
 import com.bookshop.features.user.entity.UserEntity;
