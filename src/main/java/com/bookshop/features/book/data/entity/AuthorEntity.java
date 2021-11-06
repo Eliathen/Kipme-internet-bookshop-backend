@@ -1,6 +1,5 @@
-package com.bookshop.features.book.entity;
+package com.bookshop.features.book.data.entity;
 
-import com.bookshop.features.book.entity.BookEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

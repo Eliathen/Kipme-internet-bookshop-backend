@@ -1,5 +1,4 @@
-package com.bookshop.features.book.entity;
-
+package com.bookshop.features.book.data.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,11 +9,10 @@ import javax.persistence.*;
 import java.util.Collections;
 import java.util.Set;
 
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Subcategory")
-public class SubcategoryEntity {
-
+@NoArgsConstructor
+@Entity(name = "Language")
+public class LanguageEntity {
 
     @Getter
     @Setter
@@ -28,13 +26,7 @@ public class SubcategoryEntity {
 
     @Getter
     @Setter
-    @ManyToOne
-    @JoinColumn(name="category_id", nullable = false)
-    private CategoryEntity category;
-
-    @Getter
-    @Setter
-    @ManyToMany(mappedBy = "subcategories")
+    @OneToMany(mappedBy = "language")
     private Set<BookEntity> books = Collections.emptySet();
 
 }

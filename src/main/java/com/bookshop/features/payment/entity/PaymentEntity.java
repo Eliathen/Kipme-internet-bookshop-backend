@@ -1,6 +1,6 @@
 package com.bookshop.features.payment.entity;
 
-import com.bookshop.features.order.entity.OrderEntity;
+import com.bookshop.features.order.data.entity.OrderEntity;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 

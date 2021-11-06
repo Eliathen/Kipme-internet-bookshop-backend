@@ -1,12 +1,10 @@
-package com.bookshop.features.book.entity;
+package com.bookshop.features.book.data.entity;
 
-import com.bookshop.features.book.entity.BookEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Blob;
 
 @EqualsAndHashCode
 @Entity(name = "Cover")

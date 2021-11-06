@@ -1,17 +1,16 @@
-package com.bookshop.features.order.entity;
+package com.bookshop.features.order.data.entity;
 
-import com.bookshop.features.order.entity.OrderEntity;
-import com.bookshop.features.user.entity.UserEntity;
+import com.bookshop.features.user.data.entity.UserEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Builder
 @Entity(name = "Address")
 public class AddressEntity {
 

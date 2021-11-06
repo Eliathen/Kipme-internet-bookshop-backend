@@ -1,4 +1,4 @@
-package com.bookshop.features.book.entity;
+package com.bookshop.features.book.data.entity;
 
 
 import lombok.AllArgsConstructor;

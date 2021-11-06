@@ -1,14 +1,15 @@
-package com.bookshop.features.user.entity;
+package com.bookshop.features.user.data.entity;
 
-import com.bookshop.features.order.entity.AddressEntity;
-import com.bookshop.features.opinion.entity.OpinionEntity;
-import com.bookshop.features.order.entity.OrderEntity;
+import com.bookshop.features.order.data.entity.AddressEntity;
+import com.bookshop.features.opinion.data.entity.OpinionEntity;
+import com.bookshop.features.order.data.entity.OrderEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -31,7 +32,7 @@ public class UserEntity {
 
     @Getter
     @Setter
-    private Integer phoneNumber;
+    private String phoneNumber;
 
     @Getter
     @Setter
@@ -39,7 +40,11 @@ public class UserEntity {
 
     @Getter
     @Setter
-    private String password;
+    private char[] password;
+
+    @Getter
+    @Setter
+    private boolean enabled;
 
     @Getter
     @Setter
@@ -54,10 +59,11 @@ public class UserEntity {
     @Getter
     @Setter
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @Getter
     @Setter
     @ManyToMany(mappedBy = "usersAddresses")
-    private Set<AddressEntity> addressesWithUsers = new HashSet<>();
+    private Set<AddressEntity> addresses = new HashSet<>();
 }
