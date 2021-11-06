@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -46,12 +47,6 @@ public class BookEntity {
     @Getter
     @Setter
     private BigDecimal price;
-
-    @Getter
-    @Setter
-    @OneToMany
-    @JoinColumn(name = "book_id")
-    private Set<OpinionEntity> bookOpinions = new HashSet<>();
 
     @Getter
     @Setter

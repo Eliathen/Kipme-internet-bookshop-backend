@@ -1,14 +1,15 @@
 package com.bookshop.features.book.data.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Builder
+@AllArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 @Entity(name = "Author")
 public class AuthorEntity {
 
@@ -31,20 +32,4 @@ public class AuthorEntity {
     @ManyToMany(mappedBy = "bookAuthors")
     private Set<BookEntity> authorsBooks = new HashSet<>();
 
-    public AuthorEntity() {
-    }
-
-    public AuthorEntity(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
-    }
-
-    @Override
-    public String toString() {
-        return "AuthorEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                '}';
-    }
 }
