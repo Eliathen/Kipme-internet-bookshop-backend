@@ -9,9 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -45,8 +43,8 @@ public class OrderEntity {
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "bookOrders")
-    private Set<BookEntity> orderedBooks = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "order")
+    private List<OrderPosition> orderPositions = new LinkedList<>();
 
     @Getter
     @Setter
