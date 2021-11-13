@@ -3,7 +3,7 @@ package com.bookshop.features.book.data.entity;
 
 import com.bookshop.features.opinion.data.entity.OpinionEntity;
 import com.bookshop.features.order.data.entity.OrderEntity;
-import com.bookshop.features.order.data.entity.OrderPosition;
+import com.bookshop.features.order.data.entity.OrderPositionEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -95,7 +95,7 @@ public class BookEntity {
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderedBook")
-    private List<OrderPosition> orderPositions;
+    private List<OrderPositionEntity> orderPositions;
 
 
 }

@@ -1,7 +1,6 @@
 package com.bookshop.features.order.data.entity;
 
 
-import com.bookshop.features.book.data.entity.BookEntity;
 import com.bookshop.features.payment.entity.PaymentEntity;
 import com.bookshop.features.user.data.entity.UserEntity;
 import lombok.*;
@@ -44,7 +43,7 @@ public class OrderEntity {
     @Getter
     @Setter
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "order")
-    private List<OrderPosition> orderPositions = new LinkedList<>();
+    private List<OrderPositionEntity> orderPositions = new LinkedList<>();
 
     @Getter
     @Setter
