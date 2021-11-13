@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -21,6 +22,6 @@ public class Category {
 
     private String name;
 
-    private Set<Subcategory> subcategories = Collections.emptySet();
+    private List<Subcategory> subcategories = Collections.emptyList();
 
 }
