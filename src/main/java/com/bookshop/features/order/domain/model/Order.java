@@ -12,9 +12,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Builder
 public class Order {
@@ -28,7 +26,7 @@ public class Order {
 
     private Address address;
 
-    private Set<Book> orderedBooks = new HashSet<>();
+    private List<BookPosition> orderedBooks = new LinkedList<>();
 
     private Payment payment;
 

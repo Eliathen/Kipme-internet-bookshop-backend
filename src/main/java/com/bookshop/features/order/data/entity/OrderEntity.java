@@ -1,7 +1,6 @@
 package com.bookshop.features.order.data.entity;
 
 
-import com.bookshop.features.book.data.entity.BookEntity;
 import com.bookshop.features.payment.entity.PaymentEntity;
 import com.bookshop.features.user.data.entity.UserEntity;
 import lombok.*;
@@ -9,9 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -45,8 +42,8 @@ public class OrderEntity {
 
     @Getter
     @Setter
-    @ManyToMany(mappedBy = "bookOrders")
-    private Set<BookEntity> orderedBooks = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "order")
+    private List<OrderPositionEntity> orderPositions = new LinkedList<>();
 
     @Getter
     @Setter
