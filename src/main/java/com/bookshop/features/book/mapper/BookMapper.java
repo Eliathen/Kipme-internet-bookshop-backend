@@ -29,4 +29,21 @@ public class BookMapper {
                 .build();
     }
 
+    public static Book mapToBook(BookEntity bookEntity) {
+        return Book.builder()
+                .id(bookEntity.getId())
+                .cover(CoverMapper.mapToCover(bookEntity.getCover()))
+                .bookAuthors(bookEntity.getBookAuthors().stream().map(AuthorMapper::mapToAuthor).collect(Collectors.toSet()))
+                .bookPublishers(bookEntity.getBookPublishers().stream().map(PublisherMapper::mapToPublisher).collect(Collectors.toSet()))
+                .category(CategoryMapper.mapToCategory(bookEntity.getCategory()))
+                .description(bookEntity.getDescription())
+                .isbn(bookEntity.getIsbn())
+                .language(LanguageMapper.mapToLanguage(bookEntity.getLanguage()))
+                .price(bookEntity.getPrice())
+                .publishedYear(bookEntity.getPublishedYear())
+                .quantity(bookEntity.getQuantity())
+                .title(bookEntity.getTitle())
+                .subcategories(bookEntity.getSubcategories().stream().map(SubcategoryMapper::mapToSubcategory).collect(Collectors.toSet()))
+                .build();
+    }
 }

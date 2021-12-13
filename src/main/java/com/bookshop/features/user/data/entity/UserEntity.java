@@ -44,7 +44,7 @@ public class UserEntity {
 
     @Getter
     @Setter
-    private boolean enabled;
+    private Boolean enabled;
 
     @Getter
     @Setter

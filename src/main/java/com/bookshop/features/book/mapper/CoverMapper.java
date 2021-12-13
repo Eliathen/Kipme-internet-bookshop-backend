@@ -15,4 +15,13 @@ public class CoverMapper {
                 .type(cover.getType())
                 .build();
     }
+
+    public static Cover mapToCover(CoverEntity cover) {
+        return Cover.builder()
+                .id(cover.getId())
+                .data(cover.getData())
+                .name(cover.getName())
+                .type(cover.getType())
+                .build();
+    }
 }

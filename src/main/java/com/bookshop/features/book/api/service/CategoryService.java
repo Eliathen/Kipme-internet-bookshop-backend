@@ -1,4 +1,4 @@
-package com.bookshop.features.book.api;
+package com.bookshop.features.book.api.service;
 
 import com.bookshop.features.book.domain.model.Category;
 
@@ -8,4 +8,5 @@ public interface CategoryService {
 
     List<Category> getCategories();
 
+    Category saveCategory(Category category);
 }

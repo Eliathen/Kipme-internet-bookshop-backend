@@ -12,4 +12,12 @@ public class AuthorMapper {
                 .surname(author.getSurname())
                 .build();
     }
+
+    public static Author mapToAuthor(AuthorEntity authorEntity) {
+        return Author.builder()
+                .id(authorEntity.getId())
+                .name(authorEntity.getName())
+                .surname(authorEntity.getSurname())
+                .build();
+    }
 }

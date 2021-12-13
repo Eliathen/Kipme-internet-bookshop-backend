@@ -1,15 +1,14 @@
-package com.bookshop.features.book.api;
+package com.bookshop.features.book.api.controller;
 
 
+import com.bookshop.features.book.api.request.SaveCategoryRequest;
 import com.bookshop.features.book.api.response.CategoryResponse;
+import com.bookshop.features.book.api.service.CategoryService;
 import com.bookshop.features.book.mapper.CategoryMapper;
-import com.bookshop.features.user.api.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,5 +27,12 @@ public class CategoryController {
                         .stream().map(CategoryMapper::mapToCategoryResponse)
                         .collect(Collectors.toList()),
                 HttpStatus.OK);
+    }
+
+    @PostMapping
+    private ResponseEntity<CategoryResponse> saveCategory(@RequestBody SaveCategoryRequest request) {
+        return ResponseEntity.ok(
+                CategoryMapper.mapToCategoryResponse(categoryService.saveCategory(CategoryMapper.mapToCategory(request))
+                ));
     }
 }

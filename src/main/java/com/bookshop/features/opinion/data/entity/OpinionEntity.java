@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,7 +27,7 @@ public class OpinionEntity {
 
     @Getter
     @Setter
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Getter
     @Setter

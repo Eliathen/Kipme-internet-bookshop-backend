@@ -11,4 +11,11 @@ public class LanguageMapper {
                 .name(language.getName())
                 .build();
     }
+
+    public static Language mapToLanguage(LanguageEntity language) {
+        return Language.builder()
+                .id(language.getId())
+                .name(language.getName())
+                .build();
+    }
 }

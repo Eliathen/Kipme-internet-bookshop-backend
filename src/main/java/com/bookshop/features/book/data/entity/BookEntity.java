@@ -1,6 +1,7 @@
 package com.bookshop.features.book.data.entity;
 
 
+import com.bookshop.features.magazine.data.entity.MagazineStateEntity;
 import com.bookshop.features.opinion.data.entity.OpinionEntity;
 import com.bookshop.features.order.data.entity.OrderEntity;
 import com.bookshop.features.order.data.entity.OrderPositionEntity;
@@ -93,9 +94,10 @@ public class BookEntity {
     )
     private Set<SubcategoryEntity> subcategories;
 
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderedBook")
     private List<OrderPositionEntity> orderPositions;
 
-
+    @OneToOne
+    @JoinColumn(name="magazine_state_id", referencedColumnName = "id")
+    private MagazineStateEntity magazineState;
 }

@@ -8,6 +8,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +21,6 @@ public class Opinion {
 
     private String description;
 
-    private LocalDate date;
+    private LocalDateTime date;
 
 }

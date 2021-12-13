@@ -1,6 +1,7 @@
 package com.bookshop.features.book.data.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -20,6 +21,7 @@ public class CoverEntity {
     private String name;
 
     @Lob
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] data;
 
     private String type;

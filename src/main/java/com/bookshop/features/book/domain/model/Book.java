@@ -47,4 +47,6 @@ public class Book {
 
     private Set<Subcategory> subcategories;
 
+    private Integer amount;
+
 }
