@@ -10,4 +10,6 @@ public interface CategoryRepository {
     List<Category> getCategories();
 
     Category saveCategory(Category category);
+
+    Category getCategory(int id);
 }

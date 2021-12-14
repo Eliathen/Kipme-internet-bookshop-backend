@@ -1,5 +1,6 @@
 package com.bookshop.features.book.mapper;
 
+import com.bookshop.features.book.api.request.SaveSubcategoryRequest;
 import com.bookshop.features.book.api.response.SubcategoryResponse;
 import com.bookshop.features.book.data.entity.SubcategoryEntity;
 import com.bookshop.features.book.domain.model.Subcategory;
@@ -25,6 +26,12 @@ public class SubcategoryMapper {
         return SubcategoryResponse.builder()
                 .id(subcategory.getId())
                 .name(subcategory.getName())
+                .build();
+    }
+
+    public static Subcategory mapToSubcategory(SaveSubcategoryRequest request) {
+        return Subcategory.builder()
+                .name(request.getName())
                 .build();
     }
 }
