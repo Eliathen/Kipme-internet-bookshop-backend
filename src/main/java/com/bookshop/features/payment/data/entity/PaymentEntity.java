@@ -1,4 +1,4 @@
-package com.bookshop.features.payment.entity;
+package com.bookshop.features.payment.data.entity;
 
 import com.bookshop.features.order.data.entity.OrderEntity;
 import lombok.*;

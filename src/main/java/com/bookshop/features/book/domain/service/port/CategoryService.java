@@ -1,4 +1,4 @@
-package com.bookshop.features.book.api.service;
+package com.bookshop.features.book.domain.service.port;
 
 import com.bookshop.features.book.domain.model.Category;
 import com.bookshop.features.book.domain.model.Subcategory;
@@ -12,4 +12,6 @@ public interface CategoryService {
     Category saveCategory(Category category);
 
     Subcategory saveSubcategory(int categoryId, Subcategory subcategory);
+
+    Category getCategory(Integer id);
 }

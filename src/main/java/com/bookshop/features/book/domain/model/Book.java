@@ -10,8 +10,11 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -33,11 +36,11 @@ public class Book {
 
     private BigDecimal price;
 
-    private Set<Opinion> bookOpinions = new HashSet<>();
+    private List<Opinion> bookOpinions = new LinkedList<>();
 
-    private Set<Author> bookAuthors = new HashSet<>();
+    private List<Author> bookAuthors = new LinkedList<>();
 
-    private Set<Publisher> bookPublishers = new HashSet<>();
+    private List<Publisher> bookPublishers = new LinkedList<>();
 
     private Cover cover;
 
@@ -45,8 +48,10 @@ public class Book {
 
     private Category category;
 
-    private Set<Subcategory> subcategories;
+    private List<Subcategory> subcategories = new LinkedList<>();
 
     private Integer amount;
+
+
 
 }

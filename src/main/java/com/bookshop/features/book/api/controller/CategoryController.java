@@ -5,7 +5,7 @@ import com.bookshop.features.book.api.request.SaveCategoryRequest;
 import com.bookshop.features.book.api.request.SaveSubcategoryRequest;
 import com.bookshop.features.book.api.response.CategoryResponse;
 import com.bookshop.features.book.api.response.SubcategoryResponse;
-import com.bookshop.features.book.api.service.CategoryService;
+import com.bookshop.features.book.domain.service.port.CategoryService;
 import com.bookshop.features.book.mapper.CategoryMapper;
 import com.bookshop.features.book.mapper.SubcategoryMapper;
 import lombok.RequiredArgsConstructor;
@@ -36,16 +36,24 @@ public class CategoryController {
     @Transactional
     @PostMapping
     public ResponseEntity<CategoryResponse> saveCategory(@RequestBody SaveCategoryRequest request) {
-        return ResponseEntity.ok(
+        return new ResponseEntity<>(
                 CategoryMapper.mapToCategoryResponse(categoryService.saveCategory(CategoryMapper.mapToCategory(request))
-                ));
+                ), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryResponse> getCategory(@PathVariable Integer id){
+        return ResponseEntity.ok(
+          CategoryMapper.mapToCategoryResponse(categoryService.getCategory(id))
+        );
     }
 
     @Transactional
     @PostMapping("/{id}/subcategories")
     public ResponseEntity<SubcategoryResponse> saveSubcategory(@PathVariable int id, @RequestBody SaveSubcategoryRequest request){
-        return ResponseEntity.ok(
+        return new ResponseEntity<>(
                 SubcategoryMapper.mapToSubcategoryResponse(categoryService.saveSubcategory(id, SubcategoryMapper.mapToSubcategory(request)))
-        );
+        , HttpStatus.CREATED);
     }
+
 }

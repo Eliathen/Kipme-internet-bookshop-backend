@@ -17,7 +17,7 @@ import java.math.BigInteger;
 public class OrderPositionEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

@@ -15,13 +15,14 @@ import javax.persistence.*;
 public class CoverEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
     @Lob
     @Type(type = "org.hibernate.type.BinaryType")
+    @Column(columnDefinition="BLOB")
     private byte[] data;
 
     private String type;

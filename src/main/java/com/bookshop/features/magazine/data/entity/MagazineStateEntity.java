@@ -2,10 +2,7 @@ package com.bookshop.features.magazine.data.entity;
 
 
 import com.bookshop.features.book.data.entity.BookEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -15,13 +12,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "MAGAZINE_STATE")
+@Builder
 public class MagazineStateEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @OneToOne(mappedBy = "magazineState")
     private BookEntity book;
 
     private int amount;

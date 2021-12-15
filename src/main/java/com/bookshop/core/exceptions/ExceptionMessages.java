@@ -5,4 +5,10 @@ public class ExceptionMessages {
     public static final String USER_NOT_FOUND_EXCEPTION = "User not found";
 
     public static final String CATEGORY_NOT_FOUND_EXCEPTION = "Category with id %s not found";
+
+    public static final String LANGUAGE_NOT_FOUND = "Language with id %s not found";
+
+    public static final String PUBLISHER_NOT_FOUND = "Publisher with id %s not found";
+
+    public static final String AUTHOR_NOT_FOUND = "Author with id %s not found";
 }

@@ -1,5 +1,6 @@
 package com.bookshop.features.book.data;
 
+import com.bookshop.features.book.data.entity.AuthorEntity;
 import com.bookshop.features.book.data.entity.BookEntity;
 import com.bookshop.features.book.data.jpa.BookJpaRepository;
 import com.bookshop.features.book.domain.model.Book;

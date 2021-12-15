@@ -12,4 +12,8 @@ public interface PublisherRepository {
     List<Publisher> getPublishers();
 
     Publisher save(Publisher publisher);
+
+    Publisher getPublisher(Integer id);
+
+    List<Publisher> getPublishersByIds(List<Integer> publishersIds);
 }

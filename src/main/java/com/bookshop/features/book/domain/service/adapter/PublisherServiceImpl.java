@@ -1,9 +1,8 @@
-package com.bookshop.features.book.domain;
+package com.bookshop.features.book.domain.service.adapter;
 
-import com.bookshop.features.book.api.service.PublisherService;
+import com.bookshop.features.book.domain.service.port.PublisherService;
 import com.bookshop.features.book.domain.model.Publisher;
 import com.bookshop.features.book.domain.repository.PublisherRepository;
-import com.bookshop.features.book.mapper.PublisherMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,4 +24,13 @@ public class PublisherServiceImpl implements PublisherService {
         return repository.save(publisher);
     }
 
+    @Override
+    public Publisher getPublisher(Integer id) {
+        return repository.getPublisher(id);
+    }
+
+    @Override
+    public List<Publisher> getPublishers(List<Integer> publishersIds) {
+        return repository.getPublishersByIds(publishersIds);
+    }
 }

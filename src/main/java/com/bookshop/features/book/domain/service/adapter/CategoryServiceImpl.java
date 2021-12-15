@@ -1,6 +1,6 @@
-package com.bookshop.features.book.domain;
+package com.bookshop.features.book.domain.service.adapter;
 
-import com.bookshop.features.book.api.service.CategoryService;
+import com.bookshop.features.book.domain.service.port.CategoryService;
 import com.bookshop.features.book.domain.model.Category;
 import com.bookshop.features.book.domain.model.Subcategory;
 import com.bookshop.features.book.domain.repository.CategoryRepository;
@@ -30,5 +30,10 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.getCategory(categoryId);
         category.getSubcategories().add(subcategory);
         return categoryRepository.saveCategory(category).getSubcategories().stream().filter(sub -> sub.getName().equals(subcategory.getName())).findFirst().get();
+    }
+
+    @Override
+    public Category getCategory(Integer id) {
+        return categoryRepository.getCategory(id);
     }
 }
