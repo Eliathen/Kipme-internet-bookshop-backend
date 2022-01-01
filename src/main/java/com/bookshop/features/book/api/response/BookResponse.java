@@ -3,11 +3,12 @@ package com.bookshop.features.book.api.response;
 import com.bookshop.features.book.domain.model.*;
 import com.bookshop.features.opinion.api.response.OpinionResponse;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-
+@Getter
 @Builder
 public class BookResponse {
 
@@ -31,7 +32,6 @@ public class BookResponse {
 
     private List<PublisherResponse> bookPublishers;
 
-    private CoverResponse cover;
 
     private LanguageResponse language;
 

@@ -5,14 +5,9 @@ import com.bookshop.features.book.data.entity.AuthorEntity;
 import com.bookshop.features.book.data.entity.BookEntity;
 import com.bookshop.features.book.domain.model.Book;
 import com.bookshop.features.magazine.data.entity.MagazineStateEntity;
-import com.bookshop.features.opinion.domain.model.Opinion;
 import com.bookshop.features.opinion.mapper.OpinionMapper;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BookMapper {
@@ -71,7 +66,6 @@ public class BookMapper {
     public static BookResponse mapToBookResponse(Book book) {
         return BookResponse.builder()
                 .id(book.getId())
-                .cover(CoverMapper.mapToCoverResponse(book.getCover()))
                 .bookAuthors(book.getBookAuthors().stream().map(AuthorMapper::mapToAuthorResponse).collect(Collectors.toList()))
                 .bookPublishers(book.getBookPublishers().stream().map(PublisherMapper::mapToPublisherResponse).collect(Collectors.toList()))
                 .category(CategoryMapper.mapToCategoryResponse(book.getCategory()))

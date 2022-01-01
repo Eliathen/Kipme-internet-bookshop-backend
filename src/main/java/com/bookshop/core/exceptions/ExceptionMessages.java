@@ -11,4 +11,5 @@ public class ExceptionMessages {
     public static final String PUBLISHER_NOT_FOUND = "Publisher with id %s not found";
 
     public static final String AUTHOR_NOT_FOUND = "Author with id %s not found";
+    public static final String BOOK_NOT_FOUND = "Book with id %s not found";
 }

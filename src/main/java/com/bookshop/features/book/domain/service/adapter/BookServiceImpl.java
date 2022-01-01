@@ -9,14 +9,15 @@ import com.bookshop.features.book.domain.service.port.CategoryService;
 import com.bookshop.features.book.domain.service.port.LanguageService;
 import com.bookshop.features.book.domain.service.port.PublisherService;
 import com.bookshop.features.book.mapper.AuthorMapper;
-import com.bookshop.features.opinion.domain.model.Opinion;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -58,6 +59,15 @@ public class BookServiceImpl implements BookService {
         return bookRepository.saveBook(book);
     }
 
+    @Override
+    public Book getBookById(Long id) {
+        return bookRepository.getBookById(id);
+    }
+
+    @Override
+    public Cover getCoverByBookId(Long bookId) {
+        return bookRepository.getBookById(bookId).getCover();
+    }
 
     private Cover getCoverFromMultipartFile(MultipartFile cover) throws IOException {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(cover.getOriginalFilename()));
