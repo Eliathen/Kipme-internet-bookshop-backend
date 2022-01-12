@@ -18,6 +18,7 @@ public class Constants {
                 "/h2-console/**",
                 "/users/login",
                 "/users/signup",
+                "/categories"
         };
     }
 

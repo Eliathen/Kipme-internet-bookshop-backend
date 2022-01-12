@@ -15,7 +15,7 @@ public class RegisterUserRequest {
     @Email(message = "Email should be valid")
     private String email;
 
-    @NotNull
+    @NotNull(message = "Provide password")
     private char[] password;
 
     @NotBlank(message = "Provide name")

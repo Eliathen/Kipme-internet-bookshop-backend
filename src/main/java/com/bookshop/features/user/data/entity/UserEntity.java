@@ -19,7 +19,7 @@ public class UserEntity {
     @Getter
     @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Getter
@@ -36,6 +36,7 @@ public class UserEntity {
 
     @Getter
     @Setter
+    @Column(unique = true)
     private String email;
 
     @Getter
@@ -44,7 +45,7 @@ public class UserEntity {
 
     @Getter
     @Setter
-    private boolean enabled;
+    private Boolean enabled;
 
     @Getter
     @Setter

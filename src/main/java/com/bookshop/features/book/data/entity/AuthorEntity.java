@@ -4,32 +4,26 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 @Builder
 @AllArgsConstructor
-@EqualsAndHashCode
 @NoArgsConstructor
+@Data
 @Entity(name = "Author")
 public class AuthorEntity {
 
-    @Getter
-    @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Getter
-    @Setter
     private String name;
 
-    @Getter
-    @Setter
     private String surname;
 
-    @Getter
-    @Setter
     @ManyToMany(mappedBy = "bookAuthors")
-    private Set<BookEntity> authorsBooks = new HashSet<>();
+    private List<BookEntity> authorsBooks = new LinkedList<>();
 
 }

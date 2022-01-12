@@ -3,10 +3,7 @@ package com.bookshop.features.book.data.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Collections;
 import java.util.Set;
 
@@ -19,7 +16,7 @@ public class CategoryEntity {
     @Getter
     @Setter
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Getter
@@ -28,7 +25,8 @@ public class CategoryEntity {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "category")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "CATEGORY_ID")
     private Set<SubcategoryEntity> subcategories = Collections.emptySet();
 
     @Getter

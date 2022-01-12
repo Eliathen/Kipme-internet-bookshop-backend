@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Entity
 @Table(name = "Order_Position")
@@ -16,7 +17,7 @@ import javax.persistence.*;
 public class OrderPositionEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -24,5 +25,7 @@ public class OrderPositionEntity {
 
     @ManyToOne
     private BookEntity orderedBook;
+
+    private BigInteger price;
 
 }

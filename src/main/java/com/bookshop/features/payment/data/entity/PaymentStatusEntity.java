@@ -1,4 +1,4 @@
-package com.bookshop.features.payment.entity;
+package com.bookshop.features.payment.data.entity;
 
 
 public enum PaymentStatusEntity {

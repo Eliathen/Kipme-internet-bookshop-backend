@@ -17,7 +17,7 @@ public class SubcategoryEntity {
     @Getter
     @Setter
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Getter
@@ -27,7 +27,6 @@ public class SubcategoryEntity {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name="category_id", nullable = false)
     private CategoryEntity category;
 
     @Getter
