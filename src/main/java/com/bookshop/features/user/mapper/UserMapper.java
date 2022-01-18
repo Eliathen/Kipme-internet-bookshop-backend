@@ -18,14 +18,9 @@ public class UserMapper {
     public static UserEntity mapToUserEntity(User user) {
         return UserEntity.builder()
                 .id(user.getId())
-                .opinions(
-                        (user.getOpinions() != null) ?
-                                user.getOpinions().stream().map(OpinionMapper::mapToOpinionEntity).collect(Collectors.toSet()) :
-                                new HashSet<OpinionEntity>()
-                )
                 .addresses((user.getAddresses() != null) ?
                         user.getAddresses().stream().map(AddressMapper::mapToAddressEntity).collect(Collectors.toSet()) :
-                        new HashSet<AddressEntity>())
+                        new HashSet<>())
                 .password(user.getPassword())
                 .name(user.getName())
                 .surname(user.getSurname())

@@ -9,15 +9,15 @@ import com.bookshop.features.book.domain.service.port.CategoryService;
 import com.bookshop.features.book.domain.service.port.LanguageService;
 import com.bookshop.features.book.domain.service.port.PublisherService;
 import com.bookshop.features.book.mapper.AuthorMapper;
+import com.bookshop.features.opinion.domain.model.Opinion;
+import com.bookshop.features.user.api.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,6 +30,7 @@ public class BookServiceImpl implements BookService {
     private final LanguageService languageService;
     private final PublisherService publisherService;
     private final CategoryService categoryService;
+    private final UserService userService;
 
     @Override
     public Book saveBook(SaveBookRequest request, MultipartFile cover) throws IOException {
@@ -67,6 +68,13 @@ public class BookServiceImpl implements BookService {
     @Override
     public Cover getCoverByBookId(Long bookId) {
         return bookRepository.getBookById(bookId).getCover();
+    }
+
+    @Override
+    public void saveOpinion(Long id, Opinion opinion) {
+        var currentUser = userService.getUserById(userService.getCurrentUserId());
+        opinion.setUser(currentUser);
+        bookRepository.saveOpinion(id, opinion);
     }
 
     private Cover getCoverFromMultipartFile(MultipartFile cover) throws IOException {

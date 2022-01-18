@@ -12,4 +12,8 @@ public interface UserService {
     User getUserByEmail(String email);
 
     JwtAuthenticationResponse getJwt(LoginRequest request);
+
+    Long getCurrentUserId();
+
+    User getUserById(Long userId);
 }

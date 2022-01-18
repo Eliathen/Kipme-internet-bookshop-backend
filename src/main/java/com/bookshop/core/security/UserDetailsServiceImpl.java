@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public UserDetails loadUserById(Long id) {
-        return UserDetailsImpl.of(userRepository.getUserById(id).orElseThrow(UserNotFoundException::new));
+        return UserDetailsImpl.of(userRepository.getUserById(id));
     }
 
     public UserDetailsImpl currentUser() {
@@ -35,6 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         return (UserDetailsImpl) authentication.getPrincipal();
     }
+
 
     public boolean isCurrentUserAdmin() {
         return currentUser().getUserRole().equals(UserRole.ADMIN);

@@ -22,8 +22,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id).map(UserMapper::mapToUser);
+    public User getUserById(Long id) {
+        return userRepository.findById(id).map(UserMapper::mapToUser).orElseThrow(UserNotFoundException::new);
     }
 
     @Override

@@ -7,6 +7,8 @@ import com.bookshop.features.book.domain.model.Book;
 import com.bookshop.features.magazine.data.entity.MagazineStateEntity;
 import com.bookshop.features.opinion.mapper.OpinionMapper;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
@@ -18,6 +20,9 @@ public class BookMapper {
                 .id(book.getId())
                 .cover(CoverMapper.mapToCoverEntity(book.getCover()))
                 .bookPublishers(book.getBookPublishers().stream().map(PublisherMapper::mapToPublisherEntity).collect(Collectors.toList()))
+                .opinions((book.getBookOpinions() != null) ?
+                        book.getBookOpinions().stream().map(OpinionMapper::mapToOpinionEntity).collect(Collectors.toList()):
+                        new ArrayList<>())
                 .category(CategoryMapper.mapToCategoryEntity(book.getCategory()))
                 .description(book.getDescription())
                 .bookAuthors(new LinkedList<>())
@@ -38,7 +43,7 @@ public class BookMapper {
 
         bookEntity.setMagazineState(MagazineStateEntity.builder()
                 .book(bookEntity)
-                .amount(book.getAmount())
+                .amount(bookEntity.getQuantity())
                 .build());
         authors.forEach(authorEntity -> authorEntity.getAuthorsBooks().add(bookEntity));
         bookEntity.getBookAuthors().addAll(authors);
@@ -51,6 +56,9 @@ public class BookMapper {
                 .cover(CoverMapper.mapToCover(bookEntity.getCover()))
                 .bookAuthors(bookEntity.getBookAuthors().stream().map(AuthorMapper::mapToAuthor).collect(Collectors.toList()))
                 .bookPublishers(bookEntity.getBookPublishers().stream().map(PublisherMapper::mapToPublisher).collect(Collectors.toList()))
+                .bookOpinions((bookEntity.getOpinions() != null) ?
+                        bookEntity.getOpinions().stream().map(OpinionMapper::mapToOpinion).collect(Collectors.toList()):
+                        new ArrayList<>())
                 .category(CategoryMapper.mapToCategory(bookEntity.getCategory()))
                 .description(bookEntity.getDescription())
                 .isbn(bookEntity.getIsbn())
@@ -68,6 +76,9 @@ public class BookMapper {
                 .id(book.getId())
                 .bookAuthors(book.getBookAuthors().stream().map(AuthorMapper::mapToAuthorResponse).collect(Collectors.toList()))
                 .bookPublishers(book.getBookPublishers().stream().map(PublisherMapper::mapToPublisherResponse).collect(Collectors.toList()))
+                .bookOpinions((book.getBookOpinions() != null) ?
+                        book.getBookOpinions().stream().map(OpinionMapper::mapToOpinionResponse).collect(Collectors.toList()):
+                        new ArrayList<>())
                 .category(CategoryMapper.mapToCategoryResponse(book.getCategory()))
                 .description(book.getDescription())
                 .isbn(book.getIsbn())

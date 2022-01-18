@@ -37,7 +37,7 @@ public class OpinionEntity {
 
     @Getter
     @Setter
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="book_Id")
     private BookEntity book;
 

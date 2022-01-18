@@ -9,7 +9,8 @@ public interface UserRepository {
 
     User saveUser(User user);
 
-    Optional<User> getUserById(Long id);
+    User getUserById(Long id);
+
     User getUserByEmail(String email);
 
 }

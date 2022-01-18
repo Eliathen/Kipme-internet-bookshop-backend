@@ -23,4 +23,6 @@ public class Opinion {
 
     private LocalDateTime date;
 
+    private User user;
+
 }

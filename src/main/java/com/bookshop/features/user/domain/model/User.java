@@ -31,8 +31,6 @@ public class User {
 
     private Set<Order> orders = new HashSet<>();
 
-    private Set<Opinion> opinions = new HashSet<>();
-
     private UserRole role;
 
     private Set<Address> addresses = new HashSet<>();
