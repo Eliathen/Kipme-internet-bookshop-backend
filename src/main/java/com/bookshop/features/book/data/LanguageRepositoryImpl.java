@@ -1,6 +1,6 @@
 package com.bookshop.features.book.data;
 
-import com.bookshop.features.book.data.jpa.JpaLanguageRepository;
+import com.bookshop.features.book.data.jpa.LanguageJpaRepository;
 import com.bookshop.features.book.domain.model.Language;
 import com.bookshop.features.book.domain.repository.LanguageRepository;
 import com.bookshop.features.book.exception.LanguageNotFound;
@@ -15,20 +15,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class LanguageRepositoryImpl implements LanguageRepository {
 
-    private final JpaLanguageRepository jpa;
+    private final LanguageJpaRepository jpa;
 
     @Override
     public List<Language> getLanguages() {
-        return jpa.findAll().stream().map(LanguageMapper::mapToLanguage).collect(Collectors.toList());
+        return jpa.findAll().stream().map(LanguageMapper::mapLanguageEntityToLanguage).collect(Collectors.toList());
     }
 
     @Override
     public Language saveLanguage(Language language) {
-        return LanguageMapper.mapToLanguage(jpa.saveAndFlush(LanguageMapper.mapToLanguageEntity(language)));
+        return LanguageMapper.mapLanguageEntityToLanguage(jpa.saveAndFlush(LanguageMapper.mapLanguageToLanguageEntity(language)));
     }
 
     @Override
     public Language getLanguageById(Integer id) {
-        return LanguageMapper.mapToLanguage(jpa.findById(id).orElseThrow(() -> new LanguageNotFound(id)));
+        return LanguageMapper.mapLanguageEntityToLanguage(jpa.findById(id).orElseThrow(() -> new LanguageNotFound(id)));
     }
 }

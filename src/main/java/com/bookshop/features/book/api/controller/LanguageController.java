@@ -22,17 +22,17 @@ public class LanguageController {
 
     @GetMapping
     public ResponseEntity<List<LanguageResponse>> getLanguages() {
-        return ResponseEntity.ok(service.getLanguages().stream().map(LanguageMapper::mapToLanguageResponse).collect(Collectors.toList()));
+        return ResponseEntity.ok(service.getLanguages().stream().map(LanguageMapper::mapLanguageToLanguageResponse).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<LanguageResponse> getLanguage(@PathVariable Integer id) {
-        return ResponseEntity.ok(LanguageMapper.mapToLanguageResponse(service.getLanguage(id)));
+        return ResponseEntity.ok(LanguageMapper.mapLanguageToLanguageResponse(service.getLanguage(id)));
     }
 
 
     @PostMapping
     public ResponseEntity<LanguageResponse> saveLanguage(@RequestBody SaveLanguageRequest request){
-        return new ResponseEntity<>(LanguageMapper.mapToLanguageResponse(service.saveLanguage(LanguageMapper.mapToLanguage(request))), HttpStatus.CREATED);
+        return new ResponseEntity<>(LanguageMapper.mapLanguageToLanguageResponse(service.saveLanguage(LanguageMapper.mapToLanguage(request))), HttpStatus.CREATED);
     }
 }

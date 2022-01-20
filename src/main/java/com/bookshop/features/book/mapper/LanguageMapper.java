@@ -7,21 +7,21 @@ import com.bookshop.features.book.domain.model.Language;
 
 public class LanguageMapper {
 
-    public static LanguageEntity mapToLanguageEntity(Language language) {
+    public static LanguageEntity mapLanguageToLanguageEntity(Language language) {
         return LanguageEntity.builder()
                 .id(language.getId())
                 .name(language.getName())
                 .build();
     }
 
-    public static Language mapToLanguage(LanguageEntity language) {
+    public static Language mapLanguageEntityToLanguage(LanguageEntity language) {
         return Language.builder()
                 .id(language.getId())
                 .name(language.getName())
                 .build();
     }
 
-    public static LanguageResponse mapToLanguageResponse(Language language) {
+    public static LanguageResponse mapLanguageToLanguageResponse(Language language) {
         return LanguageResponse.builder()
                 .id(language.getId())
                 .name(language.getName())

@@ -7,12 +7,12 @@ import com.bookshop.features.user.api.UserService;
 import com.bookshop.features.user.api.request.LoginRequest;
 import com.bookshop.features.user.data.entity.UserRole;
 import com.bookshop.features.user.domain.model.User;
+import com.bookshop.features.user.validators.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
     public User register(User user) {
         user.setRole(UserRole.CLIENT);
         user.setPassword(passwordEncoder.encode(String.valueOf(user.getPassword())).toCharArray());
+        validateUserEmail(user.getEmail());
         return userRepository.saveUser(user);
     }
 
@@ -59,5 +60,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long userId) {
         return userRepository.getUserById(userId);
+    }
+
+    private void validateUserEmail(String email) {
+        EmailValidator.validate(email);
     }
 }

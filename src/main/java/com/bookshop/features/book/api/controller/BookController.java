@@ -7,10 +7,9 @@ import com.bookshop.features.book.api.response.BookResponse;
 import com.bookshop.features.book.domain.model.Cover;
 import com.bookshop.features.book.domain.service.port.BookService;
 import com.bookshop.features.book.mapper.BookMapper;
-import com.bookshop.features.opinion.mapper.OpinionMapper;
+import com.bookshop.features.book.mapper.OpinionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,12 +29,12 @@ public class BookController {
     @Transactional
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BookResponse> saveBook(@ModelAttribute SaveBookRequest request, @NotNull MultipartFile cover) throws IOException {
-        return ResponseEntity.ok(BookMapper.mapToBookResponse(bookService.saveBook(request, cover)));
+        return ResponseEntity.ok(BookMapper.mapBookToBookResponse(bookService.saveBook(request, cover)));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BookResponse> getBook(@PathVariable Long id){
-        return ResponseEntity.ok(BookMapper.mapToBookResponse(bookService.getBookById(id)));
+        return ResponseEntity.ok(BookMapper.mapBookToBookResponse(bookService.getBookById(id)));
     }
 
     @GetMapping("/{bookId}/cover")
@@ -50,6 +49,13 @@ public class BookController {
     @PostMapping("/{bookId}/opinions")
     public ResponseEntity<Void> saveOpinion(@PathVariable Long bookId, @RequestBody AddOpinionRequest request) {
         bookService.saveOpinion(bookId, OpinionMapper.mapToOpinion(request));
+        return ResponseEntity.noContent().build();
+    }
+
+    @Transactional
+    @DeleteMapping("/{bookId}/opinions/{opinionId}")
+    public ResponseEntity<Void> removeBook(@PathVariable Long bookId, @PathVariable Integer opinionId) {
+        bookService.removeOpinion(bookId, opinionId);
         return ResponseEntity.noContent().build();
     }
 }

@@ -11,5 +11,12 @@ public class ExceptionMessages {
     public static final String PUBLISHER_NOT_FOUND = "Publisher with id %s not found";
 
     public static final String AUTHOR_NOT_FOUND = "Author with id %s not found";
+
     public static final String BOOK_NOT_FOUND = "Book with id %s not found";
+
+    public static final String USER_ALREADY_EXISTS = "User already exists";
+
+    public static final String INVALID_EMAIL_ADDRESS_EXCEPTION = "Invalid email address";
+
+    public static final String INVALID_EMAIL_ADDRESS_OR_PASSWORD = "Invalid email od password";
 }

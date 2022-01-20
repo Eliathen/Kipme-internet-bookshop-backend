@@ -1,18 +1,10 @@
 package com.bookshop.features.book.domain.model;
 
-import com.bookshop.features.book.data.entity.*;
-import com.bookshop.features.opinion.data.entity.OpinionEntity;
-import com.bookshop.features.opinion.domain.model.Opinion;
-import com.bookshop.features.order.data.entity.OrderEntity;
-import com.bookshop.features.order.domain.model.Order;
 import lombok.*;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @ToString
 @NoArgsConstructor
@@ -50,8 +42,6 @@ public class Book {
 
     private List<Subcategory> subcategories = new LinkedList<>();
 
-    private Integer amount;
-
-
+    private Double avgRating = 0.0;
 
 }

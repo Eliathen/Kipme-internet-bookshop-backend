@@ -1,8 +1,5 @@
 package com.bookshop.features.user.mapper;
 
-import com.bookshop.features.opinion.data.entity.OpinionEntity;
-import com.bookshop.features.opinion.mapper.OpinionMapper;
-import com.bookshop.features.order.data.entity.AddressEntity;
 import com.bookshop.features.order.mapper.AddressMapper;
 import com.bookshop.features.user.api.request.RegisterUserRequest;
 import com.bookshop.features.user.api.response.UserResponse;

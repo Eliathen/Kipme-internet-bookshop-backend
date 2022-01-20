@@ -28,7 +28,7 @@ public class CategoryController {
     public ResponseEntity<List<CategoryResponse>> getCategories() {
         return new ResponseEntity<>(
                 categoryService.getCategories()
-                        .stream().map(CategoryMapper::mapToCategoryResponse)
+                        .stream().map(CategoryMapper::mapCategoryToCategoryResponse)
                         .collect(Collectors.toList()),
                 HttpStatus.OK);
     }
@@ -37,14 +37,14 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<CategoryResponse> saveCategory(@RequestBody SaveCategoryRequest request) {
         return new ResponseEntity<>(
-                CategoryMapper.mapToCategoryResponse(categoryService.saveCategory(CategoryMapper.mapToCategory(request))
+                CategoryMapper.mapCategoryToCategoryResponse(categoryService.saveCategory(CategoryMapper.mapSaveCategoryRequestToCategory(request))
                 ), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponse> getCategory(@PathVariable Integer id){
         return ResponseEntity.ok(
-          CategoryMapper.mapToCategoryResponse(categoryService.getCategory(id))
+                CategoryMapper.mapCategoryToCategoryResponse(categoryService.getCategory(id))
         );
     }
 
@@ -52,7 +52,7 @@ public class CategoryController {
     @PostMapping("/{id}/subcategories")
     public ResponseEntity<SubcategoryResponse> saveSubcategory(@PathVariable int id, @RequestBody SaveSubcategoryRequest request){
         return new ResponseEntity<>(
-                SubcategoryMapper.mapToSubcategoryResponse(categoryService.saveSubcategory(id, SubcategoryMapper.mapToSubcategory(request)))
+                SubcategoryMapper.mapSubcategoryToSubcategoryResponse(categoryService.saveSubcategory(id, SubcategoryMapper.mapSaveSubcategoryRequestToSubcategory(request)))
         , HttpStatus.CREATED);
     }
 

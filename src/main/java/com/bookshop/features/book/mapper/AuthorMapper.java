@@ -5,12 +5,11 @@ import com.bookshop.features.book.api.response.AuthorResponse;
 import com.bookshop.features.book.data.entity.AuthorEntity;
 import com.bookshop.features.book.domain.model.Author;
 
-import java.util.Collections;
 import java.util.LinkedList;
 
 public class AuthorMapper {
 
-    public static AuthorEntity mapToAuthorEntity(Author author){
+    public static AuthorEntity mapAuthorToAuthorEntity(Author author) {
         return AuthorEntity.builder()
                 .id(author.getId())
                 .name(author.getName())
@@ -19,7 +18,7 @@ public class AuthorMapper {
                 .build();
     }
 
-    public static Author mapToAuthor(AuthorEntity authorEntity) {
+    public static Author mapAuthorEntityToAuthor(AuthorEntity authorEntity) {
         return Author.builder()
                 .id(authorEntity.getId())
                 .name(authorEntity.getName())
@@ -27,7 +26,7 @@ public class AuthorMapper {
                 .build();
     }
 
-    public static AuthorResponse mapToAuthorResponse(Author author) {
+    public static AuthorResponse mapAuthorToAuthorResponse(Author author) {
         return AuthorResponse.builder()
                 .id(author.getId())
                 .name(author.getName())
@@ -35,7 +34,7 @@ public class AuthorMapper {
                 .build();
     }
 
-    public static Author mapToAuthor(AuthorRequest author) {
+    public static Author mapAuthorRequestEntityToAuthor(AuthorRequest author) {
         return Author.builder()
                 .name(author.getName())
                 .surname(author.getSurname())

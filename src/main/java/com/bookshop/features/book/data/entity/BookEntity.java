@@ -2,7 +2,6 @@ package com.bookshop.features.book.data.entity;
 
 
 import com.bookshop.features.magazine.data.entity.MagazineStateEntity;
-import com.bookshop.features.opinion.data.entity.OpinionEntity;
 import com.bookshop.features.order.data.entity.OrderEntity;
 import com.bookshop.features.order.data.entity.OrderPositionEntity;
 import lombok.*;
@@ -10,7 +9,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.List;
 
 @Getter
@@ -30,6 +28,7 @@ public class BookEntity {
     @Column(unique = true)
     private String isbn;
 
+    @Column(name = "PUBLISHED_YEAR")
     private Integer publishedYear;
 
     private String description;

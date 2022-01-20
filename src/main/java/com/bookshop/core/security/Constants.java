@@ -17,8 +17,7 @@ public class Constants {
                 "/swagger-ui/**",
                 "/h2-console/**",
                 "/users/login",
-                "/users/signup",
-                "/categories"
+                "/users/signup"
         };
     }
 

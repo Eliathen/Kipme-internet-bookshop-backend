@@ -16,17 +16,17 @@ public class AuthorRepositoryImpl implements AuthorRepository {
 
     @Override
     public Author getAuthorByNameAndSurname(Author author) {
-        return AuthorMapper.mapToAuthor(jpa.findFirstByNameIgnoreCaseAndSurnameIgnoreCase(author.getName(), author.getSurname())
-                .orElseGet(() -> jpa.saveAndFlush(AuthorMapper.mapToAuthorEntity(author))));
+        return AuthorMapper.mapAuthorEntityToAuthor(jpa.findFirstByNameIgnoreCaseAndSurnameIgnoreCase(author.getName(), author.getSurname())
+                .orElseGet(() -> jpa.saveAndFlush(AuthorMapper.mapAuthorToAuthorEntity(author))));
     }
 
     @Override
     public Author saveAuthor(Author author) {
-        return AuthorMapper.mapToAuthor(jpa.saveAndFlush(AuthorMapper.mapToAuthorEntity(author)));
+        return AuthorMapper.mapAuthorEntityToAuthor(jpa.saveAndFlush(AuthorMapper.mapAuthorToAuthorEntity(author)));
     }
 
     @Override
     public Author getAuthorById(Integer id) {
-        return AuthorMapper.mapToAuthor(jpa.findById(id).orElseThrow(() -> new AuthorNotFound(id)));
+        return AuthorMapper.mapAuthorEntityToAuthor(jpa.findById(id).orElseThrow(() -> new AuthorNotFound(id)));
     }
 }

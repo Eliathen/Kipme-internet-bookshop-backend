@@ -7,14 +7,14 @@ import com.bookshop.features.book.domain.model.Subcategory;
 
 public class SubcategoryMapper {
 
-    public static SubcategoryEntity mapToSubcategoryEntity(Subcategory subcategory){
+    public static SubcategoryEntity mapSubcategoryToSubcategoryEntity(Subcategory subcategory) {
         return SubcategoryEntity.builder()
                 .id(subcategory.getId())
                 .name(subcategory.getName())
                 .build();
     }
 
-    public static Subcategory mapToSubcategory(SubcategoryEntity subcategoryEntity) {
+    public static Subcategory mapSubcategoryEntityToSubcategory(SubcategoryEntity subcategoryEntity) {
         return Subcategory.builder()
                 .id(subcategoryEntity.getId())
                 .name(subcategoryEntity.getName())
@@ -22,14 +22,14 @@ public class SubcategoryMapper {
 
     }
 
-    public static SubcategoryResponse mapToSubcategoryResponse(Subcategory subcategory) {
+    public static SubcategoryResponse mapSubcategoryToSubcategoryResponse(Subcategory subcategory) {
         return SubcategoryResponse.builder()
                 .id(subcategory.getId())
                 .name(subcategory.getName())
                 .build();
     }
 
-    public static Subcategory mapToSubcategory(SaveSubcategoryRequest request) {
+    public static Subcategory mapSaveSubcategoryRequestToSubcategory(SaveSubcategoryRequest request) {
         return Subcategory.builder()
                 .name(request.getName())
                 .build();

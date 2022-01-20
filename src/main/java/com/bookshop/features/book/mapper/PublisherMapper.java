@@ -8,7 +8,7 @@ import com.bookshop.features.book.domain.model.Publisher;
 
 public class PublisherMapper {
 
-    public static PublisherEntity mapToPublisherEntity(Publisher publisher) {
+    public static PublisherEntity mapPublisherToPublisherEntity(Publisher publisher) {
         return PublisherEntity.builder()
                 .id(publisher.getId())
                 .publisherCity(publisher.getPublisherCity())
@@ -16,7 +16,7 @@ public class PublisherMapper {
                 .build();
     }
 
-    public static Publisher mapToPublisher(PublisherEntity publisherEntity) {
+    public static Publisher mapPublisherEntityToPublisher(PublisherEntity publisherEntity) {
         return Publisher.builder()
                 .id(publisherEntity.getId())
                 .publisherCity(publisherEntity.getPublisherCity())
@@ -24,7 +24,7 @@ public class PublisherMapper {
                 .build();
     }
 
-    public static PublisherResponse mapToPublisherResponse(Publisher publisher) {
+    public static PublisherResponse mapPublisherToPublisherResponse(Publisher publisher) {
         return PublisherResponse.builder()
                 .id(publisher.getId())
                 .publisherCity(publisher.getPublisherCity())
@@ -32,7 +32,7 @@ public class PublisherMapper {
                 .build();
     }
 
-    public static Publisher mapToPublisher(SavePublisherRequest request) {
+    public static Publisher mapSavePublisherRequestToPublisher(SavePublisherRequest request) {
         return Publisher.builder()
                 .publisherName(request.getPublisherName())
                 .publisherCity(request.getPublisherCity())

@@ -38,6 +38,6 @@ public class BookResponse {
 
     private List<SubcategoryResponse> subcategories;
 
-    private Integer amount;
+    private Double rating;
 
 }

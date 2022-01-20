@@ -1,7 +1,6 @@
 package com.bookshop.features.user.domain.model;
 
 import com.bookshop.features.order.domain.model.Address;
-import com.bookshop.features.opinion.domain.model.Opinion;
 import com.bookshop.features.order.domain.model.Order;
 import com.bookshop.features.user.data.entity.UserRole;
 import lombok.*;
