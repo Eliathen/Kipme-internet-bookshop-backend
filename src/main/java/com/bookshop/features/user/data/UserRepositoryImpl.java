@@ -1,25 +1,23 @@
 package com.bookshop.features.user.data;
 
 import com.bookshop.features.user.data.entity.UserEntity;
-import com.bookshop.features.user.data.jpa.UserRepositoryJpa;
+import com.bookshop.features.user.data.jpa.UserJpaRepository;
 import com.bookshop.features.user.domain.UserRepository;
-import com.bookshop.features.user.domain.model.User;
-import com.bookshop.features.user.exception.InvalidEmailOrPassword;
-import com.bookshop.features.user.exception.UserAlreadyExists;
-import com.bookshop.features.user.exception.UserNotFoundException;
-import com.bookshop.features.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 
-    private final UserRepositoryJpa userRepository;
+    private final UserJpaRepository userRepository;
 
     @Override
     public UserEntity saveUser(UserEntity user) {
         return userRepository.saveAndFlush(user);
+    }
 
     @Override
     public Optional<UserEntity> getUserById(Long id) {
@@ -30,5 +28,4 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<UserEntity> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-
 }

@@ -4,9 +4,11 @@ import com.bookshop.features.order.data.entity.OrderEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -14,53 +16,41 @@ import java.util.Set;
 @Entity(name = "Address")
 public class AddressEntity {
 
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
-    @Setter
     private String voivodeship;
 
-    @Getter
-    @Setter
     private String postalCode;
 
-    @Getter
-    @Setter
     private String city;
 
-    @Getter
-    @Setter
     private String street;
 
-    @Getter
-    @Setter
     private String buildingNumber;
 
-    @Getter
-    @Setter
     private String flatNumber;
 
-    @Getter
-    @Setter
     @OneToMany
     @JoinColumn(name = "address_id")
-    private Set<OrderEntity> ordersWithAdresses = new HashSet<>();
+    private List<OrderEntity> ordersWithAdresses;
 
-    @Getter
-    @Setter
     @ManyToMany(
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
     )
     @JoinTable(
-         name = "users_addresses",
-         joinColumns = @JoinColumn(name = "address_id"),
-         inverseJoinColumns = @JoinColumn(name = "user_id")
+            name = "users_addresses",
+            joinColumns = @JoinColumn(name = "address_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private Set<UserEntity> usersAddresses = new HashSet<>();
+    private List<UserEntity> usersAddresses;
 
-
+    public void addUser(UserEntity userEntity) {
+        if (usersAddresses == null) {
+            usersAddresses = List.of(userEntity);
+        } else {
+            usersAddresses.add(userEntity);
+        }
+    }
 }

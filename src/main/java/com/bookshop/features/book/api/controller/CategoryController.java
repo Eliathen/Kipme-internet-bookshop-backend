@@ -28,7 +28,7 @@ public class CategoryController {
     public ResponseEntity<List<CategoryResponse>> getCategories() {
         return new ResponseEntity<>(
                 categoryService.getCategories()
-                        .stream().map(CategoryMapper::mapCategoryToCategoryResponse)
+                        .stream().map(CategoryMapper::mapToCategoryResponse)
                         .collect(Collectors.toList()),
                 HttpStatus.OK);
     }
@@ -44,7 +44,7 @@ public class CategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponse> getCategory(@PathVariable Integer id){
         return ResponseEntity.ok(
-                CategoryMapper.mapCategoryToCategoryResponse(categoryService.getCategory(id))
+                CategoryMapper.mapToCategoryResponse(categoryService.getCategory(id))
         );
     }
 

@@ -8,6 +8,7 @@ import com.bookshop.features.user.api.response.AddressResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class AddressController {
         return new ResponseEntity<>(addressService.getUserAddresses(userId).stream().map(AddressMapper::mapToAddressResponse).collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @Transactional
     @PostMapping
     public ResponseEntity<AddressResponse> saveAddress(@PathVariable Long userId, @RequestBody SaveUpdateAddressRequest request){
         return new ResponseEntity<>(AddressMapper.mapToAddressResponse(addressService.saveAddress(userId, request)), HttpStatus.CREATED);
@@ -35,12 +37,15 @@ public class AddressController {
         return ResponseEntity.ok(AddressMapper.mapToAddressResponse(addressService.getAddressById(addressId)));
     }
 
+    @Transactional
     @PatchMapping("/{addressId}")
-    public ResponseEntity<AddressResponse> updateAddress(@PathVariable Long userId,@PathVariable Long addressId, @RequestBody SaveUpdateAddressRequest request){
+    public ResponseEntity<AddressResponse> updateAddress(@PathVariable Long userId, @PathVariable Long addressId, @RequestBody SaveUpdateAddressRequest request) {
         return ResponseEntity.ok(AddressMapper.mapToAddressResponse(addressService.updateAddress(addressId, request)));
     }
-    @DeleteMapping("{/{addressId}")
-    public ResponseEntity<Void> deleteAddress(@PathVariable Long userId, @PathVariable Long addressId){
+
+    @Transactional
+    @DeleteMapping("/{addressId}")
+    public ResponseEntity<Void> deleteAddress(@PathVariable Long userId, @PathVariable Long addressId) {
         addressService.removeAddress(addressId);
         return ResponseEntity.noContent().build();
     }

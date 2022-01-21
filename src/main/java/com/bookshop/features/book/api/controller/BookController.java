@@ -28,12 +28,12 @@ public class BookController {
     @Transactional
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BookResponse> saveBook(@ModelAttribute SaveBookRequest request, @NotNull MultipartFile cover) throws IOException {
-        return ResponseEntity.ok(BookMapper.mapBookToBookResponse(bookService.saveBook(request, cover)));
+        return ResponseEntity.ok(BookMapper.mapToBookResponse(bookService.saveBook(request, cover)));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BookResponse> getBook(@PathVariable Long id){
-        return ResponseEntity.ok(BookMapper.mapBookToBookResponse(bookService.getBookById(id)));
+        return ResponseEntity.ok(BookMapper.mapToBookResponse(bookService.getBookById(id)));
     }
 
     @GetMapping("/{bookId}/cover")

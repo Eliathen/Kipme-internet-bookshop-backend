@@ -38,6 +38,4 @@ public class UserController {
                         userService.getUserByEmail(request.getEmail()), userService.getJwt(request)),
                 HttpStatus.OK);
     }
-
-    //TODO adding address to user
 }

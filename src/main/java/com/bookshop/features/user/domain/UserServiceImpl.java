@@ -10,6 +10,7 @@ import com.bookshop.features.user.data.entity.UserEntity;
 import com.bookshop.features.user.data.entity.UserRole;
 import com.bookshop.features.user.exception.UserNotFoundException;
 import com.bookshop.features.user.mapper.UserMapper;
+import com.bookshop.features.user.validators.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

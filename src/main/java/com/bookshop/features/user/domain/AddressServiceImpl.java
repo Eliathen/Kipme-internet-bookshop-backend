@@ -6,16 +6,19 @@ import com.bookshop.features.user.api.AddressService;
 import com.bookshop.features.user.api.UserService;
 import com.bookshop.features.user.api.request.SaveUpdateAddressRequest;
 import com.bookshop.features.user.data.entity.AddressEntity;
+import com.bookshop.features.user.exception.AddressNotFound;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
 public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
+    private final UserRepository userRepository;
     private final UserService userService;
 
     @Override
@@ -25,20 +28,18 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressEntity saveAddress(Long userId, SaveUpdateAddressRequest request) {
-
-        AddressEntity addressEntity = addressRepository.saveAddress(AddressMapper.mapToAddressEntity(request));
+        AddressEntity address = AddressMapper.mapToAddressEntity(request);
         var user = userService.getCurrentUser();
-        if(user.getAddresses() == null){
-            user.setAddresses(List.of(addressEntity));
-        } else {
-            user.getAddresses().add(addressEntity);
-        }
-        return addressEntity;
+        address.addUser(user);
+        user.addAddress(address);
+        return addressRepository.saveAddress(address);
     }
 
     @Override
     public AddressEntity updateAddress(Long addressId, SaveUpdateAddressRequest request) {
-        var address = getAddressById(addressId);
+        var address = userService.getCurrentUser().getAddresses().stream()
+                .filter(addressEntity -> Objects.equals(addressEntity.getId(), addressId))
+                .findFirst().orElseThrow(AddressNotFound::new);
         NotNullBeanUtils.copyNonNullProperties(AddressMapper.mapToAddressEntity(request), address);
         return addressRepository.updateAddress(address);
     }
@@ -50,6 +51,8 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressEntity getAddressById(Long addressId) {
-        return null;
+        return userService.getCurrentUser().getAddresses()
+                .stream().filter(address -> address.getId().equals(addressId))
+                .findFirst().orElseThrow(AddressNotFound::new);
     }
 }

@@ -2,12 +2,9 @@ package com.bookshop.features.book.mapper;
 
 import com.bookshop.features.book.api.request.SaveBookRequest;
 import com.bookshop.features.book.api.response.BookResponse;
-import com.bookshop.features.book.data.entity.AuthorEntity;
 import com.bookshop.features.book.data.entity.BookEntity;
-import com.bookshop.features.opinion.mapper.OpinionMapper;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class BookMapper {

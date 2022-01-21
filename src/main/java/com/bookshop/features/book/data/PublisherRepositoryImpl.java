@@ -1,5 +1,6 @@
 package com.bookshop.features.book.data;
 
+import com.bookshop.features.book.data.entity.PublisherEntity;
 import com.bookshop.features.book.data.jpa.PublisherJpaRepository;
 import com.bookshop.features.book.domain.repository.PublisherRepository;
 import lombok.RequiredArgsConstructor;

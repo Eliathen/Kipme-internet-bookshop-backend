@@ -1,6 +1,6 @@
 package com.bookshop.features.user.data.entity;
 
-import com.bookshop.features.opinion.data.entity.OpinionEntity;
+import com.bookshop.features.book.data.entity.OpinionEntity;
 import com.bookshop.features.order.data.entity.OrderEntity;
 import lombok.*;
 
@@ -44,6 +44,14 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @ManyToMany(mappedBy = "usersAddresses")
+    @ManyToMany(mappedBy = "usersAddresses", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AddressEntity> addresses;
+
+    public void addAddress(AddressEntity address) {
+        if (getAddresses() == null) {
+            addresses = List.of(address);
+        } else {
+            addresses.add(address);
+        }
+    }
 }

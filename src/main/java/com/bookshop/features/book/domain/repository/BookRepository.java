@@ -2,7 +2,7 @@ package com.bookshop.features.book.domain.repository;
 
 
 import com.bookshop.features.book.data.entity.BookEntity;
-import com.bookshop.features.opinion.data.entity.OpinionEntity;
+import com.bookshop.features.book.data.entity.OpinionEntity;
 
 import java.util.Optional;
 

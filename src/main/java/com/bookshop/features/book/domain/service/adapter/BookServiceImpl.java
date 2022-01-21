@@ -12,7 +12,7 @@ import com.bookshop.features.book.domain.service.port.PublisherService;
 import com.bookshop.features.book.exception.BookNotFound;
 import com.bookshop.features.book.exception.CoverNotFound;
 import com.bookshop.features.book.mapper.BookMapper;
-import com.bookshop.features.opinion.mapper.OpinionMapper;
+import com.bookshop.features.book.mapper.OpinionMapper;
 import com.bookshop.features.user.api.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -54,7 +54,7 @@ public class BookServiceImpl implements BookService {
         book.setSubcategories(subcategories);
         book.setBookAuthors(authors);
         authors.forEach(author -> {
-            if(author.getAuthorsBooks() != null) {
+            if (author.getAuthorsBooks() != null) {
                 author.getAuthorsBooks().add(book);
             } else {
                 author.setAuthorsBooks(List.of(book));
@@ -82,6 +82,16 @@ public class BookServiceImpl implements BookService {
         opinion.setBook(book);
         opinion.setUser(user);
         bookRepository.saveOpinion(opinion);
+    }
+
+    @Override
+    public void removeOpinion(Long bookId, Integer opinionId) {
+        var user = userService.getCurrentUser();
+        var book = getBookById(bookId);
+        var opinion = book.getOpinions().stream()
+                .filter(opinionEntity -> Objects.equals(opinionEntity.getId(), opinionId) && Objects.equals(opinionEntity.getUser().getId(), user.getId()))
+                .findFirst();
+        opinion.ifPresent(opinionEntity -> book.getOpinions().remove(opinionEntity));
     }
 
     private CoverEntity getCoverFromMultipartFile(MultipartFile cover) throws IOException {

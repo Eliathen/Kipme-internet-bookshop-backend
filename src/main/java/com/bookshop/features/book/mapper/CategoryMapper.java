@@ -13,7 +13,7 @@ public class CategoryMapper {
         return CategoryResponse.builder()
                 .id(category.getId())
                 .name(category.getName())
-                .subcategories(category.getSubcategories().stream().map(SubcategoryMapper::mapSubcategoryToSubcategoryResponse).collect(Collectors.toList()))
+                .subcategories(category.getSubcategories().stream().map(SubcategoryMapper::mapToSubcategoryResponse).collect(Collectors.toList()))
                 .build();
     }
 
