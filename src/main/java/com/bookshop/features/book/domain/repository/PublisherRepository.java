@@ -2,18 +2,17 @@ package com.bookshop.features.book.domain.repository;
 
 
 import com.bookshop.features.book.data.entity.PublisherEntity;
-import com.bookshop.features.book.domain.model.Category;
-import com.bookshop.features.book.domain.model.Publisher;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PublisherRepository {
 
-    List<Publisher> getPublishers();
+    List<PublisherEntity> getPublishers();
 
-    Publisher save(Publisher publisher);
+    PublisherEntity save(PublisherEntity publisher);
 
-    Publisher getPublisher(Integer id);
+    Optional<PublisherEntity> getPublisher(Integer id);
 
-    List<Publisher> getPublishersByIds(List<Integer> publishersIds);
+    List<PublisherEntity> getPublishersByIds(List<Integer> publishersIds);
 }

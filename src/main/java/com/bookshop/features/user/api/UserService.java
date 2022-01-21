@@ -3,17 +3,18 @@ package com.bookshop.features.user.api;
 
 import com.bookshop.core.security.JwtAuthenticationResponse;
 import com.bookshop.features.user.api.request.LoginRequest;
-import com.bookshop.features.user.domain.model.User;
+import com.bookshop.features.user.api.request.RegisterUserRequest;
+import com.bookshop.features.user.data.entity.UserEntity;
 
 public interface UserService {
 
-    User register(User user);
+    UserEntity register(RegisterUserRequest user);
 
-    User getUserByEmail(String email);
+    UserEntity getUserByEmail(String email);
 
     JwtAuthenticationResponse getJwt(LoginRequest request);
 
-    Long getCurrentUserId();
+    UserEntity getCurrentUser();
 
-    User getUserById(Long userId);
+    UserEntity getUserById(Long userId);
 }

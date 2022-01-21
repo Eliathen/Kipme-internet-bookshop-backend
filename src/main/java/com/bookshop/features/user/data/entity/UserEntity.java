@@ -1,13 +1,11 @@
 package com.bookshop.features.user.data.entity;
 
-import com.bookshop.features.order.data.entity.AddressEntity;
 import com.bookshop.features.opinion.data.entity.OpinionEntity;
 import com.bookshop.features.order.data.entity.OrderEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -50,12 +48,12 @@ public class UserEntity {
     @Getter
     @Setter
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private Set<OrderEntity> orders = new HashSet<>();
+    private List<OrderEntity> orders;
 
     @Getter
     @Setter
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private Set<OpinionEntity> opinions = new HashSet<>();
+    private List<OpinionEntity> opinions;
 
     @Getter
     @Setter
@@ -66,5 +64,5 @@ public class UserEntity {
     @Getter
     @Setter
     @ManyToMany(mappedBy = "usersAddresses")
-    private Set<AddressEntity> addresses = new HashSet<>();
+    private List<AddressEntity> addresses;
 }

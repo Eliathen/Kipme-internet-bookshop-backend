@@ -8,6 +8,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -15,28 +18,20 @@ import java.time.LocalDateTime;
 @Entity(name = "Opinion")
 public class OpinionEntity {
 
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Getter
-    @Setter
     private String description;
 
-    @Getter
-    @Setter
     private LocalDateTime date;
 
-    @Getter
-    @Setter
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    private Double rating;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_Id")
     private UserEntity user;
 
-    @Getter
-    @Setter
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="book_Id")
     private BookEntity book;

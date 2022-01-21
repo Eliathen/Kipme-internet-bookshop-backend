@@ -1,5 +1,6 @@
-package com.bookshop.features.user.api;
+package com.bookshop.features.user.api.controller;
 
+import com.bookshop.features.user.api.UserService;
 import com.bookshop.features.user.api.request.LoginRequest;
 import com.bookshop.features.user.api.request.RegisterUserRequest;
 import com.bookshop.features.user.api.response.LoginResponse;
@@ -8,7 +9,10 @@ import com.bookshop.features.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -22,7 +26,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<UserResponse> register(@RequestBody @Valid RegisterUserRequest request) {
         return new ResponseEntity<>(
-                UserMapper.mapToUserResponse(userService.register(UserMapper.mapToUser(request))),
+                UserMapper.mapToUserResponse(userService.register(request)),
                 HttpStatus.CREATED
         );
     }

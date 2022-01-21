@@ -1,7 +1,5 @@
 package com.bookshop.features.book.api.request;
 
-import com.bookshop.features.book.domain.model.*;
-import com.bookshop.features.opinion.domain.model.Opinion;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,7 +34,5 @@ public class SaveBookRequest {
     private Integer categoryId;
 
     private List<Integer> subcategoriesIds;
-
-    private Integer amount;
 
 }

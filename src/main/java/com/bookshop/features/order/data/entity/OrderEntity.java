@@ -2,13 +2,16 @@ package com.bookshop.features.order.data.entity;
 
 
 import com.bookshop.features.payment.data.entity.PaymentEntity;
+import com.bookshop.features.user.data.entity.AddressEntity;
 import com.bookshop.features.user.data.entity.UserEntity;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor

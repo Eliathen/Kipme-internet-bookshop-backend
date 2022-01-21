@@ -1,7 +1,7 @@
 package com.bookshop.features.user.api.response;
 
 import com.bookshop.core.security.JwtAuthenticationResponse;
-import com.bookshop.features.user.domain.model.User;
+import com.bookshop.features.user.data.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,7 @@ public class LoginResponse {
     private String email;
     private JwtAuthenticationResponse response;
 
-    public static LoginResponse of(User user, JwtAuthenticationResponse jwtAuthenticationResponse) {
+    public static LoginResponse of(UserEntity user, JwtAuthenticationResponse jwtAuthenticationResponse) {
         return new LoginResponse(
                 user.getId(),
                 user.getEmail(),

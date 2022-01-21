@@ -1,13 +1,15 @@
 package com.bookshop.features.book.domain.repository;
 
 
-import com.bookshop.features.book.domain.model.Author;
+import com.bookshop.features.book.data.entity.AuthorEntity;
+
+import java.util.Optional;
 
 public interface AuthorRepository {
 
-    Author getAuthorByNameAndSurname(Author author);
+    AuthorEntity getAuthorByNameAndSurnameOrSave(String name, String surname);
 
-    Author saveAuthor(Author author);
+    AuthorEntity saveAuthor(AuthorEntity author);
 
-    Author getAuthorById(Integer id);
+    Optional<AuthorEntity> getAuthorById(Integer id);
 }

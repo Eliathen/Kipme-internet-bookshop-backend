@@ -1,15 +1,13 @@
 package com.bookshop.features.book.data;
 
+import com.bookshop.features.book.data.entity.LanguageEntity;
 import com.bookshop.features.book.data.jpa.JpaLanguageRepository;
-import com.bookshop.features.book.domain.model.Language;
 import com.bookshop.features.book.domain.repository.LanguageRepository;
-import com.bookshop.features.book.exception.LanguageNotFound;
-import com.bookshop.features.book.mapper.LanguageMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,17 +16,17 @@ public class LanguageRepositoryImpl implements LanguageRepository {
     private final JpaLanguageRepository jpa;
 
     @Override
-    public List<Language> getLanguages() {
-        return jpa.findAll().stream().map(LanguageMapper::mapToLanguage).collect(Collectors.toList());
+    public List<LanguageEntity> getLanguages() {
+        return jpa.findAll();
     }
 
     @Override
-    public Language saveLanguage(Language language) {
-        return LanguageMapper.mapToLanguage(jpa.saveAndFlush(LanguageMapper.mapToLanguageEntity(language)));
+    public LanguageEntity saveLanguage(LanguageEntity language) {
+        return jpa.saveAndFlush(language);
     }
 
     @Override
-    public Language getLanguageById(Integer id) {
-        return LanguageMapper.mapToLanguage(jpa.findById(id).orElseThrow(() -> new LanguageNotFound(id)));
+    public Optional<LanguageEntity> getLanguageById(Integer id) {
+        return jpa.findById(id);
     }
 }

@@ -1,13 +1,15 @@
 package com.bookshop.features.book.domain.repository;
 
 
-import com.bookshop.features.book.domain.model.Book;
-import com.bookshop.features.opinion.domain.model.Opinion;
+import com.bookshop.features.book.data.entity.BookEntity;
+import com.bookshop.features.opinion.data.entity.OpinionEntity;
+
+import java.util.Optional;
 
 public interface BookRepository {
-    Book saveBook(Book book);
+    BookEntity saveBook(BookEntity book);
 
-    Book getBookById(Long id);
+    Optional<BookEntity> getBookById(Long id);
 
-    void saveOpinion(Long bookId, Opinion opinion);
+    void saveOpinion(OpinionEntity opinion);
 }

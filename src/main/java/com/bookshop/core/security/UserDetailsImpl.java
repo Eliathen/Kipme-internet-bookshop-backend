@@ -1,6 +1,6 @@
 package com.bookshop.core.security;
 
-import com.bookshop.features.user.domain.model.User;
+import com.bookshop.features.user.data.entity.UserEntity;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,12 +20,12 @@ public class UserDetailsImpl implements UserDetails {
     private UserRole userRole;
     private boolean isEnabled;
 
-    public static UserDetailsImpl of(User user) {
+    public static UserDetailsImpl of(UserEntity user) {
         return UserDetailsImpl.builder()
                 .id(user.getId())
                 .email(user.getEmail())
                 .password(String.valueOf(user.getPassword()))
-                .isEnabled(user.isEnabled())
+                .isEnabled(user.getEnabled())
                 .userRole(UserRole.valueOf(user.getRole().name()))
                 .build();
     }
