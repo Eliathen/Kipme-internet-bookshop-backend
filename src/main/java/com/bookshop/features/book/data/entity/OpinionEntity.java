@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -26,9 +27,11 @@ public class OpinionEntity {
     private Double rating;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_Id")
     private UserEntity user;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="book_Id")
     private BookEntity book;
 
 }

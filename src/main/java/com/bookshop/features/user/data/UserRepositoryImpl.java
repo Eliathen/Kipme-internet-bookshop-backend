@@ -1,5 +1,6 @@
 package com.bookshop.features.user.data;
 
+import com.bookshop.features.user.data.entity.UserEntity;
 import com.bookshop.features.user.data.jpa.UserRepositoryJpa;
 import com.bookshop.features.user.domain.UserRepository;
 import com.bookshop.features.user.domain.model.User;
@@ -17,23 +18,17 @@ public class UserRepositoryImpl implements UserRepository {
     private final UserRepositoryJpa userRepository;
 
     @Override
-    public User saveUser(User user) {
-        var result = userRepository.findByEmail(user.getEmail());
-        if (result.isPresent()) {
-            throw new UserAlreadyExists(user.getEmail());
-        }
-        return UserMapper.mapToUser(userRepository.saveAndFlush(UserMapper.mapToUserEntity(user)));
+    public UserEntity saveUser(UserEntity user) {
+        return userRepository.saveAndFlush(user);
+
+    @Override
+    public Optional<UserEntity> getUserById(Long id) {
+        return userRepository.findById(id);
     }
 
     @Override
-    public User getUserById(Long id) {
-        return userRepository.findById(id).map(UserMapper::mapToUser).orElseThrow(UserNotFoundException::new);
-    }
-
-    @Override
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .map(UserMapper::mapToUser).orElseThrow(InvalidEmailOrPassword::new);
+    public Optional<UserEntity> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
 }

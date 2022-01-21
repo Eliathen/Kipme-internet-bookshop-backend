@@ -4,10 +4,9 @@ package com.bookshop.features.book.api.controller;
 import com.bookshop.features.book.api.request.AddOpinionRequest;
 import com.bookshop.features.book.api.request.SaveBookRequest;
 import com.bookshop.features.book.api.response.BookResponse;
-import com.bookshop.features.book.domain.model.Cover;
+import com.bookshop.features.book.data.entity.CoverEntity;
 import com.bookshop.features.book.domain.service.port.BookService;
 import com.bookshop.features.book.mapper.BookMapper;
-import com.bookshop.features.book.mapper.OpinionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -39,7 +38,7 @@ public class BookController {
 
     @GetMapping("/{bookId}/cover")
     public ResponseEntity<byte[]> getCoverByBookId(@PathVariable Long bookId) {
-        Cover cover = bookService.getCoverByBookId(bookId);
+        CoverEntity cover = bookService.getCoverByBookId(bookId);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_TYPE, cover.getType())
                 .body(cover.getData());
@@ -48,7 +47,7 @@ public class BookController {
     @Transactional
     @PostMapping("/{bookId}/opinions")
     public ResponseEntity<Void> saveOpinion(@PathVariable Long bookId, @RequestBody AddOpinionRequest request) {
-        bookService.saveOpinion(bookId, OpinionMapper.mapToOpinion(request));
+        bookService.saveOpinion(bookId, request);
         return ResponseEntity.noContent().build();
     }
 

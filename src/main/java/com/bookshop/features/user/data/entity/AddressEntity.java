@@ -1,6 +1,6 @@
-package com.bookshop.features.order.data.entity;
+package com.bookshop.features.user.data.entity;
 
-import com.bookshop.features.user.data.entity.UserEntity;
+import com.bookshop.features.order.data.entity.OrderEntity;
 import lombok.*;
 
 import javax.persistence.*;

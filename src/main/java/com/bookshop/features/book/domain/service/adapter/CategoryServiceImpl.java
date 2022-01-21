@@ -1,9 +1,12 @@
 package com.bookshop.features.book.domain.service.adapter;
 
-import com.bookshop.features.book.domain.service.port.CategoryService;
-import com.bookshop.features.book.domain.model.Category;
-import com.bookshop.features.book.domain.model.Subcategory;
+import com.bookshop.features.book.api.request.SaveSubcategoryRequest;
+import com.bookshop.features.book.data.entity.CategoryEntity;
+import com.bookshop.features.book.data.entity.SubcategoryEntity;
 import com.bookshop.features.book.domain.repository.CategoryRepository;
+import com.bookshop.features.book.domain.service.port.CategoryService;
+import com.bookshop.features.book.exception.CategoryNotFound;
+import com.bookshop.features.book.mapper.SubcategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,24 +19,24 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<Category> getCategories() {
+    public List<CategoryEntity> getCategories() {
         return categoryRepository.getCategories();
     }
 
     @Override
-    public Category saveCategory(Category category) {
+    public CategoryEntity saveCategory(CategoryEntity category) {
         return categoryRepository.saveCategory(category);
     }
 
     @Override
-    public Subcategory saveSubcategory(int categoryId, Subcategory subcategory) {
-        Category category = categoryRepository.getCategory(categoryId);
-        category.getSubcategories().add(subcategory);
-        return categoryRepository.saveCategory(category).getSubcategories().stream().filter(sub -> sub.getName().equals(subcategory.getName())).findFirst().get();
+    public SubcategoryEntity saveSubcategory(int categoryId, SaveSubcategoryRequest request) {
+        CategoryEntity category = categoryRepository.getCategory(categoryId).orElseThrow(() -> new CategoryNotFound(categoryId));
+        category.getSubcategories().add(SubcategoryMapper.mapToSubcategoryEntity(request));
+        return categoryRepository.saveCategory(category).getSubcategories().stream().filter(sub -> sub.getName().equals(request.getName())).findFirst().orElseThrow(AssertionError::new);
     }
 
     @Override
-    public Category getCategory(Integer id) {
-        return categoryRepository.getCategory(id);
+    public CategoryEntity getCategory(Integer id) {
+        return categoryRepository.getCategory(id).orElseThrow(() -> new CategoryNotFound(id));
     }
 }

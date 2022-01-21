@@ -1,8 +1,9 @@
 package com.bookshop.features.book.domain.service.adapter;
 
-import com.bookshop.features.book.domain.service.port.PublisherService;
-import com.bookshop.features.book.domain.model.Publisher;
+import com.bookshop.features.book.data.entity.PublisherEntity;
 import com.bookshop.features.book.domain.repository.PublisherRepository;
+import com.bookshop.features.book.domain.service.port.PublisherService;
+import com.bookshop.features.book.exception.PublisherNotFound;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +16,22 @@ public class PublisherServiceImpl implements PublisherService {
     private final PublisherRepository repository;
 
     @Override
-    public List<Publisher> getPublishers() {
+    public List<PublisherEntity> getPublishers() {
         return repository.getPublishers();
     }
 
     @Override
-    public Publisher savePublisher(Publisher publisher) {
+    public PublisherEntity savePublisher(PublisherEntity publisher) {
         return repository.save(publisher);
     }
 
     @Override
-    public Publisher getPublisher(Integer id) {
-        return repository.getPublisher(id);
+    public PublisherEntity getPublisher(Integer id) {
+        return repository.getPublisher(id).orElseThrow(()-> new PublisherNotFound(id));
     }
 
     @Override
-    public List<Publisher> getPublishers(List<Integer> publishersIds) {
+    public List<PublisherEntity> getPublishers(List<Integer> publishersIds) {
         return repository.getPublishersByIds(publishersIds);
     }
 }

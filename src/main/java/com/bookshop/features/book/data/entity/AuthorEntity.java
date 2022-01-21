@@ -24,6 +24,6 @@ public class AuthorEntity {
     private String surname;
 
     @ManyToMany(mappedBy = "bookAuthors")
-    private List<BookEntity> authorsBooks = new LinkedList<>();
+    private List<BookEntity> authorsBooks;
 
 }

@@ -1,16 +1,16 @@
 package com.bookshop.features.book.domain.service.port;
 
-import com.bookshop.features.book.domain.model.Publisher;
+import com.bookshop.features.book.data.entity.PublisherEntity;
 
 import java.util.List;
 
 public interface PublisherService {
 
-    List<Publisher> getPublishers();
+    List<PublisherEntity> getPublishers();
 
-    Publisher savePublisher(Publisher publisher);
+    PublisherEntity savePublisher(PublisherEntity publisher);
 
-    Publisher getPublisher(Integer id);
+    PublisherEntity getPublisher(Integer id);
 
-    List<Publisher> getPublishers(List<Integer> publishersIds);
+    List<PublisherEntity> getPublishers(List<Integer> publishersIds);
 }

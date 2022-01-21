@@ -1,17 +1,18 @@
 package com.bookshop.features.book.domain.service.port;
 
-import com.bookshop.features.book.domain.model.Category;
-import com.bookshop.features.book.domain.model.Subcategory;
+import com.bookshop.features.book.api.request.SaveSubcategoryRequest;
+import com.bookshop.features.book.data.entity.CategoryEntity;
+import com.bookshop.features.book.data.entity.SubcategoryEntity;
 
 import java.util.List;
 
 public interface CategoryService {
 
-    List<Category> getCategories();
+    List<CategoryEntity> getCategories();
 
-    Category saveCategory(Category category);
+    CategoryEntity saveCategory(CategoryEntity category);
 
-    Subcategory saveSubcategory(int categoryId, Subcategory subcategory);
+    SubcategoryEntity saveSubcategory(int categoryId, SaveSubcategoryRequest subcategory);
 
-    Category getCategory(Integer id);
+    CategoryEntity getCategory(Integer id);
 }

@@ -66,7 +66,7 @@ public class BookEntity {
     private List<PublisherEntity> bookPublishers = new LinkedList<>();
 
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<OpinionEntity> opinions = new LinkedList<>();
+    private List<OpinionEntity> opinions;
 
     @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_id")
@@ -96,4 +96,9 @@ public class BookEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="magazine_state_id", referencedColumnName = "id")
     private MagazineStateEntity magazineState;
+
+
+    public Double getAvgRating(){
+        return getOpinions() != null ? getOpinions().stream().mapToDouble(OpinionEntity::getRating).average().orElse(0.0) : (0.0);
+    }
 }

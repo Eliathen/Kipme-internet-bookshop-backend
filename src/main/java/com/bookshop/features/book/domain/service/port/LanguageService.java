@@ -1,15 +1,16 @@
 package com.bookshop.features.book.domain.service.port;
 
-import com.bookshop.features.book.domain.model.Language;
+import com.bookshop.features.book.api.request.SaveLanguageRequest;
+import com.bookshop.features.book.data.entity.LanguageEntity;
 
 import java.util.List;
 
 public interface LanguageService {
 
 
-    List<Language> getLanguages();
+    List<LanguageEntity> getLanguages();
 
-    Language saveLanguage(Language language);
+    LanguageEntity saveLanguage(SaveLanguageRequest language);
 
-    Language getLanguage(Integer id);
+    LanguageEntity getLanguage(Integer id);
 }

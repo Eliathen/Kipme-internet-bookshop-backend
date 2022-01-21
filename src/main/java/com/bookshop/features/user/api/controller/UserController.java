@@ -1,5 +1,6 @@
-package com.bookshop.features.user.api;
+package com.bookshop.features.user.api.controller;
 
+import com.bookshop.features.user.api.UserService;
 import com.bookshop.features.user.api.request.LoginRequest;
 import com.bookshop.features.user.api.request.RegisterUserRequest;
 import com.bookshop.features.user.api.response.LoginResponse;
@@ -25,7 +26,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<UserResponse> register(@RequestBody @Valid RegisterUserRequest request) {
         return new ResponseEntity<>(
-                UserMapper.mapToUserResponse(userService.register(UserMapper.mapToUser(request))),
+                UserMapper.mapToUserResponse(userService.register(request)),
                 HttpStatus.CREATED
         );
     }

@@ -1,14 +1,18 @@
 package com.bookshop.features.book.domain.service.adapter;
 
+import com.bookshop.features.book.api.request.AddOpinionRequest;
 import com.bookshop.features.book.api.request.SaveBookRequest;
-import com.bookshop.features.book.domain.model.*;
+import com.bookshop.features.book.data.entity.*;
 import com.bookshop.features.book.domain.repository.AuthorRepository;
 import com.bookshop.features.book.domain.repository.BookRepository;
 import com.bookshop.features.book.domain.service.port.BookService;
 import com.bookshop.features.book.domain.service.port.CategoryService;
 import com.bookshop.features.book.domain.service.port.LanguageService;
 import com.bookshop.features.book.domain.service.port.PublisherService;
-import com.bookshop.features.book.mapper.AuthorMapper;
+import com.bookshop.features.book.exception.BookNotFound;
+import com.bookshop.features.book.exception.CoverNotFound;
+import com.bookshop.features.book.mapper.BookMapper;
+import com.bookshop.features.opinion.mapper.OpinionMapper;
 import com.bookshop.features.user.api.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,75 +37,59 @@ public class BookServiceImpl implements BookService {
     private final UserService userService;
 
     @Override
-    public Book saveBook(SaveBookRequest request, MultipartFile cover) throws IOException {
-        Cover newCover = getCoverFromMultipartFile(cover);
-
-        Language language = languageService.getLanguage(request.getLanguageId());
-
-        List<Publisher> publisherList = publisherService.getPublishers(new LinkedList<>(request.getBookPublishersIds()));
-
-        Category category = categoryService.getCategory(request.getCategoryId());
-
-        List<Subcategory> subcategories = category.getSubcategories().stream().filter(sub -> request.getSubcategoriesIds().contains(sub.getId())).collect(Collectors.toList());
-
-        List<Author> authors = request.getBookAuthors().stream().map(
-                author -> authorRepository.getAuthorByNameAndSurname(AuthorMapper.mapAuthorRequestEntityToAuthor(author))
+    public BookEntity saveBook(SaveBookRequest request, MultipartFile cover) throws IOException {
+        CoverEntity newCover = getCoverFromMultipartFile(cover);
+        LanguageEntity language = languageService.getLanguage(request.getLanguageId());
+        List<PublisherEntity> publisherList = publisherService.getPublishers(new LinkedList<>(request.getBookPublishersIds()));
+        CategoryEntity category = categoryService.getCategory(request.getCategoryId());
+        List<SubcategoryEntity> subcategories = category.getSubcategories().stream().filter(sub -> request.getSubcategoriesIds().contains(sub.getId())).collect(Collectors.toList());
+        List<AuthorEntity> authors = request.getBookAuthors().stream().map(
+                author -> authorRepository.getAuthorByNameAndSurnameOrSave(author.getName(), author.getSurname())
         ).collect(Collectors.toList());
-        Book book = Book.builder()
-                .title(request.getTitle())
-                .isbn(request.getIsbn())
-                .publishedYear(request.getPublishedYear())
-                .description(request.getDescription())
-                .quantity(request.getQuantity())
-                .price(request.getPrice())
-                .bookAuthors(authors)
-                .bookPublishers(publisherList)
-                .language(language)
-                .cover(newCover)
-                .category(category)
-                .subcategories(subcategories)
-                .build();
-        Book result = bookRepository.saveBook(book);
-        result.setAvgRating(countAvgRatingForBook(result));
-        return result;
+        BookEntity book = BookMapper.mapToBookEntity(request);
+        book.setCover(newCover);
+        book.setLanguage(language);
+        book.setBookPublishers(publisherList);
+        book.setCategory(category);
+        book.setSubcategories(subcategories);
+        book.setBookAuthors(authors);
+        authors.forEach(author -> {
+            if(author.getAuthorsBooks() != null) {
+                author.getAuthorsBooks().add(book);
+            } else {
+                author.setAuthorsBooks(List.of(book));
+            }
+        });
+        return bookRepository.saveBook(book);
     }
 
     @Override
-    public Book getBookById(Long id) {
-        var book = bookRepository.getBookById(id);
-        book.setAvgRating(countAvgRatingForBook(book));
-        return book;
+    public BookEntity getBookById(Long id) {
+        return bookRepository.getBookById(id).orElseThrow(() -> new BookNotFound(id));
     }
 
     @Override
-    public Cover getCoverByBookId(Long bookId) {
-        return bookRepository.getBookById(bookId).getCover();
+    public CoverEntity getCoverByBookId(Long bookId) {
+        BookEntity book = bookRepository.getBookById(bookId).orElseThrow(CoverNotFound::new);
+        return book.getCover();
     }
 
     @Override
-    public void saveOpinion(Long id, Opinion opinion) {
-        var currentUser = userService.getUserById(userService.getCurrentUserId());
-        opinion.setUser(currentUser);
-        bookRepository.saveOpinion(id, opinion);
+    public void saveOpinion(Long bookId, AddOpinionRequest request) {
+        var book = getBookById(bookId);
+        var user = userService.getCurrentUser();
+        var opinion = OpinionMapper.mapToOpinionEntity(request);
+        opinion.setBook(book);
+        opinion.setUser(user);
+        bookRepository.saveOpinion(opinion);
     }
 
-    @Override
-    public void removeOpinion(Long bookId, Integer opinionId) {
-        Book book = getBookById(bookId);
-        var opinion = book.getBookOpinions().stream().filter(opinionElement -> opinionElement.getId().equals(opinionId)).findFirst();
-        opinion.ifPresent((opi) -> book.getBookOpinions().remove(opi));
-    }
-
-    private Cover getCoverFromMultipartFile(MultipartFile cover) throws IOException {
+    private CoverEntity getCoverFromMultipartFile(MultipartFile cover) throws IOException {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(cover.getOriginalFilename()));
-        return Cover.builder()
+        return CoverEntity.builder()
                 .name(fileName)
                 .type(cover.getContentType())
                 .data(cover.getBytes())
                 .build();
-    }
-
-    private Double countAvgRatingForBook(Book book) {
-        return (book.getBookOpinions() != null) ? book.getBookOpinions().stream().mapToDouble(Opinion::getRating).average().orElse(0.0) : 0.0;
     }
 }

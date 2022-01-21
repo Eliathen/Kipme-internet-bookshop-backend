@@ -19,4 +19,6 @@ public class ExceptionMessages {
     public static final String INVALID_EMAIL_ADDRESS_EXCEPTION = "Invalid email address";
 
     public static final String INVALID_EMAIL_ADDRESS_OR_PASSWORD = "Invalid email od password";
+
+    public static final String COVER_NOT_FOUND = "Cover not found";
 }

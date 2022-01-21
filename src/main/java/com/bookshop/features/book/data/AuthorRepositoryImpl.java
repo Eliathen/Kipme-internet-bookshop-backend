@@ -1,12 +1,12 @@
 package com.bookshop.features.book.data;
 
+import com.bookshop.features.book.data.entity.AuthorEntity;
 import com.bookshop.features.book.data.jpa.AuthorJpaRepository;
-import com.bookshop.features.book.domain.model.Author;
 import com.bookshop.features.book.domain.repository.AuthorRepository;
-import com.bookshop.features.book.exception.AuthorNotFound;
-import com.bookshop.features.book.mapper.AuthorMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -15,18 +15,21 @@ public class AuthorRepositoryImpl implements AuthorRepository {
     private final AuthorJpaRepository jpa;
 
     @Override
-    public Author getAuthorByNameAndSurname(Author author) {
-        return AuthorMapper.mapAuthorEntityToAuthor(jpa.findFirstByNameIgnoreCaseAndSurnameIgnoreCase(author.getName(), author.getSurname())
-                .orElseGet(() -> jpa.saveAndFlush(AuthorMapper.mapAuthorToAuthorEntity(author))));
+    public AuthorEntity getAuthorByNameAndSurnameOrSave(String name, String surname) {
+        return jpa.findFirstByNameIgnoreCaseAndSurnameIgnoreCase(name, surname)
+                .orElseGet(() -> jpa.saveAndFlush(AuthorEntity.builder()
+                        .name(name)
+                        .surname(surname)
+                        .build()));
     }
 
     @Override
-    public Author saveAuthor(Author author) {
-        return AuthorMapper.mapAuthorEntityToAuthor(jpa.saveAndFlush(AuthorMapper.mapAuthorToAuthorEntity(author)));
+    public AuthorEntity saveAuthor(AuthorEntity author) {
+        return jpa.saveAndFlush(author);
     }
 
     @Override
-    public Author getAuthorById(Integer id) {
-        return AuthorMapper.mapAuthorEntityToAuthor(jpa.findById(id).orElseThrow(() -> new AuthorNotFound(id)));
+    public Optional<AuthorEntity> getAuthorById(Integer id) {
+        return jpa.findById(id);
     }
 }

@@ -37,7 +37,7 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<CategoryResponse> saveCategory(@RequestBody SaveCategoryRequest request) {
         return new ResponseEntity<>(
-                CategoryMapper.mapCategoryToCategoryResponse(categoryService.saveCategory(CategoryMapper.mapSaveCategoryRequestToCategory(request))
+                CategoryMapper.mapToCategoryResponse(categoryService.saveCategory(CategoryMapper.mapSaveCategoryRequestsToCategoryEntity(request))
                 ), HttpStatus.CREATED);
     }
 
@@ -52,7 +52,7 @@ public class CategoryController {
     @PostMapping("/{id}/subcategories")
     public ResponseEntity<SubcategoryResponse> saveSubcategory(@PathVariable int id, @RequestBody SaveSubcategoryRequest request){
         return new ResponseEntity<>(
-                SubcategoryMapper.mapSubcategoryToSubcategoryResponse(categoryService.saveSubcategory(id, SubcategoryMapper.mapSaveSubcategoryRequestToSubcategory(request)))
+                SubcategoryMapper.mapToSubcategoryResponse(categoryService.saveSubcategory(id, request))
         , HttpStatus.CREATED);
     }
 
