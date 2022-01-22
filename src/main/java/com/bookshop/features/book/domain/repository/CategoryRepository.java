@@ -1,15 +1,16 @@
 package com.bookshop.features.book.domain.repository;
 
 
-import com.bookshop.features.book.domain.model.Category;
+import com.bookshop.features.book.data.entity.CategoryEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CategoryRepository {
 
-    List<Category> getCategories();
+    List<CategoryEntity> getCategories();
 
-    Category saveCategory(Category category);
+    CategoryEntity saveCategory(CategoryEntity category);
 
-    Category getCategory(int id);
+    Optional<CategoryEntity> getCategory(int id);
 }

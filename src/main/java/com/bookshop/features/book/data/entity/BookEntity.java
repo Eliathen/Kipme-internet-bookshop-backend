@@ -1,8 +1,6 @@
 package com.bookshop.features.book.data.entity;
 
 
-import com.bookshop.features.magazine.data.entity.MagazineStateEntity;
-import com.bookshop.features.opinion.data.entity.OpinionEntity;
 import com.bookshop.features.order.data.entity.OrderEntity;
 import com.bookshop.features.order.data.entity.OrderPositionEntity;
 import lombok.*;
@@ -10,7 +8,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.List;
 
 @Getter
@@ -30,8 +27,10 @@ public class BookEntity {
     @Column(unique = true)
     private String isbn;
 
+    @Column(name = "PUBLISHED_YEAR")
     private Integer publishedYear;
 
+    @Column(length = 65535, columnDefinition = "text")
     private String description;
 
     private Integer quantity;
@@ -67,7 +66,7 @@ public class BookEntity {
     private List<PublisherEntity> bookPublishers = new LinkedList<>();
 
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<OpinionEntity> opinions = new LinkedList<>();
+    private List<OpinionEntity> opinions;
 
     @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_id")
@@ -94,7 +93,9 @@ public class BookEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderedBook")
     private List<OrderPositionEntity> orderPositions;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="magazine_state_id", referencedColumnName = "id")
-    private MagazineStateEntity magazineState;
+    private Integer magazineState;
+
+    public Double getAvgRating(){
+        return getOpinions() != null ? getOpinions().stream().mapToDouble(OpinionEntity::getRating).average().orElse(0.0) : (0.0);
+    }
 }

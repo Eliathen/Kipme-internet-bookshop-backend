@@ -20,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return UserDetailsImpl.of(userRepository.getUserByEmail(email));
+        return UserDetailsImpl.of(userRepository.getUserByEmail(email).orElseThrow(UserNotFoundException::new));
     }
 
     public UserDetails loadUserById(Long id) {
@@ -35,6 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         return (UserDetailsImpl) authentication.getPrincipal();
     }
+
 
     public boolean isCurrentUserAdmin() {
         return currentUser().getUserRole().equals(UserRole.ADMIN);

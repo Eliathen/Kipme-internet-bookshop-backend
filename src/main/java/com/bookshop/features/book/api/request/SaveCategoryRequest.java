@@ -9,7 +9,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class SaveCategoryRequest {
 
-
     @NotBlank(message = "Provide category's name")
     private String name;
 }

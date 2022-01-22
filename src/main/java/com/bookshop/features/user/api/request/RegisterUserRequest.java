@@ -3,7 +3,6 @@ package com.bookshop.features.user.api.request;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -12,7 +11,6 @@ import javax.validation.constraints.NotNull;
 public class RegisterUserRequest {
 
     @NotBlank(message = "Provide email address")
-    @Email(message = "Email should be valid")
     private String email;
 
     @NotNull(message = "Provide password")

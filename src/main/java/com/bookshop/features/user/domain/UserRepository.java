@@ -1,15 +1,15 @@
 package com.bookshop.features.user.domain;
 
-import com.bookshop.features.user.domain.model.User;
-import org.springframework.stereotype.Repository;
+import com.bookshop.features.user.data.entity.UserEntity;
 
 import java.util.Optional;
 
 public interface UserRepository {
 
-    User saveUser(User user);
+    UserEntity saveUser(UserEntity user);
 
-    Optional<User> getUserById(Long id);
-    User getUserByEmail(String email);
+    Optional<UserEntity> getUserById(Long id);
+
+    Optional<UserEntity> getUserByEmail(String email);
 
 }

@@ -1,7 +1,6 @@
 package com.bookshop.features.book.api.response;
 
-import com.bookshop.features.book.domain.model.*;
-import com.bookshop.features.opinion.api.response.OpinionResponse;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,6 +9,7 @@ import java.util.List;
 
 @Getter
 @Builder
+@AllArgsConstructor
 public class BookResponse {
 
     private Long id;
@@ -32,13 +32,12 @@ public class BookResponse {
 
     private List<PublisherResponse> bookPublishers;
 
-
     private LanguageResponse language;
 
     private CategoryResponse category;
 
     private List<SubcategoryResponse> subcategories;
 
-    private Integer amount;
+    private Double rating;
 
 }

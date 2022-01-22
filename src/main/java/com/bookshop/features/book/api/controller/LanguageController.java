@@ -33,6 +33,6 @@ public class LanguageController {
 
     @PostMapping
     public ResponseEntity<LanguageResponse> saveLanguage(@RequestBody SaveLanguageRequest request){
-        return new ResponseEntity<>(LanguageMapper.mapToLanguageResponse(service.saveLanguage(LanguageMapper.mapToLanguage(request))), HttpStatus.CREATED);
+        return new ResponseEntity<>(LanguageMapper.mapToLanguageResponse(service.saveLanguage(request)), HttpStatus.CREATED);
     }
 }

@@ -1,31 +1,38 @@
 package com.bookshop.features.book.data;
 
-import com.bookshop.features.book.data.entity.AuthorEntity;
 import com.bookshop.features.book.data.entity.BookEntity;
+import com.bookshop.features.book.data.entity.OpinionEntity;
 import com.bookshop.features.book.data.jpa.BookJpaRepository;
-import com.bookshop.features.book.domain.model.Book;
+import com.bookshop.features.book.data.jpa.OpinionJpaRepository;
 import com.bookshop.features.book.domain.repository.BookRepository;
-import com.bookshop.features.book.exception.BookNotFotFound;
-import com.bookshop.features.book.mapper.BookMapper;
+import com.bookshop.features.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
 
     private final BookJpaRepository jpa;
+    private final UserRepository userRepository;
+    private final OpinionJpaRepository opinionJpaRepository;
 
     @Override
-    public Book saveBook(Book book) {
-        BookEntity bookToSave = BookMapper.mapToBookEntity(book);
-        return BookMapper.mapToBook(jpa.saveAndFlush(bookToSave));
+    public BookEntity saveBook(BookEntity book) {
+        return jpa.saveAndFlush(book);
     }
 
     @Override
-    public Book getBookById(Long id) {
-        return BookMapper.mapToBook(jpa.getBookEntityById(id)
-                .orElseThrow(() -> new BookNotFotFound(id))
-        );
+    public Optional<BookEntity> getBookById(Long id) {
+        return jpa.getBookEntityById(id);
     }
+
+    @Override
+    public void saveOpinion(OpinionEntity opinion) {
+        opinionJpaRepository.saveAndFlush(opinion);
+    }
+
+
 }
