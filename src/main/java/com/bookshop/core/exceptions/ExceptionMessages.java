@@ -23,4 +23,6 @@ public class ExceptionMessages {
     public static final String COVER_NOT_FOUND = "Cover not found";
 
     public static final String ADDRESS_NOT_FOUND = "Address not found";
+
+    public static final String SUBCATEGORY_WITH_ID_NOT_FOUND = "Subcategory with id = %s not found";
 }

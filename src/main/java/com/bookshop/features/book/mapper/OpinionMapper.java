@@ -23,7 +23,7 @@ public class OpinionMapper {
                 .date(opinion.getDate())
                 .description(opinion.getDescription())
                 .rating(opinion.getRating())
-                .user(UserMapper.mapToUserResponse(opinion.getUser()))
+                .user(UserMapper.mapToBaseUserResponse(opinion.getUser()))
                 .build();
     }
 }

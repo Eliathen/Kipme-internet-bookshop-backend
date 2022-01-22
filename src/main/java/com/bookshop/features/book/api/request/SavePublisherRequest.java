@@ -1,5 +1,7 @@
 package com.bookshop.features.book.api.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -13,4 +15,12 @@ public class SavePublisherRequest {
     @NotBlank(message = "Provide publisher's city")
     private String publisherCity;
 
+
+    @JsonCreator
+    public SavePublisherRequest(
+            @JsonProperty("name") String publisherName,
+            @JsonProperty("city") String publisherCity) {
+        this.publisherName = publisherName;
+        this.publisherCity = publisherCity;
+    }
 }

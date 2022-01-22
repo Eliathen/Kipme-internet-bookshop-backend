@@ -4,26 +4,23 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Builder
-public class AuthorResponse {
+public class CategoryResponseWithoutSubcategories {
+
 
     private Integer id;
 
     private String name;
 
-    private String surname;
-
-
     @JsonCreator
-
-    public AuthorResponse(
+    public CategoryResponseWithoutSubcategories(
             @JsonProperty("id") Integer id,
-            @JsonProperty("name") String name,
-            @JsonProperty("surname") String surname) {
+            @JsonProperty("name") String name) {
         this.id = id;
         this.name = name;
-        this.surname = surname;
     }
 }

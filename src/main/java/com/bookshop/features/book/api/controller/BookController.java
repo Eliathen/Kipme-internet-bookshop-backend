@@ -2,6 +2,7 @@ package com.bookshop.features.book.api.controller;
 
 
 import com.bookshop.features.book.api.request.AddOpinionRequest;
+import com.bookshop.features.book.api.request.AddRemoveBookFavouriteRequest;
 import com.bookshop.features.book.api.request.SaveBookRequest;
 import com.bookshop.features.book.api.response.BookResponse;
 import com.bookshop.features.book.data.entity.CoverEntity;
@@ -17,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,7 +35,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookResponse> getBook(@PathVariable Long id){
+    public ResponseEntity<BookResponse> getBook(@PathVariable Long id) {
         return ResponseEntity.ok(BookMapper.mapToBookResponse(bookService.getBookById(id)));
     }
 
@@ -53,8 +56,50 @@ public class BookController {
 
     @Transactional
     @DeleteMapping("/{bookId}/opinions/{opinionId}")
-    public ResponseEntity<Void> removeBook(@PathVariable Long bookId, @PathVariable Integer opinionId) {
+    public ResponseEntity<Void> removeBook(@PathVariable("bookId") Long bookId, @PathVariable("opinionId") Integer opinionId) {
         bookService.removeOpinion(bookId, opinionId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/favorites")
+    public ResponseEntity<List<BookResponse>> getFavouriteBooks() {
+        return ResponseEntity.ok(bookService.getFavouriteBooks()
+                .stream()
+                .map(BookMapper::mapToBookResponse)
+                .collect(Collectors.toList())
+        );
+    }
+
+    @PostMapping("/favorites")
+    public ResponseEntity<Void> addFavouriteBooks(@RequestBody AddRemoveBookFavouriteRequest request) {
+        bookService.addBookToFavorites(request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/favorites")
+    public ResponseEntity<Void> removeBookFromFavorites(@RequestBody AddRemoveBookFavouriteRequest request) {
+        bookService.removeBookFromFavorites(request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<BookResponse>> searchBook(
+            @RequestParam(name = "q", required = false) String query
+    ) {
+        return ResponseEntity.ok(
+                bookService.searchBooks(query)
+                        .stream().map(BookMapper::mapToBookResponse)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @GetMapping("/categories/{categoryId}")
+    public ResponseEntity<List<BookResponse>> getBooksByCategoryId(@PathVariable("categoryId") Integer categoryId) {
+        return ResponseEntity.ok(bookService.getBooksByCategoryId(categoryId).stream().map(BookMapper::mapToBookResponse).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/subcategories/{subcategoryId}")
+    public ResponseEntity<List<BookResponse>> getBooksBySubcategoryId(@PathVariable("subcategoryId") Integer categoryId) {
+        return ResponseEntity.ok(bookService.getBooksBySubcategoryId(categoryId).stream().map(BookMapper::mapToBookResponse).collect(Collectors.toList()));
     }
 }
