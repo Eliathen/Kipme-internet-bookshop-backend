@@ -15,4 +15,6 @@ public interface CategoryService {
     SubcategoryEntity saveSubcategory(int categoryId, SaveSubcategoryRequest subcategory);
 
     CategoryEntity getCategory(Integer id);
+
+    SubcategoryEntity getSubcategoryById(Integer categoryId);
 }

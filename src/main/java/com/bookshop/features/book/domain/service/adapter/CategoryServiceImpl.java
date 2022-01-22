@@ -6,6 +6,7 @@ import com.bookshop.features.book.data.entity.SubcategoryEntity;
 import com.bookshop.features.book.domain.repository.CategoryRepository;
 import com.bookshop.features.book.domain.service.port.CategoryService;
 import com.bookshop.features.book.exception.CategoryNotFound;
+import com.bookshop.features.book.exception.SubcategoryNotFoundException;
 import com.bookshop.features.book.mapper.SubcategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,4 +40,10 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryEntity getCategory(Integer id) {
         return categoryRepository.getCategory(id).orElseThrow(() -> new CategoryNotFound(id));
     }
+
+    @Override
+    public SubcategoryEntity getSubcategoryById(Integer subcategoryId) {
+        return categoryRepository.getSubcategoryById(subcategoryId).orElseThrow(() -> new SubcategoryNotFoundException(subcategoryId));
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.bookshop.features.user.data.entity;
 
+import com.bookshop.features.book.data.entity.BookEntity;
 import com.bookshop.features.book.data.entity.OpinionEntity;
 import com.bookshop.features.order.data.entity.OrderEntity;
 import lombok.*;
@@ -40,6 +41,14 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<OpinionEntity> opinions;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "Favourite_Books",
+            joinColumns = {@JoinColumn(name = "user_Id")},
+            inverseJoinColumns = {@JoinColumn(name = "book_Id")}
+    )
+    private List<BookEntity> favouriteBooks;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
@@ -54,4 +63,6 @@ public class UserEntity {
             addresses.add(address);
         }
     }
+
+
 }

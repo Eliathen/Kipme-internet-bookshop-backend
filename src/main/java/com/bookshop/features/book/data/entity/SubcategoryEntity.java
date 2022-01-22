@@ -4,8 +4,7 @@ package com.bookshop.features.book.data.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -32,6 +31,6 @@ public class SubcategoryEntity {
     @Getter
     @Setter
     @ManyToMany(mappedBy = "subcategories")
-    private Set<BookEntity> books = Collections.emptySet();
+    private List<BookEntity> books;
 
 }

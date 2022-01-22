@@ -16,11 +16,12 @@ public class BookMapper {
                 .bookAuthors(book.getBookAuthors().stream().map(AuthorMapper::mapToAuthorResponse).collect(Collectors.toList()))
                 .bookPublishers(book.getBookPublishers().stream().map(PublisherMapper::mapToPublisherResponse).collect(Collectors.toList()))
                 .bookOpinions((book.getOpinions() != null) ?
-                        book.getOpinions().stream().map(OpinionMapper::mapOpinionEntityToOpinionResponse).collect(Collectors.toList()):
+                        book.getOpinions().stream().map(OpinionMapper::mapOpinionEntityToOpinionResponse).collect(Collectors.toList()) :
                         new ArrayList<>())
-                .category(CategoryMapper.mapToCategoryResponse(book.getCategory()))
+                .category(CategoryMapper.mapToCategoryWithoutSubcategoriesResponse(book.getCategory()))
                 .description(book.getDescription())
                 .isbn(book.getIsbn())
+                .isFavorite(book.isFavorite())
                 .language(LanguageMapper.mapToLanguageResponse(book.getLanguage()))
                 .price(book.getPrice())
                 .publishedYear(book.getPublishedYear())
