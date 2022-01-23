@@ -5,6 +5,8 @@ import com.bookshop.features.book.data.jpa.SaleJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Repository
 public class SaleRepositoryImpl implements SaleRepository {
@@ -12,7 +14,12 @@ public class SaleRepositoryImpl implements SaleRepository {
     private final SaleJpaRepository saleJpaRepository;
 
     @Override
-    public SaleEntity saveSale(SaleEntity saleEntity) {
-        return saleJpaRepository.saveAndFlush(saleEntity);
+    public void saveSale(SaleEntity saleEntity) {
+        saleJpaRepository.saveAndFlush(saleEntity);
+    }
+
+    @Override
+    public List<SaleEntity> getAllSales() {
+        return saleJpaRepository.findAll();
     }
 }

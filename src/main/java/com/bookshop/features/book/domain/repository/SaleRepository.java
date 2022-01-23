@@ -2,8 +2,11 @@ package com.bookshop.features.book.domain.repository;
 
 import com.bookshop.features.book.data.entity.SaleEntity;
 
+import java.util.List;
+
 public interface SaleRepository {
 
-    SaleEntity saveSale(SaleEntity saleEntity);
+    void saveSale(SaleEntity saleEntity);
 
+    List<SaleEntity> getAllSales();
 }

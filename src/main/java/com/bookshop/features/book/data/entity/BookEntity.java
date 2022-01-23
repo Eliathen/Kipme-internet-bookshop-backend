@@ -126,7 +126,6 @@ public class BookEntity {
     public BigDecimal getSalePrice() {
         var currentPrice = price;
         var sales = (getSales() != null) ? getSales().stream()
-                .peek(sale -> sale.setActive(true))
                 .filter(SaleEntity::isActive)
                 .collect(Collectors.toList()) : new ArrayList<SaleEntity>();
         if (!sales.isEmpty()) {
