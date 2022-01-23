@@ -11,6 +11,7 @@ import com.bookshop.features.book.domain.service.port.CategoryService;
 import com.bookshop.features.book.domain.service.port.LanguageService;
 import com.bookshop.features.book.domain.service.port.PublisherService;
 import com.bookshop.features.book.exception.BookNotFound;
+import com.bookshop.features.book.exception.BookWithIsbnAlreadyExists;
 import com.bookshop.features.book.exception.CoverNotFound;
 import com.bookshop.features.book.mapper.BookMapper;
 import com.bookshop.features.book.mapper.OpinionMapper;
@@ -40,6 +41,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookEntity saveBook(SaveBookRequest request, MultipartFile cover) throws IOException {
+        bookRepository.getBookByIsbn(request.getIsbn()).ifPresent((isbn) -> {
+            throw new BookWithIsbnAlreadyExists(request.getIsbn());
+        });
+        BookEntity book = BookMapper.mapToBookEntity(request);
         CoverEntity newCover = getCoverFromMultipartFile(cover);
         LanguageEntity language = languageService.getLanguage(request.getLanguageId());
         List<PublisherEntity> publisherList = publisherService.getPublishers(new LinkedList<>(request.getBookPublishersIds()));
@@ -48,7 +53,6 @@ public class BookServiceImpl implements BookService {
         List<AuthorEntity> authors = request.getBookAuthors().stream().map(
                 author -> authorRepository.getAuthorByNameAndSurnameOrSave(author.getName(), author.getSurname())
         ).collect(Collectors.toList());
-        BookEntity book = BookMapper.mapToBookEntity(request);
         book.setCover(newCover);
         book.setLanguage(language);
         book.setBookPublishers(publisherList);

@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Getter
 public class AddOpinionRequest {
+
     private String description;
 
     @NotBlank(message = "Provide book's rating")

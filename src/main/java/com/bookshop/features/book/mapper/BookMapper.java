@@ -20,6 +20,7 @@ public class BookMapper {
                         new ArrayList<>())
                 .category(CategoryMapper.mapToCategoryWithoutSubcategoriesResponse(book.getCategory()))
                 .description(book.getDescription())
+                .salePrice(book.getSalePrice())
                 .isbn(book.getIsbn())
                 .isFavorite(book.isFavorite())
                 .language(LanguageMapper.mapToLanguageResponse(book.getLanguage()))
