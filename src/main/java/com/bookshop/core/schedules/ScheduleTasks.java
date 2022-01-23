@@ -18,7 +18,7 @@ public class ScheduleTasks {
     private final Logger logger = LoggerFactory.getLogger(ScheduleTasks.class);
 
 
-    @Scheduled(initialDelay = 1000 * 60, cron = "0 0 0 * * *", zone = "Poland") // run every day at midnight
+    @Scheduled(cron = "0 0 0 * * *", zone = "Poland") // run every day at midnight
     public void startEndSales() {
         var sales = saleRepository.getAllSales();
         logger.info("Scheduler invoked");
