@@ -8,8 +8,11 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -35,8 +38,6 @@ public class BookEntity {
     private String description;
 
     private Integer quantity;
-
-    private Integer magazineState;
 
     private BigDecimal price;
 
@@ -106,6 +107,9 @@ public class BookEntity {
         return getOpinions() != null ? getOpinions().stream().mapToDouble(OpinionEntity::getRating).average().orElse(0.0) : (0.0);
     }
 
+    @ManyToMany(mappedBy = "books", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
+    private List<SaleEntity> sales;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -117,5 +121,38 @@ public class BookEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public BigDecimal getSalePrice() {
+        var currentPrice = price;
+        var sales = (getSales() != null) ? getSales().stream()
+                .filter(SaleEntity::isActive)
+                .collect(Collectors.toList()) : new ArrayList<SaleEntity>();
+        if (!sales.isEmpty()) {
+            var sale = resolveSale(currentPrice, sales);
+            currentPrice = resolvePrice(currentPrice, sale.getValue(), sale.getSaleUnit());
+        }
+        return currentPrice.setScale(2, RoundingMode.HALF_EVEN);
+    }
+
+    private SaleEntity resolveSale(BigDecimal currentPrice, List<SaleEntity> sales) {
+        var currentSale = sales.get(0);
+        var theLowerPrice = resolvePrice(currentPrice, currentSale.getValue(), currentSale.getSaleUnit());
+        for (SaleEntity sale : sales) {
+            BigDecimal newPrice = resolvePrice(currentPrice, sale.getValue(), sale.getSaleUnit());
+            if (theLowerPrice.compareTo(newPrice) > 0) {
+                currentPrice = newPrice;
+                currentSale = sale;
+            }
+        }
+        return currentSale;
+    }
+
+    private BigDecimal resolvePrice(BigDecimal price, BigDecimal value, SALE_UNIT type) {
+        if (type == SALE_UNIT.VALUE) {
+            return price.subtract(value);
+        }
+        var saleValue = price.multiply(value.divide(BigDecimal.valueOf(100.00), RoundingMode.HALF_EVEN));
+        return price.subtract(saleValue);
     }
 }

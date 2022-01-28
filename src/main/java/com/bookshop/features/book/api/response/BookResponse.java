@@ -26,6 +26,8 @@ public class BookResponse {
 
     private BigDecimal price;
 
+    private BigDecimal salePrice;
+
     private List<OpinionResponse> bookOpinions;
 
     private List<AuthorResponse> bookAuthors;
@@ -51,6 +53,7 @@ public class BookResponse {
             @JsonProperty("description") String description,
             @JsonProperty("quantity") Integer quantity,
             @JsonProperty("price") BigDecimal price,
+            @JsonProperty("sale_price") BigDecimal salePrice,
             @JsonProperty("opinions") List<OpinionResponse> bookOpinions,
             @JsonProperty("authors") List<AuthorResponse> bookAuthors,
             @JsonProperty("publishers") List<PublisherResponse> bookPublishers,
@@ -66,6 +69,7 @@ public class BookResponse {
         this.description = description;
         this.quantity = quantity;
         this.price = price;
+        this.salePrice = salePrice;
         this.bookOpinions = bookOpinions;
         this.bookAuthors = bookAuthors;
         this.bookPublishers = bookPublishers;
