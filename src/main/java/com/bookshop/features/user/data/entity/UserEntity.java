@@ -1,5 +1,6 @@
 package com.bookshop.features.user.data.entity;
 
+import com.bookshop.features.basket.data.entity.BasketEntity;
 import com.bookshop.features.book.data.entity.BookEntity;
 import com.bookshop.features.book.data.entity.OpinionEntity;
 import com.bookshop.features.order.data.entity.OrderEntity;
@@ -55,6 +56,9 @@ public class UserEntity {
 
     @ManyToMany(mappedBy = "usersAddresses", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AddressEntity> addresses;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private BasketEntity basketEntity;
 
     public void addAddress(AddressEntity address) {
         if (getAddresses() == null) {

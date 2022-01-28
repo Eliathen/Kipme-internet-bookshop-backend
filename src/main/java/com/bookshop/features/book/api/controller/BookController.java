@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +29,8 @@ public class BookController {
 
     @Transactional
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BookResponse> saveBook(@ModelAttribute SaveBookRequest request, @NotNull MultipartFile cover) throws IOException {
+    public ResponseEntity<BookResponse> saveBook(@ModelAttribute SaveBookRequest request,
+                                                 @RequestParam(value = "cover") MultipartFile cover) throws IOException {
         return ResponseEntity.ok(BookMapper.mapToBookResponse(bookService.saveBook(request, cover)));
     }
 
@@ -70,12 +70,14 @@ public class BookController {
         );
     }
 
+    @Transactional
     @PostMapping("/favorites")
     public ResponseEntity<Void> addFavouriteBooks(@RequestBody AddRemoveBookFavouriteRequest request) {
         bookService.addBookToFavorites(request);
         return ResponseEntity.noContent().build();
     }
 
+    @Transactional
     @DeleteMapping("/favorites")
     public ResponseEntity<Void> removeBookFromFavorites(@RequestBody AddRemoveBookFavouriteRequest request) {
         bookService.removeBookFromFavorites(request);
