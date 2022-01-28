@@ -19,7 +19,7 @@ public class AddOpinionRequest {
     @JsonCreator
     public AddOpinionRequest(
             @JsonProperty("description") String description,
-            @JsonProperty("rating") Double rating) {
+            @JsonProperty(value = "rating", required = true) Double rating) {
         this.description = description;
         this.rating = rating;
     }

@@ -39,17 +39,17 @@ public class SaveBookRequest {
 
     @JsonCreator
     public SaveBookRequest(
-            @JsonProperty("title") String title,
-            @JsonProperty("title") String isbn,
-            @JsonProperty("published_year") Integer publishedYear,
-            @JsonProperty("description") String description,
-            @JsonProperty("quantity") Integer quantity,
-            @JsonProperty("price") BigDecimal price,
-            @JsonProperty("authors") List<AuthorRequest> bookAuthors,
-            @JsonProperty("publishers_ids") Set<Integer> bookPublishersIds,
-            @JsonProperty("language_id") Integer languageId,
-            @JsonProperty("category_id") Integer categoryId,
-            @JsonProperty("subcategories_ids") List<Integer> subcategoriesIds
+            @JsonProperty(value = "title", required = true) String title,
+            @JsonProperty(value = "isbn", required = true) String isbn,
+            @JsonProperty(value = "published_year", required = true) Integer publishedYear,
+            @JsonProperty(value = "description", required = true) String description,
+            @JsonProperty(value = "quantity", required = true) Integer quantity,
+            @JsonProperty(value = "price", required = true) BigDecimal price,
+            @JsonProperty(value = "authors", required = true) List<AuthorRequest> bookAuthors,
+            @JsonProperty(value = "publishers_ids", required = true) Set<Integer> bookPublishersIds,
+            @JsonProperty(value = "language_id", required = true) Integer languageId,
+            @JsonProperty(value = "category_id", required = true) Integer categoryId,
+            @JsonProperty(value = "subcategories_ids", required = true) List<Integer> subcategoriesIds
     ) {
         this.title = title;
         this.isbn = isbn;

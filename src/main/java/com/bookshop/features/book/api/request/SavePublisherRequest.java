@@ -18,8 +18,8 @@ public class SavePublisherRequest {
 
     @JsonCreator
     public SavePublisherRequest(
-            @JsonProperty("name") String publisherName,
-            @JsonProperty("city") String publisherCity) {
+            @JsonProperty(value = "name", required = true) String publisherName,
+            @JsonProperty(value = "city", required = true) String publisherCity) {
         this.publisherName = publisherName;
         this.publisherCity = publisherCity;
     }

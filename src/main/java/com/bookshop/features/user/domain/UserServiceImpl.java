@@ -8,6 +8,7 @@ import com.bookshop.features.user.api.request.LoginRequest;
 import com.bookshop.features.user.api.request.RegisterUserRequest;
 import com.bookshop.features.user.data.entity.UserEntity;
 import com.bookshop.features.user.data.entity.UserRole;
+import com.bookshop.features.user.exception.UserAlreadyExists;
 import com.bookshop.features.user.exception.UserNotFoundException;
 import com.bookshop.features.user.mapper.UserMapper;
 import com.bookshop.features.user.validators.EmailValidator;
@@ -31,10 +32,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity register(RegisterUserRequest user) {
+        validateUser(user);
         UserEntity newUser = UserMapper.mapToUser(user);
         newUser.setRole(UserRole.CLIENT);
         newUser.setPassword(passwordEncoder.encode(String.valueOf(newUser.getPassword())).toCharArray());
-        validateUserEmail(user.getEmail());
         return userRepository.saveUser(newUser);
     }
 
@@ -66,7 +67,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUserById(userId).orElseThrow(UserNotFoundException::new);
     }
 
-    private void validateUserEmail(String email) {
-        EmailValidator.validate(email);
+    private void validateUser(RegisterUserRequest userRequest) {
+        EmailValidator.validate(userRequest.getEmail());
+        userRepository.getUserByEmail(userRequest.getEmail()).ifPresent(user -> {
+            throw new UserAlreadyExists();
+        });
     }
+
 }

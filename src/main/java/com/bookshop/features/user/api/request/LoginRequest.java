@@ -19,8 +19,9 @@ public class LoginRequest {
     private char[] password;
 
     @JsonCreator
-    public LoginRequest(@JsonProperty("email") String email,
-                        @JsonProperty("password") char[] password) {
+    public LoginRequest(
+            @JsonProperty(value = "email", required = true) String email,
+            @JsonProperty(value = "password", required = true) char[] password) {
         this.email = email;
         this.password = password;
     }
