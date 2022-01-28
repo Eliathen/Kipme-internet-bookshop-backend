@@ -21,8 +21,8 @@ public class AuthorRequest {
 
     @JsonCreator
     public AuthorRequest(
-            @JsonProperty("name") String name,
-            @JsonProperty("surname") String surname) {
+            @JsonProperty(value = "name", required = true) String name,
+            @JsonProperty(value = "surname", required = true) String surname) {
         this.name = name;
         this.surname = surname;
     }

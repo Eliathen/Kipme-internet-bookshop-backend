@@ -16,7 +16,7 @@ public class SaveLanguageRequest {
     private String name;
 
     @JsonCreator
-    public SaveLanguageRequest(@JsonProperty("name") String name) {
+    public SaveLanguageRequest(@JsonProperty(value = "name", required = true) String name) {
         this.name = name;
     }
 }

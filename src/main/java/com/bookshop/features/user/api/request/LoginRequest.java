@@ -1,5 +1,7 @@
 package com.bookshop.features.user.api.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +18,10 @@ public class LoginRequest {
     @NotEmpty(message = "Provide password")
     private char[] password;
 
-    public LoginRequest(String email, char[] password) {
+    @JsonCreator
+    public LoginRequest(
+            @JsonProperty(value = "email", required = true) String email,
+            @JsonProperty(value = "password", required = true) char[] password) {
         this.email = email;
         this.password = password;
     }

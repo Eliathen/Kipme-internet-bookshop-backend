@@ -4,5 +4,11 @@
       "name": "app.jwtSecret",
       "type": "java.lang.String",
       "description": "Description for app.jwtSecret."
-  }
-] }
+    },
+    {
+      "name": "app.jwtExpirationInMs",
+      "type": "java.lang.String",
+      "description": "Description for app.jwtExpirationInMs."
+    }
+  ]
+}

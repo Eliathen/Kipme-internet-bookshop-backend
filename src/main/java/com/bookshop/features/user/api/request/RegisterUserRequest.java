@@ -1,5 +1,7 @@
 package com.bookshop.features.user.api.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,11 +27,12 @@ public class RegisterUserRequest {
     @NotBlank(message = "Provide phoneNumber")
     private String phoneNumber;
 
-    public RegisterUserRequest(String email,
-                               char[] password,
-                               String name,
-                               String surname,
-                               String phoneNumber
+    @JsonCreator
+    public RegisterUserRequest(@JsonProperty(value = "email", required = true) String email,
+                               @JsonProperty(value = "password", required = true) char[] password,
+                               @JsonProperty(value = "name", required = true) String name,
+                               @JsonProperty(value = "surname", required = true) String surname,
+                               @JsonProperty(value = "phone_number", required = true) String phoneNumber
 
     ) {
         this.email = email;

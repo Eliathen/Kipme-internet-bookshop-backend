@@ -13,7 +13,7 @@ public class AddRemoveBookFavouriteRequest {
     private Long bookId;
 
     @JsonCreator
-    public AddRemoveBookFavouriteRequest(@JsonProperty("book_id") Long bookId) {
+    public AddRemoveBookFavouriteRequest(@JsonProperty(value = "book_id", required = true) Long bookId) {
         this.bookId = bookId;
     }
 }

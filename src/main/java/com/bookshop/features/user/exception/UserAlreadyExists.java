@@ -5,7 +5,11 @@ import com.bookshop.core.exceptions.base.ResourceAlreadyExists;
 
 public class UserAlreadyExists extends ResourceAlreadyExists {
 
-    public UserAlreadyExists(String message) {
+    public UserAlreadyExists() {
         super(ExceptionMessages.USER_ALREADY_EXISTS);
+    }
+
+    public UserAlreadyExists(String message) {
+        super(message);
     }
 }
