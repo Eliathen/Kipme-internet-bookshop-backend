@@ -1,5 +1,6 @@
 package com.bookshop.features.book.domain.service.adapter;
 
+import com.bookshop.core.config.CacheConfig;
 import com.bookshop.features.book.api.request.AddOpinionRequest;
 import com.bookshop.features.book.api.request.AddRemoveBookFavouriteRequest;
 import com.bookshop.features.book.api.request.SaveBookRequest;
@@ -38,6 +39,8 @@ public class BookServiceImpl implements BookService {
     private final CategoryService categoryService;
     private final UserService userService;
     private final UserRepository userRepository;
+    private final CacheConfig cacheConfig;
+
 
     @Override
     public BookEntity saveBook(SaveBookRequest request, MultipartFile cover) throws IOException {
@@ -71,7 +74,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookEntity getBookById(Long id) {
-        return markBookIfFavorite(bookRepository.getBookById(id).orElseThrow(() -> new BookNotFound(id)), userService.getCurrentUser().getId());
+        UserEntity currentUser = userService.getCurrentUser();
+        Optional<BookEntity> book = bookRepository.getBookById(id);
+        if (book.isPresent() && cacheConfig.isAvailable()) {
+            bookRepository.saveBookIdForUser(currentUser.getId(), book.get().getId());
+        }
+        return markBookIfFavorite(book.orElseThrow(() -> new BookNotFound(id)), currentUser.getId());
     }
 
     @Override
@@ -135,6 +143,16 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookEntity> getBooksBySubcategoryId(Integer categoryId) {
         return markAllBooksIfFavorite(categoryService.getSubcategoryById(categoryId).getBooks());
+    }
+
+    @Override
+    public List<BookEntity> getRecentViewBooks() {
+        return bookRepository.getLastViewsBooksByUser(userService.getCurrentUser().getId());
+    }
+
+    @Override
+    public List<BookEntity> getTopBooks() {
+        return bookRepository.getTopBooks();
     }
 
     private void addBookToFavorites(UserEntity user, BookEntity book) {

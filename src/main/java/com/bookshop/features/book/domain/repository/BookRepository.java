@@ -17,4 +17,10 @@ public interface BookRepository {
     List<BookEntity> findByTitleOrAuthorNameOrAuthorSurname(String query);
 
     Optional<BookEntity> getBookByIsbn(String isbn);
+
+    void saveBookIdForUser(Long userId, Long bookId);
+
+    List<BookEntity> getLastViewsBooksByUser(Long userId);
+
+    List<BookEntity> getTopBooks();
 }

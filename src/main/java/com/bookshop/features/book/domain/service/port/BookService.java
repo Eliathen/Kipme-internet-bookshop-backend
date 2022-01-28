@@ -34,4 +34,8 @@ public interface BookService {
     List<BookEntity> getBooksByCategoryId(Integer categoryId);
 
     List<BookEntity> getBooksBySubcategoryId(Integer categoryId);
+
+    List<BookEntity> getRecentViewBooks();
+
+    List<BookEntity> getTopBooks();
 }

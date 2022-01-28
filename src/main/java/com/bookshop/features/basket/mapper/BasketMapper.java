@@ -27,7 +27,7 @@ public class BasketMapper {
                 .id(entity.getId())
                 .price(entity.getBook().getPrice())
                 .quantity(entity.getQuantity())
-                .bookResponse(BookMapper.mapToBookResponse(entity.getBook()))
+                .bookResponse(BookMapper.mapToBookBaseResponse(entity.getBook()))
                 .build();
     }
 
