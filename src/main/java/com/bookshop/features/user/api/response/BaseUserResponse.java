@@ -1,5 +1,7 @@
 package com.bookshop.features.user.api.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +11,15 @@ import lombok.Setter;
 @Builder
 public class BaseUserResponse {
 
-    protected String name;
+    private String name;
 
-    protected String surname;
+    private String surname;
 
+    @JsonCreator
+    public BaseUserResponse(
+            @JsonProperty("name") String name,
+            @JsonProperty("surname") String surname) {
+        this.name = name;
+        this.surname = surname;
+    }
 }

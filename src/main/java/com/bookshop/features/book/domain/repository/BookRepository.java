@@ -15,4 +15,6 @@ public interface BookRepository {
     void saveOpinion(OpinionEntity opinion);
 
     List<BookEntity> findByTitleOrAuthorNameOrAuthorSurname(String query);
+
+    Optional<BookEntity> getBookByIsbn(String isbn);
 }

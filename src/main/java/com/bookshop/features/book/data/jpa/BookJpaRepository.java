@@ -18,4 +18,5 @@ public interface BookJpaRepository extends JpaRepository<BookEntity, Long> {
             "OR a.name = ?1 OR a.surname = ?1", nativeQuery = true)
     List<BookEntity> getBookEntityByTitleQuery(String query);
 
+    Optional<BookEntity> getBookEntityByIsbn(String isbn);
 }

@@ -25,4 +25,10 @@ public class ExceptionMessages {
     public static final String ADDRESS_NOT_FOUND = "Address not found";
 
     public static final String SUBCATEGORY_WITH_ID_NOT_FOUND = "Subcategory with id = %s not found";
+
+    public static final String INVALID_SALE_VALUE = "Invalid sale's value";
+
+    public static final String INVALID_SALE_UNIT_CATEGORY = "Category's sale can take only percent value";
+
+    public static final String BOOK_WITH_ID_ALREADY_EXISTS = "Book with isbn = %s already exists";
 }

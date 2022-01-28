@@ -41,5 +41,8 @@ public class BookRepositoryImpl implements BookRepository {
         return new ArrayList<>(result);
     }
 
-
+    @Override
+    public Optional<BookEntity> getBookByIsbn(String isbn) {
+        return jpa.getBookEntityByIsbn(isbn);
+    }
 }
