@@ -120,7 +120,6 @@ public class BookServiceImpl implements BookService {
         userRepository.saveUser(user);
     }
 
-
     @Override
     public List<BookEntity> searchBooks(String query) {
         Set<BookEntity> result = new HashSet<>();
