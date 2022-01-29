@@ -10,11 +10,19 @@ import java.util.Optional;
 public interface BookRepository {
     BookEntity saveBook(BookEntity book);
 
-    Optional<BookEntity> getBookById(Long id);
+    Optional<BookEntity> getAvailableBookById(Long id);
 
     void saveOpinion(OpinionEntity opinion);
 
     List<BookEntity> findByTitleOrAuthorNameOrAuthorSurname(String query);
 
     Optional<BookEntity> getBookByIsbn(String isbn);
+
+    void saveBookIdForUser(Long userId, Long bookId);
+
+    List<BookEntity> getLastViewsBooksByUser(Long userId);
+
+    List<BookEntity> getTopBooks();
+
+    List<BookEntity> getNewBooks();
 }

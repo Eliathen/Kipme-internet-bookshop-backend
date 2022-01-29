@@ -1,4 +1,4 @@
-package com.bookshop.core.schedules;
+package com.bookshop.core.scheduler;
 
 
 import com.bookshop.features.book.domain.repository.SaleRepository;

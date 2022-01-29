@@ -4,6 +4,7 @@ package com.bookshop.features.book.api.controller;
 import com.bookshop.features.book.api.request.AddOpinionRequest;
 import com.bookshop.features.book.api.request.AddRemoveBookFavouriteRequest;
 import com.bookshop.features.book.api.request.SaveBookRequest;
+import com.bookshop.features.book.api.response.BookBaseResponse;
 import com.bookshop.features.book.api.response.BookResponse;
 import com.bookshop.features.book.data.entity.CoverEntity;
 import com.bookshop.features.book.domain.service.port.BookService;
@@ -62,10 +63,10 @@ public class BookController {
     }
 
     @GetMapping("/favorites")
-    public ResponseEntity<List<BookResponse>> getFavouriteBooks() {
+    public ResponseEntity<List<BookBaseResponse>> getFavouriteBooks() {
         return ResponseEntity.ok(bookService.getFavouriteBooks()
                 .stream()
-                .map(BookMapper::mapToBookResponse)
+                .map(BookMapper::mapToBookBaseResponse)
                 .collect(Collectors.toList())
         );
     }
@@ -85,23 +86,43 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<BookResponse>> searchBook(
+    public ResponseEntity<List<BookBaseResponse>> searchBook(
             @RequestParam(name = "q", required = false) String query
     ) {
         return ResponseEntity.ok(
                 bookService.searchBooks(query)
-                        .stream().map(BookMapper::mapToBookResponse)
+                        .stream().map(BookMapper::mapToBookBaseResponse)
                         .collect(Collectors.toList())
         );
     }
 
     @GetMapping("/categories/{categoryId}")
-    public ResponseEntity<List<BookResponse>> getBooksByCategoryId(@PathVariable("categoryId") Integer categoryId) {
-        return ResponseEntity.ok(bookService.getBooksByCategoryId(categoryId).stream().map(BookMapper::mapToBookResponse).collect(Collectors.toList()));
+    public ResponseEntity<List<BookBaseResponse>> getBooksByCategoryId(@PathVariable("categoryId") Integer categoryId) {
+        return ResponseEntity.ok(bookService.getBooksByCategoryId(categoryId).stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
     }
 
     @GetMapping("/subcategories/{subcategoryId}")
-    public ResponseEntity<List<BookResponse>> getBooksBySubcategoryId(@PathVariable("subcategoryId") Integer categoryId) {
-        return ResponseEntity.ok(bookService.getBooksBySubcategoryId(categoryId).stream().map(BookMapper::mapToBookResponse).collect(Collectors.toList()));
+    public ResponseEntity<List<BookBaseResponse>> getBooksBySubcategoryId(@PathVariable("subcategoryId") Integer categoryId) {
+        return ResponseEntity.ok(bookService.getBooksBySubcategoryId(categoryId).stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/recent")
+    public ResponseEntity<List<BookBaseResponse>> getRecentViewBooks() {
+        return ResponseEntity.ok(bookService.getRecentViewBooks().stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/top")
+    public ResponseEntity<List<BookBaseResponse>> getTopBooks() {
+        return ResponseEntity.ok(bookService.getTopBooks().stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/best-offer")
+    public ResponseEntity<List<BookBaseResponse>> getBooksWithBestOffer() {
+        return ResponseEntity.ok(bookService.getBookWithBestOffer().stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/new")
+    public ResponseEntity<List<BookBaseResponse>> getNewestBooks() {
+        return ResponseEntity.ok(bookService.getNewBooks().stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
     }
 }

@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -26,4 +27,7 @@ public class SubcategoryEntity {
     @ManyToMany(mappedBy = "subcategories")
     private List<BookEntity> books;
 
+    public List<BookEntity> getAvailableBooks() {
+        return books.stream().filter(BookEntity::isFavorite).collect(Collectors.toList());
+    }
 }

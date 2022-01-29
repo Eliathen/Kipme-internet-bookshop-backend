@@ -1,11 +1,13 @@
 package com.bookshop.features.book.domain.service.adapter;
 
+import com.bookshop.core.config.CacheConfig;
 import com.bookshop.features.book.api.request.AddOpinionRequest;
 import com.bookshop.features.book.api.request.AddRemoveBookFavouriteRequest;
 import com.bookshop.features.book.api.request.SaveBookRequest;
 import com.bookshop.features.book.data.entity.*;
 import com.bookshop.features.book.domain.repository.AuthorRepository;
 import com.bookshop.features.book.domain.repository.BookRepository;
+import com.bookshop.features.book.domain.repository.SaleRepository;
 import com.bookshop.features.book.domain.service.port.BookService;
 import com.bookshop.features.book.domain.service.port.CategoryService;
 import com.bookshop.features.book.domain.service.port.LanguageService;
@@ -13,6 +15,7 @@ import com.bookshop.features.book.domain.service.port.PublisherService;
 import com.bookshop.features.book.exception.BookNotFound;
 import com.bookshop.features.book.exception.BookWithIsbnAlreadyExists;
 import com.bookshop.features.book.exception.CoverNotFound;
+import com.bookshop.features.book.exception.EmptyCover;
 import com.bookshop.features.book.mapper.BookMapper;
 import com.bookshop.features.book.mapper.OpinionMapper;
 import com.bookshop.features.user.api.UserService;
@@ -24,8 +27,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -33,11 +38,16 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final UserRepository userRepository;
+    private final SaleRepository saleRepository;
+
     private final LanguageService languageService;
     private final PublisherService publisherService;
     private final CategoryService categoryService;
     private final UserService userService;
-    private final UserRepository userRepository;
+
+    private final CacheConfig cacheConfig;
+
 
     @Override
     public BookEntity saveBook(SaveBookRequest request, MultipartFile cover) throws IOException {
@@ -53,6 +63,8 @@ public class BookServiceImpl implements BookService {
         List<AuthorEntity> authors = request.getBookAuthors().stream().map(
                 author -> authorRepository.getAuthorByNameAndSurnameOrSave(author.getName(), author.getSurname())
         ).collect(Collectors.toList());
+        book.setAddedAt(LocalDateTime.now());
+        book.setIsAvailable(true);
         book.setCover(newCover);
         book.setLanguage(language);
         book.setBookPublishers(publisherList);
@@ -71,12 +83,17 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookEntity getBookById(Long id) {
-        return markBookIfFavorite(bookRepository.getBookById(id).orElseThrow(() -> new BookNotFound(id)), userService.getCurrentUser().getId());
+        UserEntity currentUser = userService.getCurrentUser();
+        Optional<BookEntity> book = bookRepository.getAvailableBookById(id);
+        if (book.isPresent() && cacheConfig.isAvailable()) {
+            bookRepository.saveBookIdForUser(currentUser.getId(), book.get().getId());
+        }
+        return markBookIfFavorite(book.orElseThrow(() -> new BookNotFound(id)), currentUser.getId());
     }
 
     @Override
     public CoverEntity getCoverByBookId(Long bookId) {
-        BookEntity book = bookRepository.getBookById(bookId).orElseThrow(CoverNotFound::new);
+        BookEntity book = bookRepository.getAvailableBookById(bookId).orElseThrow(CoverNotFound::new);
         return book.getCover();
     }
 
@@ -129,12 +146,38 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookEntity> getBooksByCategoryId(Integer categoryId) {
-        return markAllBooksIfFavorite(categoryService.getCategory(categoryId).getBooks());
+        return markAllBooksIfFavorite(categoryService.getCategory(categoryId).getAvailableBooks());
     }
 
     @Override
     public List<BookEntity> getBooksBySubcategoryId(Integer categoryId) {
-        return markAllBooksIfFavorite(categoryService.getSubcategoryById(categoryId).getBooks());
+        return markAllBooksIfFavorite(categoryService.getSubcategoryById(categoryId).getAvailableBooks());
+    }
+
+    @Override
+    public List<BookEntity> getRecentViewBooks() {
+        return bookRepository.getLastViewsBooksByUser(userService.getCurrentUser().getId());
+    }
+
+    @Override
+    public List<BookEntity> getTopBooks() {
+        return bookRepository.getTopBooks();
+    }
+
+    @Override
+    public List<BookEntity> getBookWithBestOffer() {
+        var sales = saleRepository.getActiveSales();
+        return sales.stream().flatMap(saleEntity -> Stream.of(saleEntity.getAvailableBooks()))
+                .flatMap(Collection::stream)
+                .distinct()
+                .sorted(Comparator.comparing(BookEntity::getSalePrice))
+                .limit(10)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookEntity> getNewBooks() {
+        return bookRepository.getNewBooks();
     }
 
     private void addBookToFavorites(UserEntity user, BookEntity book) {
@@ -149,6 +192,7 @@ public class BookServiceImpl implements BookService {
     }
 
     private CoverEntity getCoverFromMultipartFile(MultipartFile cover) throws IOException {
+        if (cover.getBytes().length == 0) throw new EmptyCover();
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(cover.getOriginalFilename()));
         return CoverEntity.builder()
                 .name(fileName)

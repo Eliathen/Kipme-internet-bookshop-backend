@@ -1,6 +1,6 @@
 package com.bookshop.features.basket.api.response;
 
-import com.bookshop.features.book.api.response.BookResponse;
+import com.bookshop.features.book.api.response.BookBaseResponse;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,7 +12,7 @@ public class BasketItemResponse {
 
     private Long id;
 
-    private BookResponse bookResponse;
+    private BookBaseResponse bookResponse;
 
     private Integer quantity;
 

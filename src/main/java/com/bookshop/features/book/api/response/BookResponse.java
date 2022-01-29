@@ -44,6 +44,8 @@ public class BookResponse {
 
     private Double rating;
 
+    private Integer numberOfRatings;
+
     @JsonCreator
     public BookResponse(
             @JsonProperty("id") Long id,
@@ -61,7 +63,9 @@ public class BookResponse {
             @JsonProperty("category") CategoryResponseWithoutSubcategories category,
             @JsonProperty("subcategories") List<SubcategoryResponse> subcategories,
             @JsonProperty("is_favorite") boolean isFavorite,
-            @JsonProperty("rating") Double rating) {
+            @JsonProperty("rating") Double rating,
+            @JsonProperty("number_of_ratings") Integer numberOfRatings
+    ) {
         this.id = id;
         this.title = title;
         this.isbn = isbn;
@@ -78,5 +82,6 @@ public class BookResponse {
         this.subcategories = subcategories;
         this.isFavorite = isFavorite;
         this.rating = rating;
+        this.numberOfRatings = numberOfRatings;
     }
 }

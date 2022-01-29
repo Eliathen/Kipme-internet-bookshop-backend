@@ -4,10 +4,13 @@ import com.bookshop.features.book.data.entity.BookEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public interface BookJpaRepository extends JpaRepository<BookEntity, Long> {
+
+    Optional<BookEntity> getBookEntityByIdAndIsAvailable(Long id, boolean isAvailable);
 
     Optional<BookEntity> getBookEntityById(Long id);
 
@@ -19,4 +22,13 @@ public interface BookJpaRepository extends JpaRepository<BookEntity, Long> {
     List<BookEntity> getBookEntityByTitleQuery(String query);
 
     Optional<BookEntity> getBookEntityByIsbn(String isbn);
+
+    @Query(value = "SELECT * from BOOK b WHERE b.ID IN " +
+            "(" +
+            "SELECT b.ID FROM BOOK b join OPINION O on b.ID = O.BOOK_ID " +
+            "GROUP BY (b.ID) ORDER BY AVG(o.RATING) DESC LIMIT 10" +
+            ")", nativeQuery = true)
+    List<BookEntity> getTopBooks();
+
+    List<BookEntity> findBookEntityByAddedAtAfter(LocalDateTime dateTime);
 }
