@@ -9,6 +9,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -40,6 +41,12 @@ public class BookEntity {
     private Integer quantity;
 
     private BigDecimal price;
+
+    @Column(name = "ADDED_AT", nullable = false)
+    private LocalDateTime addedAt;
+
+    @Column(name = "IS_AVAILABLE", nullable = false)
+    private Boolean isAvailable;
 
     @ManyToMany(
             cascade = CascadeType.ALL

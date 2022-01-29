@@ -115,4 +115,14 @@ public class BookController {
     public ResponseEntity<List<BookBaseResponse>> getTopBooks() {
         return ResponseEntity.ok(bookService.getTopBooks().stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
     }
+
+    @GetMapping("/best-offer")
+    public ResponseEntity<List<BookBaseResponse>> getBooksWithBestOffer() {
+        return ResponseEntity.ok(bookService.getBookWithBestOffer().stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/new")
+    public ResponseEntity<List<BookBaseResponse>> getNewestBooks() {
+        return ResponseEntity.ok(bookService.getNewBooks().stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
+    }
 }

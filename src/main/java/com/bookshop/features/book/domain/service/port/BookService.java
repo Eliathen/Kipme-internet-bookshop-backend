@@ -38,4 +38,8 @@ public interface BookService {
     List<BookEntity> getRecentViewBooks();
 
     List<BookEntity> getTopBooks();
+
+    List<BookEntity> getBookWithBestOffer();
+
+    List<BookEntity> getNewBooks();
 }

@@ -11,6 +11,7 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Repository;
 import redis.clients.jedis.Jedis;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,8 +30,8 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public Optional<BookEntity> getBookById(Long id) {
-        return jpa.getBookEntityById(id);
+    public Optional<BookEntity> getAvailableBookById(Long id) {
+        return jpa.getBookEntityByIdAndIsAvailable(id, true);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class BookRepositoryImpl implements BookRepository {
         for (String s : query.split(" ")) {
             result.addAll(jpa.getBookEntityByTitleQuery(s));
         }
-        return new ArrayList<>(result);
+        return result.stream().filter(BookEntity::getIsAvailable).distinct().collect(Collectors.toList());
     }
 
     @Override
@@ -79,13 +80,20 @@ public class BookRepositoryImpl implements BookRepository {
         if (result != null) {
             System.out.println(result);
             List<String> ids = new ArrayList<>(Arrays.asList(objectMapper.readValue(result, String[].class)));
-            return jpa.findAllById(ids.stream().mapToLong(Long::valueOf).boxed().collect(Collectors.toList()));
+            return jpa.findAllById(ids.stream().mapToLong(Long::valueOf).boxed().collect(Collectors.toList()))
+                    .stream().filter(BookEntity::getIsAvailable)
+                    .collect(Collectors.toList());
         }
         return Collections.emptyList();
     }
 
     @Override
     public List<BookEntity> getTopBooks() {
-        return jpa.getTopBooks();
+        return jpa.getTopBooks().stream().filter(BookEntity::getIsAvailable).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookEntity> getNewBooks() {
+        return jpa.findBookEntityByAddedAtAfter(LocalDateTime.now().minusDays(7));
     }
 }

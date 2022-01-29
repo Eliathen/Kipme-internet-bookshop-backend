@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface BookRepository {
     BookEntity saveBook(BookEntity book);
 
-    Optional<BookEntity> getBookById(Long id);
+    Optional<BookEntity> getAvailableBookById(Long id);
 
     void saveOpinion(OpinionEntity opinion);
 
@@ -23,4 +23,6 @@ public interface BookRepository {
     List<BookEntity> getLastViewsBooksByUser(Long userId);
 
     List<BookEntity> getTopBooks();
+
+    List<BookEntity> getNewBooks();
 }

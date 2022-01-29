@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -49,5 +50,9 @@ public class SaleEntity {
             return;
         }
         books.add(book);
+    }
+
+    public List<BookEntity> getAvailableBooks() {
+        return books.stream().filter(BookEntity::getIsAvailable).collect(Collectors.toList());
     }
 }

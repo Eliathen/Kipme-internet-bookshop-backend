@@ -4,10 +4,13 @@ import com.bookshop.features.book.data.entity.BookEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public interface BookJpaRepository extends JpaRepository<BookEntity, Long> {
+
+    Optional<BookEntity> getBookEntityByIdAndIsAvailable(Long id, boolean isAvailable);
 
     Optional<BookEntity> getBookEntityById(Long id);
 
@@ -26,4 +29,6 @@ public interface BookJpaRepository extends JpaRepository<BookEntity, Long> {
             "GROUP BY (b.ID) ORDER BY AVG(o.RATING) DESC LIMIT 10" +
             ")", nativeQuery = true)
     List<BookEntity> getTopBooks();
+
+    List<BookEntity> findBookEntityByAddedAtAfter(LocalDateTime dateTime);
 }

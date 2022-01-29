@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @Service
@@ -41,6 +42,11 @@ public class SaleServiceImpl implements SaleService {
             sale.addBook(bookEntity);
         }
         saleRepository.saveSale(sale);
+    }
+
+    @Override
+    public List<SaleEntity> getAvailableSales() {
+        return saleRepository.getActiveSales();
     }
 
     private void validateSale(SaleEntity sale, BookEntity book) {

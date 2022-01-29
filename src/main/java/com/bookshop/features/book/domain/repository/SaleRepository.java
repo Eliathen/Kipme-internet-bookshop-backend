@@ -9,4 +9,6 @@ public interface SaleRepository {
     void saveSale(SaleEntity saleEntity);
 
     List<SaleEntity> getAllSales();
+
+    List<SaleEntity> getActiveSales();
 }
