@@ -9,6 +9,8 @@ import com.bookshop.features.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ public class UserController {
 
     private final UserService userService;
 
+    @Transactional
     @PostMapping("/signup")
     public ResponseEntity<UserResponse> register(@RequestBody @Valid RegisterUserRequest request) {
         return new ResponseEntity<>(
@@ -37,5 +40,15 @@ public class UserController {
                 LoginResponse.of(
                         userService.getUserByEmail(request.getEmail()), userService.getJwt(request)),
                 HttpStatus.OK);
+    }
+
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("admins/signup")
+    public ResponseEntity<UserResponse> registerAdmin(@RequestBody @Valid RegisterUserRequest request) {
+        return new ResponseEntity<>(
+                UserMapper.mapToUserResponse(userService.registerAdmin(request)),
+                HttpStatus.CREATED
+        );
     }
 }

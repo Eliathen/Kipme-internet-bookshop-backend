@@ -13,14 +13,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity(name = "Procurement")
 public class OrderEntity {
 
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -29,39 +29,26 @@ public class OrderEntity {
     )
     private UUID id;
 
-    @Getter
-    @Setter
     private LocalDateTime orderDate;
 
-    @Getter
-    @Setter
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private UserEntity user;
 
-    @Getter
-    @Setter
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private AddressEntity address;
 
-    @Getter
-    @Setter
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "order")
     private List<OrderPositionEntity> orderPositions = new LinkedList<>();
 
-    @Getter
-    @Setter
+
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "payment_id")
     private PaymentEntity payment;
 
-    @Getter
-    @Setter
     @ManyToOne
     @JoinColumn(name = "delivery_type_id")
-    private DeliveryTypeEntity deliveryType;
+    private DeliveryMethodEntity deliveryType;
 
-    @Getter
-    @Setter
     @Enumerated(EnumType.STRING)
     private OrderStatusEntity orderStatus;
 

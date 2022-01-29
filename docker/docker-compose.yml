@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+  mariadb:
+    image: mariadb:latest
+    environment:
+      #      MYSQL_ROOT_USER: 'root'
+      #      MYSQL_ROOT_PASSWORD: 'secret'
+      MYSQL_USER: 'kipme'
+      MYSQL_PASSWORD: 'kipme_secret'
+      MYSQL_DATABASE: 'KIPME'
+    container_name: "mariadb"
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+  redis:
+    image: redis:latest
+    container_name: "redis-cache"
+    ports:
+      - "6379:6379"

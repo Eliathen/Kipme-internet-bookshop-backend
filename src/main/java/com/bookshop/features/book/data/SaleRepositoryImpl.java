@@ -26,6 +26,6 @@ public class SaleRepositoryImpl implements SaleRepository {
 
     @Override
     public List<SaleEntity> getActiveSales() {
-        return saleJpaRepository.findAllByActive(true);
+        return saleJpaRepository.findAllByIsActiveIsTrue();
     }
 }

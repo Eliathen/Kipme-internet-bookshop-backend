@@ -3,7 +3,6 @@ package com.bookshop.core.security;
 import com.bookshop.features.user.domain.UserRepository;
 import com.bookshop.features.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.usertype.UserType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +34,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         return (UserDetailsImpl) authentication.getPrincipal();
     }
-
 
     public boolean isCurrentUserAdmin() {
         return currentUser().getUserRole().equals(UserRole.ADMIN);

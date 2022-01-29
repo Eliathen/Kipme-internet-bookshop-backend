@@ -1,5 +1,6 @@
 package com.bookshop.features.user.data.entity;
 
+import com.bookshop.core.security.UserRole;
 import com.bookshop.features.basket.data.entity.BasketEntity;
 import com.bookshop.features.book.data.entity.BookEntity;
 import com.bookshop.features.book.data.entity.OpinionEntity;

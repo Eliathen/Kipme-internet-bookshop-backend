@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDateTime;
 
@@ -27,6 +28,13 @@ public class AuthExceptionAdvice {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorInfo> badCredentials(BadCredentialsException exception) {
+        logger.error(exception.getMessage());
+        ErrorInfo errorInfo = new ErrorInfo(LocalDateTime.now(), ExceptionMessages.INVALID_EMAIL_ADDRESS_OR_PASSWORD);
+        return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpClientErrorException.Unauthorized.class)
+    public ResponseEntity<ErrorInfo> badCredentials(HttpClientErrorException.Unauthorized exception) {
         logger.error(exception.getMessage());
         ErrorInfo errorInfo = new ErrorInfo(LocalDateTime.now(), ExceptionMessages.INVALID_EMAIL_ADDRESS_OR_PASSWORD);
         return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);

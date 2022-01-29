@@ -31,4 +31,6 @@ public class ExceptionMessages {
     public static final String INVALID_SALE_UNIT_CATEGORY = "Category's sale can take only percent value";
 
     public static final String BOOK_WITH_ID_ALREADY_EXISTS = "Book with isbn = %s already exists";
+
+    public static final String EMPTY_COVER = "Empty cover";
 }

@@ -8,6 +8,8 @@ import com.bookshop.features.book.mapper.PublisherMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +28,8 @@ public class PublisherController {
         return ResponseEntity.ok(service.getPublishers().stream().map(PublisherMapper::mapToPublisherResponse).collect(Collectors.toList()));
     }
 
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public ResponseEntity<PublisherResponse> savePublisher(@RequestBody SavePublisherRequest request) {
         return new ResponseEntity<>(PublisherMapper.mapToPublisherResponse(service.savePublisher(PublisherMapper.mapToPublisher(request))), HttpStatus.CREATED);
