@@ -6,16 +6,19 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
+
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Entity(name = "Payment")
+@Entity(name = "PAYMENT")
 public class PaymentEntity {
 
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -24,25 +27,19 @@ public class PaymentEntity {
     )
     private UUID id;
 
-    @Getter
-    @Setter
     private BigDecimal amount;
 
-    @Getter
-    @Setter
+    private LocalDateTime createdAt;
+
     @OneToOne(mappedBy = "payment")
     private OrderEntity order;
 
+    @ManyToOne()
+    @Enumerated(value = EnumType.STRING)
+    @JoinColumn(name = "PAYMENT_ID", nullable = false)
+    private PaymentMethodEntity paymentMethodEntity;
 
-    @Getter
-    @Setter
     @Enumerated(EnumType.STRING)
-    private PaymentTypeEntity paymentType;
-
-    @Getter
-    @Setter
-    @Enumerated(EnumType.STRING)
-    private PaymentStatusEntity paymentStatus;
-
+    private PaymentStatus paymentStatus;
 
 }

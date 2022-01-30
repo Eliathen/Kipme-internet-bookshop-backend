@@ -48,7 +48,6 @@ public class BookServiceImpl implements BookService {
 
     private final CacheConfig cacheConfig;
 
-
     @Override
     public BookEntity saveBook(SaveBookRequest request, MultipartFile cover) throws IOException {
         bookRepository.getBookByIsbn(request.getIsbn()).ifPresent((isbn) -> {
@@ -170,7 +169,7 @@ public class BookServiceImpl implements BookService {
         return sales.stream().flatMap(saleEntity -> Stream.of(saleEntity.getAvailableBooks()))
                 .flatMap(Collection::stream)
                 .distinct()
-                .sorted(Comparator.comparing(BookEntity::getSalePrice))
+                .sorted(Comparator.comparing(BookEntity::getCurrentPrice))
                 .limit(10)
                 .collect(Collectors.toList());
     }
@@ -192,7 +191,7 @@ public class BookServiceImpl implements BookService {
     }
 
     private CoverEntity getCoverFromMultipartFile(MultipartFile cover) throws IOException {
-        if (cover.getBytes().length == 0) throw new EmptyCover();
+        if (cover == null) throw new EmptyCover();
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(cover.getOriginalFilename()));
         return CoverEntity.builder()
                 .name(fileName)

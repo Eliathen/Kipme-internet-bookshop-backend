@@ -11,7 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
-@Entity(name = "Publisher")
+@Entity(name = "PUBLISHER")
 public class PublisherEntity {
 
     @Getter

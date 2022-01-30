@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Entity(name = "Cover")
+@Entity(name = "COVER")
 public class CoverEntity {
 
     @Id
@@ -22,7 +22,7 @@ public class CoverEntity {
 
     @Lob
     @Type(type = "org.hibernate.type.BinaryType")
-    @Column(columnDefinition="BLOB")
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] data;
 
     private String type;

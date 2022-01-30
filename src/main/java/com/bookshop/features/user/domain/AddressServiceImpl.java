@@ -51,8 +51,6 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressEntity getAddressById(Long addressId) {
-        return userService.getCurrentUser().getAddresses()
-                .stream().filter(address -> address.getId().equals(addressId))
-                .findFirst().orElseThrow(AddressNotFound::new);
+        return addressRepository.getAddressById(addressId).orElseThrow(AddressNotFound::new);
     }
 }

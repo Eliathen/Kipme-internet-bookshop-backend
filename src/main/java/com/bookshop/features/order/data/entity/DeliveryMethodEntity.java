@@ -1,10 +1,7 @@
 package com.bookshop.features.order.data.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,23 +9,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 
+@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "DeliveryType")
-public class DeliveryTypeEntity {
+@Entity(name = "DELIVERY_METHOD")
+public class DeliveryMethodEntity {
 
-
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Getter
-    @Setter
     private String name;
 
-    @Getter
-    @Setter
     private BigDecimal price;
 }

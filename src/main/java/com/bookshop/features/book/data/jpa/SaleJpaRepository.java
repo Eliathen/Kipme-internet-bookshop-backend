@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SaleJpaRepository extends JpaRepository<SaleEntity, Long> {
 
-    List<SaleEntity> findAllByActive(boolean isActive);
+    List<SaleEntity> findAllByIsActiveIsTrue();
 }

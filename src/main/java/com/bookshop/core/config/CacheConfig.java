@@ -2,6 +2,7 @@ package com.bookshop.core.config;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import java.net.URI;
 
 @Configuration
 @Getter
+@Setter
 @RequiredArgsConstructor
 public class CacheConfig {
 

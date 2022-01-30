@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,10 +29,10 @@ public class BookController {
 
     private final BookService bookService;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BookResponse> saveBook(@ModelAttribute SaveBookRequest request,
-                                                 @RequestParam(value = "cover") MultipartFile cover) throws IOException {
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<BookResponse> saveBook(@ModelAttribute SaveBookRequest request, MultipartFile cover) throws IOException {
         return ResponseEntity.ok(BookMapper.mapToBookResponse(bookService.saveBook(request, cover)));
     }
 
@@ -55,9 +56,10 @@ public class BookController {
         return ResponseEntity.noContent().build();
     }
 
+
     @Transactional
     @DeleteMapping("/{bookId}/opinions/{opinionId}")
-    public ResponseEntity<Void> removeBook(@PathVariable("bookId") Long bookId, @PathVariable("opinionId") Integer opinionId) {
+    public ResponseEntity<Void> removeOpinion(@PathVariable("bookId") Long bookId, @PathVariable("opinionId") Integer opinionId) {
         bookService.removeOpinion(bookId, opinionId);
         return ResponseEntity.noContent().build();
     }
