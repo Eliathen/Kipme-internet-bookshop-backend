@@ -48,5 +48,9 @@ public class BasketEntity {
     public BigDecimal getBasketFullPrice() {
         return (items != null) ? items.stream().map(BasketItemEntity::getSumPrice).reduce(BigDecimal.ZERO, BigDecimal::add) : BigDecimal.ZERO;
     }
+
+    public void clearBasket() {
+        items.clear();
+    }
 }
 

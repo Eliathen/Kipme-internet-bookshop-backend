@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "Book")
+@Entity(name = "BOOK")
 public class BookEntity {
 
     @Id
@@ -130,7 +130,7 @@ public class BookEntity {
         return Objects.hash(id);
     }
 
-    public BigDecimal getSalePrice() {
+    public BigDecimal getCurrentPrice() {
         var currentPrice = price;
         var sales = (getSales() != null) ? getSales().stream()
                 .filter(SaleEntity::isActive)

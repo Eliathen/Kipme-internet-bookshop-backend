@@ -22,7 +22,7 @@ public class PaymentMethodEntity {
     private String name;
 
     @Enumerated(value = EnumType.STRING)
-    private PaymentTypeEntity type;
+    private PaymentType type;
 
     @OneToMany(mappedBy = "paymentMethodEntity", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<PaymentEntity> payments;

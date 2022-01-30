@@ -1,18 +1,18 @@
 package com.bookshop.features.book.data.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity(name = "Author")
+@Entity(name = "AUTHOR")
 public class AuthorEntity {
 
     @Id

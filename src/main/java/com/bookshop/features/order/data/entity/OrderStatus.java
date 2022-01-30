@@ -1,5 +1,5 @@
 package com.bookshop.features.order.data.entity;
 
-public enum OrderStatusEntity {
+public enum OrderStatus {
     FINISHED, CANCELED, IN_PROGRESS,
 }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,5 +18,10 @@ public class DeliveryMethodRepositoryImpl implements DeliveryMethodRepository {
     @Override
     public List<DeliveryMethodEntity> getDeliveryMethods() {
         return deliveryMethodJpaRepository.findAll();
+    }
+
+    @Override
+    public Optional<DeliveryMethodEntity> getDeliveryById(Integer deliveryMethodId) {
+        return deliveryMethodJpaRepository.findById(deliveryMethodId);
     }
 }

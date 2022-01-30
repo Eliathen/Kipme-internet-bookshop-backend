@@ -1,6 +1,6 @@
 package com.bookshop.features.payment.data.entity;
 
+public enum PaymentType {
 
-public enum PaymentStatusEntity {
-    SUCCESS, UN_PAID
+    TRANSFER, CASH_ON_SITE
 }

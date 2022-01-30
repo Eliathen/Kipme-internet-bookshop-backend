@@ -76,6 +76,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.saveUser(newUser);
     }
 
+    @Override
+    public void removeAccount() {
+        var user = getCurrentUser();
+        user.setEnabled(false);
+        userRepository.saveUser(user);
+    }
+
     private void validateUser(RegisterUserRequest userRequest) {
         EmailValidator.validate(userRequest.getEmail());
         userRepository.getUserByEmail(userRequest.getEmail()).ifPresent(user -> {

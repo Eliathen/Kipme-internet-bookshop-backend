@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
-@Entity(name = "Address")
+@Entity(name = "ADDRESS")
 public class AddressEntity {
 
     @Id

@@ -29,7 +29,7 @@ public class BasketItemEntity {
     private Integer quantity;
 
     public BigDecimal getSumPrice() {
-        return book.getPrice().multiply(BigDecimal.valueOf(quantity));
+        return book.getCurrentPrice().multiply(BigDecimal.valueOf(quantity));
     }
 
     public void incrementQuantity() {

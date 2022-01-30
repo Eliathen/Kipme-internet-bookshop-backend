@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
-@Entity(name = "Opinion")
+@Entity(name = "OPINION")
 public class OpinionEntity {
 
     @Id

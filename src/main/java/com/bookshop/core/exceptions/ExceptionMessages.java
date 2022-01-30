@@ -33,4 +33,12 @@ public class ExceptionMessages {
     public static final String BOOK_WITH_ID_ALREADY_EXISTS = "Book with isbn = %s already exists";
 
     public static final String EMPTY_COVER = "Empty cover";
+
+    public static final String PAYMENT_NOT_FOUND = "Payment method not found";
+
+    public static final String DELIVERY_METHOD_NOT_FOUND = "Delivery method not found";
+
+    public static final String NOT_ENOUGH_BOOKS = "There is not enough book with id = %s";
+
+    public static final String EMPTY_BASKET = "Empty basket";
 }

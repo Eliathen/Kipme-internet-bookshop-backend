@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "sale")
+@Entity(name = "SALE")
 public class SaleEntity {
 
     @Id

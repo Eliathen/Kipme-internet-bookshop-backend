@@ -9,7 +9,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "Language")
+@Entity(name = "LANGUAGE")
 public class LanguageEntity {
 
     @Getter

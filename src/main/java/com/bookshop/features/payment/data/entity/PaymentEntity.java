@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Entity(name = "Payment")
+@Entity(name = "PAYMENT")
 public class PaymentEntity {
 
     @Id
@@ -40,6 +40,6 @@ public class PaymentEntity {
     private PaymentMethodEntity paymentMethodEntity;
 
     @Enumerated(EnumType.STRING)
-    private PaymentStatusEntity paymentStatus;
+    private PaymentStatus paymentStatus;
 
 }

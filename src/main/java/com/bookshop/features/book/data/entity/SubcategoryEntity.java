@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Subcategory")
+@Entity(name = "SUBCATEGORY")
 public class SubcategoryEntity {
 
     @Id

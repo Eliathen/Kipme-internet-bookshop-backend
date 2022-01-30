@@ -19,4 +19,6 @@ public interface UserService {
     UserEntity getUserById(Long userId);
 
     UserEntity registerAdmin(RegisterUserRequest request);
+
+    void removeAccount();
 }
