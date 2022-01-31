@@ -61,9 +61,8 @@ public class BookRepositoryImpl implements BookRepository {
         String result = jedis.get(key);
         var ids = List.of(String.valueOf(bookId));
         if (result != null) {
-            System.out.println(result);
             ids = new ArrayList<>(Arrays.asList(objectMapper.readValue(result, String[].class)));
-            if (ids.size() <= 10) {
+            if (ids.size() > 10) {
                 ids.remove(0);
             }
             if (!ids.contains(String.valueOf(bookId))) {
