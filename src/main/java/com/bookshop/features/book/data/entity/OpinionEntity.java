@@ -28,11 +28,11 @@ public class OpinionEntity {
     private Double rating;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_Id")
+    @JoinColumn(name = "USER_ID")
     private UserEntity user;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "book_Id")
+    @JoinColumn(name = "BOOK_ID")
     private BookEntity book;
 
 }

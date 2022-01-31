@@ -33,16 +33,16 @@ public class AddressEntity {
     private String flatNumber;
 
     @OneToMany
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "ADDRESS_ID")
     private List<OrderEntity> ordersWithAdresses;
 
     @ManyToMany(
             cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
     )
     @JoinTable(
-            name = "users_addresses",
-            joinColumns = @JoinColumn(name = "address_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            name = "USERS_ADDRESSES",
+            joinColumns = @JoinColumn(name = "ADDRESS_ID"),
+            inverseJoinColumns = @JoinColumn(name = "USER_ID")
     )
     private List<UserEntity> usersAddresses;
 

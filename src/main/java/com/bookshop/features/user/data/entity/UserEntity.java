@@ -45,9 +45,9 @@ public class UserEntity {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "Favourite_Books",
-            joinColumns = {@JoinColumn(name = "user_Id")},
-            inverseJoinColumns = {@JoinColumn(name = "book_Id")}
+            name = "FAVOURITE_BOOKS",
+            joinColumns = {@JoinColumn(name = "USER_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "book_id")}
     )
     private List<BookEntity> favouriteBooks;
 
