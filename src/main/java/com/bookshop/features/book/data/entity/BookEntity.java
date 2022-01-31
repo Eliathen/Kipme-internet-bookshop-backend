@@ -52,9 +52,9 @@ public class BookEntity {
             cascade = CascadeType.ALL
     )
     @JoinTable(
-            name = "book_orders",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id")
+            name = "BOOK_ORDERS",
+            joinColumns = @JoinColumn(name = "BOOK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ORDER_ID")
     )
     private List<OrderEntity> bookOrders;
 
@@ -62,17 +62,17 @@ public class BookEntity {
             cascade = {CascadeType.MERGE}
     )
     @JoinTable(
-            name = "book_authors",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id")
+            name = "BOOK_AUTHORS",
+            joinColumns = @JoinColumn(name = "BOOK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID")
     )
     private List<AuthorEntity> bookAuthors;
 
     @ManyToMany
     @JoinTable(
-            name = "book_publishers",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "publisher_id")
+            name = "BOOK_PUBLISHERS",
+            joinColumns = @JoinColumn(name = "BOOK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "PUBLISHER_ID")
     )
     private List<PublisherEntity> bookPublishers;
 
@@ -80,24 +80,24 @@ public class BookEntity {
     private List<OpinionEntity> opinions;
 
     @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "cover_id")
+    @JoinColumn(name = "COVER_ID")
     private CoverEntity cover;
 
     @ManyToOne
-    @JoinColumn(name = "language_id", nullable = false)
+    @JoinColumn(name = "LANGUAGE_ID", nullable = false)
     private LanguageEntity language;
 
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private CategoryEntity category;
 
 
     @ManyToMany
     @JoinTable(
-            name = "book_subcategory",
-            joinColumns = @JoinColumn(name = "subcategory_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
+            name = "BOOK_SUBCATEGORY",
+            joinColumns = @JoinColumn(name = "SUBCATEGORY_ID"),
+            inverseJoinColumns = @JoinColumn(name = "BOOK_ID")
     )
     private List<SubcategoryEntity> subcategories;
 

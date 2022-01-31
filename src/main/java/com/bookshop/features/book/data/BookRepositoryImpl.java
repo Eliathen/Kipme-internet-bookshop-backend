@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Repository;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -76,7 +77,12 @@ public class BookRepositoryImpl implements BookRepository {
     @SneakyThrows
     public List<BookEntity> getLastViewsBooksByUser(Long userId) {
         var key = "recent/" + userId + "#ids";
-        String result = jedis.get(key);
+        String result;
+        try {
+            result = jedis.get(key);
+        } catch (JedisConnectionException e) {
+            return Collections.emptyList();
+        }
         if (result != null) {
             System.out.println(result);
             List<String> ids = new ArrayList<>(Arrays.asList(objectMapper.readValue(result, String[].class)));

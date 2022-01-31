@@ -23,11 +23,11 @@ public interface BookJpaRepository extends JpaRepository<BookEntity, Long> {
 
     Optional<BookEntity> getBookEntityByIsbn(String isbn);
 
-    @Query(value = "SELECT * from BOOK b WHERE b.ID IN " +
+    @Query(value = "SELECT * from BOOK b LEFT JOIN " +
             "(" +
             "SELECT b.ID FROM BOOK b join OPINION O on b.ID = O.BOOK_ID " +
-            "GROUP BY (b.ID) ORDER BY AVG(o.RATING) DESC LIMIT 10" +
-            ")", nativeQuery = true)
+            "GROUP BY (b.ID) ORDER BY AVG(O.RATING) DESC" +
+            ") Q ON b.ID = Q.ID LIMIT 10", nativeQuery = true)
     List<BookEntity> getTopBooks();
 
     List<BookEntity> findBookEntityByAddedAtAfter(LocalDateTime dateTime);
