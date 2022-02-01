@@ -57,7 +57,7 @@ create or replace table DELIVERY_METHOD
 
 create or replace table DELIVERY
 (
-    ID                BINARY not null,
+    ID                BINARY(16) not null,
     DELIVERYPRICE     DECIMAL(19, 2),
     ADDRESS_ID        BIGINT,
     DELIVERYMETHOD_ID INTEGER,
@@ -134,7 +134,7 @@ create or replace table PAYMENT_METHOD
 
 create or replace table PAYMENT
 (
-    ID            BINARY  not null,
+    ID            BINARY(16)  not null,
     AMOUNT        DECIMAL(19, 2),
     CREATEDAT     TIMESTAMP,
     PAYMENTSTATUS VARCHAR(255),
@@ -248,12 +248,12 @@ create or replace table OPINION
 
 create or replace table PROCUREMENT
 (
-    ID          BINARY not null,
+    ID          BINARY(16) not null,
     FULLPRICE   DECIMAL(19, 2),
     ORDERDATE   TIMESTAMP,
     ORDERSTATUS VARCHAR(255),
-    DELIVERY_ID BINARY,
-    PAYMENT_ID  BINARY,
+    DELIVERY_ID BINARY(16),
+    PAYMENT_ID  BINARY(16),
     USER_ID     BIGINT,
     ADDRESS_ID  BIGINT,
     primary key (ID),
@@ -270,7 +270,7 @@ create or replace table PROCUREMENT
 create or replace table BOOK_ORDERS
 (
     BOOK_ID  BIGINT not null,
-    ORDER_ID BINARY not null,
+    ORDER_ID BINARY(16) not null,
     constraint FK2T11ETIFLRDNCGQNKB13F3IMT
         foreign key (ORDER_ID) references PROCUREMENT (ID),
     constraint FKEHNRENUXBADA6S54H204KDRC3
@@ -281,7 +281,7 @@ create or replace table ORDER_POSITION
 (
     ID             BIGINT auto_increment,
     PRICE          DECIMAL(19, 2),
-    ORDER_ID       BINARY,
+    ORDER_ID       BINARY(16),
     ORDEREDBOOK_ID BIGINT,
     primary key (ID),
     constraint FK7W7U3AY191IHOPQ8T6J0H64H8
