@@ -105,10 +105,10 @@ public class OrderServiceImpl implements OrderService {
         cacheConfig.setAvailable(false);
         if (basket.getItems() == null) throw new BasketIsEmpty();
         try {
-            basket.getItems().forEach(book -> {
-                        var magazineQuantity = bookService.getBookById(book.getId()).getQuantity();
-                        if (book.getQuantity() > magazineQuantity) {
-                            throw new NotEnoughBook(book.getId());
+            basket.getItems().forEach(item -> {
+                        var magazineQuantity = bookService.getBookById(item.getBook().getId()).getQuantity();
+                        if (item.getBook().getQuantity() > magazineQuantity) {
+                            throw new NotEnoughBook(item.getBook().getId());
                         }
                     }
             );
