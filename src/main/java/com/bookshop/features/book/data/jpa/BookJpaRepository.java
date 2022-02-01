@@ -14,10 +14,10 @@ public interface BookJpaRepository extends JpaRepository<BookEntity, Long> {
 
     Optional<BookEntity> getBookEntityById(Long id);
 
-    @Query(value = "SELECT distinct * from Book b " +
+    @Query(value = "SELECT distinct * from BOOK b " +
             "join BOOK_AUTHORS ba on ba.BOOK_ID = b.ID " +
             "join AUTHOR a on a.ID = ba.AUTHOR_ID " +
-            " WHERE LOWER(b.TITLE) LIKE concat('%', concat(?1, '%'))" +
+            "WHERE LOWER(b.TITLE) LIKE concat('%', concat(?1, '%'))" +
             "OR a.name = ?1 OR a.surname = ?1", nativeQuery = true)
     List<BookEntity> getBookEntityByTitleQuery(String query);
 
