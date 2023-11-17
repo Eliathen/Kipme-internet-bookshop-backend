@@ -1,0 +1,28 @@
+spring:
+  profiles.active: ${KIPME_PROFILE}
+  data:
+    redis:
+      repositories:
+        type: none
+  servlet:
+    multipart:
+    enabled: true
+server:
+  servlet:
+    context-path: /api/v1
+  error:
+    include-message: always
+  port: 443
+  ssl:
+    enabled: true
+    key-password: zaq1@WSX
+    key-store-password: zaq1@WSX
+    key-store: src/main/resources/keystore.jks
+    key-store-type: pkcs12
+#jwt
+app:
+  jwtSecret: secretJWT
+  jwtExpirationInMs: 3600000
+  cache:
+    available: true
+    redis-url: ${REDIS_URL:redis://kipme-redis:6379}

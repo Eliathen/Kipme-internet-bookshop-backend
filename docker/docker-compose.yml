@@ -1,20 +1,49 @@
-version: "3.3"
+version: "3.9"
+
 services:
-  mariadb:
-    image: "mariadb:latest"
-    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+  db:
+    image: mariadb:11.0.3
+    container_name: kipme-db
     environment:
-      MARIADB_ROOT_USER: 'root'
-      MARIADB_ROOT_PASSWORD: 'secret'
-      MARIADB_USER: 'kipme'
-      MARIADB_PASSWORD: 'kipme_secret'
-    container_name: "mariadb"
+      MARIADB_ROOT_USER: ${DB_ROOT_USER}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
     volumes:
-      - ./schema.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init-scripts:/docker-entrypoint-initdb.d
     ports:
-      - "3306:3306"
+      - ${DB_PORT}:3306
+    networks:
+      - kipme-network
+
   redis:
-    image: redis:latest
-    container_name: "redis-cache"
+    image: redis:7.2
+    container_name: "kipme-redis"
     ports:
-      - "6379:6379"
+      - ${REDIS_PORT}:6379
+    networks:
+      - kipme-network
+
+  kipme-backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: "kipme-backend"
+    depends_on:
+      - db
+      - redis
+    environment:
+      KIPME_PROFILE: ${KIPME_PROFILE}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_URL: jdbc:mariadb://kipme-db:${DB_PORT}/${DB_NAME}
+      REDIS_URL: redis://kipme-redis:${REDIS_PORT}
+    ports:
+      - ${KIPME_PORT}:443
+    networks:
+      - kipme-network
+
+networks:
+  kipme-network:
+    driver: bridge

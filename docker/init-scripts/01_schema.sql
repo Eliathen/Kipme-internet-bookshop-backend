@@ -1,9 +1,3 @@
-CREATE DATABASE IF NOT EXISTS kipme;
-
-USE kipme;
-GRANT ALL ON `kipme`.* TO 'kipme'@'%';
-FLUSH PRIVILEGES;
-
 create or replace table ADDRESS
 (
     ID             BIGINT auto_increment,
