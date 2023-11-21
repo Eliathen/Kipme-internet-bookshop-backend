@@ -14,7 +14,7 @@
     <name>book-shop-backend</name>
     <description>book-shop-backend</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>
