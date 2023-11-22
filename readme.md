@@ -1,3 +1,4 @@
+![Build](https://github.com/Eliathen/Kipme-internet-bookshop-backend/actions/workflows/ci.yml/badge.svg)
 # Kipme - e-commerce app
 > Backend for simple e-commerce app to purchase books.
 
