@@ -1,10 +1,12 @@
 spring:
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
-    driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MariaDB103Dialect
     hibernate:
       ddl-auto: none
+  server:
+    ssl:
+      enabled: true
+      key-password: zaq1@WSX
+      key-store-password: zaq1@WSX
+      key-store: src/main/resources/keystore.jks
+      key-store-type: pkcs12
