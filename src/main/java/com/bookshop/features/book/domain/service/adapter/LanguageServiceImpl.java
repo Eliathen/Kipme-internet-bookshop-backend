@@ -8,6 +8,7 @@ import com.bookshop.features.book.exception.LanguageNotFound;
 import com.bookshop.features.book.mapper.LanguageMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
+    @Transactional
     public LanguageEntity saveLanguage(SaveLanguageRequest request) {
         return repository.saveLanguage(LanguageMapper.mapToLanguageEntity(request));
     }

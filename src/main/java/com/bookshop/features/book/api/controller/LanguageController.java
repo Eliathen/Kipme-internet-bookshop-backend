@@ -7,7 +7,6 @@ import com.bookshop.features.book.mapper.LanguageMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,7 +32,6 @@ public class LanguageController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     private LanguageResponse saveLanguage(@RequestBody @Valid SaveLanguageRequest request) {
