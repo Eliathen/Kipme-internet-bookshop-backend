@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface LanguageService {
 
-
     List<LanguageEntity> getLanguages();
 
     LanguageEntity saveLanguage(SaveLanguageRequest language);

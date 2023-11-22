@@ -10,8 +10,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -36,7 +36,7 @@ public class LanguageController {
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    private LanguageResponse saveLanguage(@RequestBody SaveLanguageRequest request) {
+    private LanguageResponse saveLanguage(@RequestBody @Valid SaveLanguageRequest request) {
         return LanguageMapper.mapToLanguageResponse(service.saveLanguage(request));
     }
 }
