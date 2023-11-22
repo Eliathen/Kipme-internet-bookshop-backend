@@ -3,12 +3,16 @@ package com.bookshop.features.book.mapper;
 import com.bookshop.features.book.api.request.SaveLanguageRequest;
 import com.bookshop.features.book.api.response.LanguageResponse;
 import com.bookshop.features.book.data.entity.LanguageEntity;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LanguageMapper {
 
-    public static LanguageEntity mapToLanguageEntity(SaveLanguageRequest reguest) {
+
+    public static LanguageEntity mapToLanguageEntity(SaveLanguageRequest request) {
         return LanguageEntity.builder()
-                .name(reguest.getName())
+                .name(request.getName())
                 .build();
     }
 
