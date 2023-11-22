@@ -10,20 +10,16 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "LANGUAGE")
+@Getter
+@Setter
 public class LanguageEntity {
 
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Getter
-    @Setter
     private String name;
 
-    @Getter
-    @Setter
     @OneToMany(mappedBy = "language")
     private Set<BookEntity> books = Collections.emptySet();
 
