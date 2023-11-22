@@ -1,0 +1,13 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration,org.springframework.boot.autoconfigure.security.SecurityFilterAutoConfiguration,org.springframework.boot.autoconfigure.security.FallbackWebSecurityAutoConfiguration,org.springframework.boot.autoconfigure.security.oauth2.OAuth2AutoConfiguration
+
+logging:
+  level:
+    org:
+      springframework:
+        security: debug
