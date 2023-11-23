@@ -14,8 +14,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -36,49 +36,42 @@ class LanguageServiceImplTest {
         sut = new LanguageServiceImpl(languageRepository);
     }
 
-    // get all languages
     @Test
     void shouldFindAllLanguages() {
-        //given
         when(languageRepository.getLanguages()).thenReturn(languages);
 
-        //when
         List<LanguageEntity> result = sut.getLanguages();
 
-        assertEquals(languages.size(), result.size());
+        assertThat(languages).hasSize(result.size());
     }
 
     @Test
     void shouldFindLanguageWhenGivenValidId() {
-        //given
         Optional<LanguageEntity> language = languages.stream().findFirst();
+        Integer languageId = language.get().getId();
+
         when(languageRepository.getLanguageById(any())).thenReturn(language);
 
-        //when
         LanguageEntity result = sut.getLanguage(1);
-        //then
-        assertEquals(language.get().getId(), result.getId());
+
+        assertThat(result.getId()).isEqualTo(languageId);
     }
 
     @Test
     void shouldThrowExceptionLanguageNotFoundWhenGivenInvalidId() {
-        //given
         when(languageRepository.getLanguageById(999)).thenThrow(LanguageNotFound.class);
 
-        //when & then
-        assertThrows(LanguageNotFound.class, () -> sut.getLanguage(999));
+        assertThatThrownBy(() -> sut.getLanguage(999)).isInstanceOf(LanguageNotFound.class);
     }
 
     @Test
     void shouldCreateNewLanguage() {
-        //given
         SaveLanguageRequest request = new SaveLanguageRequest("Spanish");
         LanguageEntity entity = LanguageEntity.builder().name("Spanish").build();
         when(languageRepository.saveLanguage(any())).thenReturn(entity);
 
-        //when
         LanguageEntity result = sut.saveLanguage(request);
-        // then
-        assertEquals(entity.getName(), result.getName());
+
+        assertThat(result.getName()).isEqualTo(entity.getName());
     }
 }

@@ -2,7 +2,6 @@ package com.bookshop.features.book.data.jpa;
 
 import com.bookshop.features.book.base.MariaDbContainerBaseTest;
 import com.bookshop.features.book.data.entity.AuthorEntity;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Testcontainers
 @DataJpaTest
-class AuthorJpaRepositoryTest extends MariaDbContainerBaseTest {
-
+class AuthorJpaRepositoryIntTest extends MariaDbContainerBaseTest {
 
     @Autowired
     AuthorJpaRepository sut;
@@ -44,6 +42,7 @@ class AuthorJpaRepositoryTest extends MariaDbContainerBaseTest {
     @Rollback
     void shouldSaveLanguage() {
         AuthorEntity author = AuthorEntity.builder().name("John Ronald Reuel").surname("Tolkien").build();
+
         AuthorEntity saved = sut.save(author);
 
         assertThat(saved).isNotNull();
@@ -61,9 +60,8 @@ class AuthorJpaRepositoryTest extends MariaDbContainerBaseTest {
     @Test
     @Rollback
     void shouldReturnAuthorsWhenGivenSurname() {
-        sut.save(
-                AuthorEntity.builder().name("Peter").surname("Brett").build()
-        );
+        sut.save(AuthorEntity.builder().name("Peter").surname("Brett").build());
+
         List<AuthorEntity> authors = sut.findAuthorEntityByNameOrSurname("Peter", "Brett");
 
         assertThat(authors).hasSizeGreaterThan(1);
@@ -72,9 +70,10 @@ class AuthorJpaRepositoryTest extends MariaDbContainerBaseTest {
     @Test
     void shouldReturnLanguageWhenGivenValidId() {
         Integer authorId = sut.findAll().stream().findFirst().get().getId();
+
         Optional<AuthorEntity> entity = sut.findById(authorId);
 
-        Assertions.assertThat(entity).isNotNull();
+        assertThat(entity).isPresent();
         assertThat(entity.get().getId()).isEqualTo(authorId);
     }
 
@@ -82,7 +81,7 @@ class AuthorJpaRepositoryTest extends MariaDbContainerBaseTest {
     void shouldNotReturnAuthorWhenGivenInvalidId() {
         Optional<AuthorEntity> entity = sut.findById(999999);
 
-        Assertions.assertThat(entity).isNotPresent();
+        assertThat(entity).isNotPresent();
     }
 
 }

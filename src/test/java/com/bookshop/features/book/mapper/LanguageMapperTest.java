@@ -2,10 +2,11 @@ package com.bookshop.features.book.mapper;
 
 import com.bookshop.features.book.api.request.SaveLanguageRequest;
 import com.bookshop.features.book.data.entity.LanguageEntity;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class LanguageMapperTest {
 
@@ -15,11 +16,12 @@ class LanguageMapperTest {
         var entity = new LanguageEntity(1, "name", Set.of());
 
         //when
-        var result = LanguageMapper.mapToLanguageResponse(entity);
+        var response = LanguageMapper.mapToLanguageResponse(entity);
 
         //then
-        Assertions.assertEquals(entity.getId(), result.getId());
-        Assertions.assertEquals(entity.getName(), result.getName());
+        assertThat(response.getId()).isEqualTo(entity.getId());
+        assertThat(response.getName()).isEqualTo(entity.getName());
+
     }
 
     @Test
@@ -27,9 +29,10 @@ class LanguageMapperTest {
         //given
         var request = new SaveLanguageRequest("name");
         //when
-        var result = LanguageMapper.mapToLanguageEntity(request);
+        var response = LanguageMapper.mapToLanguageEntity(request);
         //then
-        Assertions.assertEquals(request.getName(), result.getName());
+
+        assertThat(response.getName()).isEqualTo(request.getName());
     }
 
 }
