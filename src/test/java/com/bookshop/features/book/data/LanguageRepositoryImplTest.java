@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 class LanguageRepositoryImplTest {
@@ -31,36 +30,31 @@ class LanguageRepositoryImplTest {
 
     @Test
     void shouldFindAllLanguages() {
-        //given
         when(jpa.findAll()).thenReturn(languages);
-        //when
+
         List<LanguageEntity> result = sut.getLanguages();
 
-        assertEquals(result.size(), languages.size());
+        assertThat(result).hasSize(languages.size());
     }
 
     @Test
     void shouldFindLanguageWhenGivenValidId() {
-        //given
         LanguageEntity language = new LanguageEntity(1, "English", Collections.emptySet());
-        when(jpa.findById(any())).thenReturn(Optional.of(language));
-        //when
+        when(jpa.findById(language.getId())).thenReturn(Optional.of(language));
+
         Optional<LanguageEntity> result = sut.getLanguageById(language.getId());
-        //then
-        assertTrue(result.isPresent());
-        assertEquals(language.getId(), result.get().getId());
 
-
+        assertThat(result).isPresent();
+        assertThat(result.get().getId()).isEqualTo(language.getId());
     }
 
     @Test
     void shouldReturnNullOptionalWhenGivenInvalidId() {
-        //given
         when(jpa.findById(999)).thenReturn(Optional.empty());
-        //when
+
         Optional<LanguageEntity> result = sut.getLanguageById(999);
-        //then
-        assertFalse(result.isPresent());
+
+        assertThat(result).isNotPresent();
     }
 
     @Test
@@ -71,7 +65,7 @@ class LanguageRepositoryImplTest {
         //when
         LanguageEntity result = sut.saveLanguage(entity);
         // then
-        assertEquals(entity.getId(), result.getId());
+        assertThat(result.getId()).isEqualTo(entity.getId());
     }
 
 }

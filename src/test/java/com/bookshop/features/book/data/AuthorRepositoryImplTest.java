@@ -3,7 +3,6 @@ package com.bookshop.features.book.data;
 import com.bookshop.features.book.data.entity.AuthorEntity;
 import com.bookshop.features.book.data.jpa.AuthorJpaRepository;
 import com.bookshop.features.book.domain.repository.AuthorRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -19,12 +18,8 @@ class AuthorRepositoryImplTest {
 
     private final AuthorJpaRepository jpa = Mockito.mock(AuthorJpaRepository.class);
 
-    private AuthorRepository sut;
+    private final AuthorRepository sut = new AuthorRepositoryImpl(jpa);
 
-    @BeforeEach
-    void setUp() {
-        sut = new AuthorRepositoryImpl(jpa);
-    }
 
     @Test
     void shouldCreateAuthor() {

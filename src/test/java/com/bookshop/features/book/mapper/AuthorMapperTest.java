@@ -2,37 +2,38 @@ package com.bookshop.features.book.mapper;
 
 import com.bookshop.features.book.api.request.AuthorRequest;
 import com.bookshop.features.book.data.entity.AuthorEntity;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class AuthorMapperTest {
 
     @Test
     void shouldMapAuthorEntityToAuthorResponseCorrect() {
         //given
-        var author = AuthorEntity.builder()
+        var entity = AuthorEntity.builder()
                 .id(1)
                 .name("Peter")
                 .surname("Brett").build();
 
         //when
-        var result = AuthorMapper.mapToAuthorResponse(author);
+        var response = AuthorMapper.mapToAuthorResponse(entity);
 
         //then
-        Assertions.assertEquals(author.getId(), result.getId());
-        Assertions.assertEquals(author.getName(), result.getName());
-        Assertions.assertEquals(author.getSurname(), result.getSurname());
+        assertThat(response.getId()).isEqualTo(entity.getId());
+        assertThat(response.getName()).isEqualTo(entity.getName());
+        assertThat(response.getSurname()).isEqualTo(entity.getSurname());
     }
 
     @Test
-    void shouldMapSaveLanguageRequestToLanguageEntityCorrect() {
+    void shouldMapSaveAuthorRequestToAuthorEntityCorrect() {
         //given
         var request = new AuthorRequest("Peter", "Brett");
         //when
         var result = AuthorMapper.mapAuthorRequestToAuthor(request);
         //then
-        Assertions.assertEquals(request.getName(), result.getName());
-        Assertions.assertEquals(request.getSurname(), result.getSurname());
+        assertThat(result.getName()).isEqualTo(request.getName());
+        assertThat(result.getSurname()).isEqualTo(request.getSurname());
     }
 
 }
