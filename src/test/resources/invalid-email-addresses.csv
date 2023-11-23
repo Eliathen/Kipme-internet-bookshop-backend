@@ -1,0 +1,9 @@
+invalid.email.com
+@missingusername.com
+user@missingtld
+user@double@at.com
+user@invalidchar&.com
+user@trailingdot.com.
+user@toolongusername012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901@example.com
+user@invalid..dot.com
+user@invalid+symbol.com
