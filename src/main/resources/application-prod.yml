@@ -1,9 +1,9 @@
 spring:
   jpa:
+    show-sql: false
     database-platform: org.hibernate.dialect.MariaDB103Dialect
-    hibernate:
-      ddl-auto: none
   server:
+    port: 443
     ssl:
       enabled: true
       key-password: zaq1@WSX

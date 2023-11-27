@@ -3,6 +3,8 @@ spring:
     user:
       name: user
       password: user
+  jpa:
+    show-sql: true
 logging:
   level:
     org:

@@ -15,7 +15,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Entity(name = "USER")
 public class UserEntity {
 
@@ -51,7 +50,7 @@ public class UserEntity {
     )
     private List<BookEntity> favouriteBooks;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR")
     @Enumerated(EnumType.STRING)
     private UserRole role;
 

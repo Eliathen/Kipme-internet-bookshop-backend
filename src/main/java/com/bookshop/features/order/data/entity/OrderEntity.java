@@ -44,6 +44,7 @@ public class OrderEntity {
     private DeliveryEntity deliveryEntity;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR")
     private OrderStatus orderStatus;
 
     private BigDecimal fullPrice;

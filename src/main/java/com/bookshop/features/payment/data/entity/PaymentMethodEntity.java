@@ -22,6 +22,7 @@ public class PaymentMethodEntity {
     private String name;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR")
     private PaymentType type;
 
     @OneToMany(mappedBy = "paymentMethodEntity", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

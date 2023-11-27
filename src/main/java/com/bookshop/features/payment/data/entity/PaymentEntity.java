@@ -37,6 +37,7 @@ public class PaymentEntity {
     @JoinColumn(name = "PAYMENT_ID", nullable = false)
     private PaymentMethodEntity paymentMethodEntity;
 
+    @Column(columnDefinition = "VARCHAR")
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
