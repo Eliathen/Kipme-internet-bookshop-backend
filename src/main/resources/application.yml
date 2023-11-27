@@ -4,20 +4,35 @@ spring:
     redis:
       repositories:
         type: none
+
   datasource:
-    url: ${DB_URL}
+    url: ${DB_URL:jdbc:mariadb://localhost:3306/kipme}
     driverClassName: org.mariadb.jdbc.Driver
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    username: ${DB_USER:kipme}
+    password: ${DB_PASSWORD:kipmesecret}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
   servlet:
     multipart:
     enabled: true
+  flyway:
+    enabled: true
+    url: ${DB_URL:jdbc:mariadb://localhost:3306/kipme}
+    user: ${DB_USER:kipme}
+    password: ${DB_PASSWORD:kipmesecret}
+    defaultSchema: kipme
 server:
   servlet:
     context-path: /api/v1
   error:
     include-message: always
-  port: 443
 
 #jwt
 app:

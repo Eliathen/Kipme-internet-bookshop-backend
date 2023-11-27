@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,11 +17,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class LanguageJpaRepositoryIntTest extends MariaDbContainerBaseTest {
 
     @Autowired
     private LanguageJpaRepository sut;
-
 
     @BeforeEach
     void setUp() {
@@ -40,18 +40,18 @@ class LanguageJpaRepositoryIntTest extends MariaDbContainerBaseTest {
     }
 
     @Test
-    @Rollback
     void shouldSaveLanguage() {
         LanguageEntity language = getSpanishLanguage();
 
         LanguageEntity saved = sut.save(language);
 
         assertThat(saved).isNotNull();
+        assertThat(saved.getId()).isNotNull();
     }
 
     @Test
     void shouldReturnLanguageWhenGivenValidId() {
-        Integer languageId = sut.findAll().stream().findFirst().get().getId();
+        Integer languageId = sut.save(getSpanishLanguage()).getId();
 
         Optional<LanguageEntity> entity = sut.findById(languageId);
 

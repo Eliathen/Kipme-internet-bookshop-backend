@@ -1,8 +1,8 @@
 package com.bookshop.features.payment.data.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -22,6 +22,7 @@ public class PaymentMethodEntity {
     private String name;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR")
     private PaymentType type;
 
     @OneToMany(mappedBy = "paymentMethodEntity", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

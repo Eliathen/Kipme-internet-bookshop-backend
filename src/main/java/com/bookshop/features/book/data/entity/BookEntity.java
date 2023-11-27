@@ -4,9 +4,9 @@ package com.bookshop.features.book.data.entity;
 import com.bookshop.features.order.data.entity.OrderEntity;
 import com.bookshop.features.order.data.entity.OrderPositionEntity;
 import com.bookshop.features.user.data.entity.UserEntity;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;

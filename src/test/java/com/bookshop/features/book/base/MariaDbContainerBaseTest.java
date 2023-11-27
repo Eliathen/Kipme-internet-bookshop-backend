@@ -1,26 +1,20 @@
 package com.bookshop.features.book.base;
 
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.containers.MariaDBContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 @Testcontainers
-public class MariaDbContainerBaseTest {
+public abstract class MariaDbContainerBaseTest {
 
-    @Container
-    static final MariaDBContainer<?> mariaDB = new MariaDBContainer<>("mariadb:11.0.3")
-            .withReuse(true)
+    @ServiceConnection
+    public static MariaDBContainer<?> mariaDB = new MariaDBContainer<>(DockerImageName.parse("mariadb:11.0.3"))
+            .withDatabaseName("kipme")
             .withUsername("kipme")
             .withPassword("kipme-secret");
 
-    @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
+    static {
         mariaDB.start();
-        registry.add("spring.datasource.url", mariaDB::getJdbcUrl);
-        registry.add("spring.datasource.username", mariaDB::getUsername);
-        registry.add("spring.datasource.password", mariaDB::getPassword);
     }
-
 }

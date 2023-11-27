@@ -5,21 +5,21 @@ import com.bookshop.features.book.data.entity.AuthorEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Testcontainers
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class AuthorJpaRepositoryIntTest extends MariaDbContainerBaseTest {
 
     @Autowired
-    AuthorJpaRepository sut;
+    private AuthorJpaRepository sut;
 
     @BeforeEach
     void setUp() {
@@ -40,12 +40,12 @@ class AuthorJpaRepositoryIntTest extends MariaDbContainerBaseTest {
 
     @Test
     @Rollback
-    void shouldSaveLanguage() {
+    void shouldSaveAuthor() {
         AuthorEntity author = AuthorEntity.builder().name("John Ronald Reuel").surname("Tolkien").build();
-
         AuthorEntity saved = sut.save(author);
 
         assertThat(saved).isNotNull();
+        assertThat(saved.getId()).isNotNull();
     }
 
     @Test
@@ -68,8 +68,8 @@ class AuthorJpaRepositoryIntTest extends MariaDbContainerBaseTest {
     }
 
     @Test
-    void shouldReturnLanguageWhenGivenValidId() {
-        Integer authorId = sut.findAll().stream().findFirst().get().getId();
+    void shouldReturnAuthorWhenGivenValidId() {
+        Integer authorId = sut.save(AuthorEntity.builder().name("Peter").surname("Brett").build()).getId();
 
         Optional<AuthorEntity> entity = sut.findById(authorId);
 

@@ -4,12 +4,12 @@ import com.bookshop.features.book.api.request.SaveLanguageRequest;
 import com.bookshop.features.book.api.response.LanguageResponse;
 import com.bookshop.features.book.domain.service.port.LanguageService;
 import com.bookshop.features.book.mapper.LanguageMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor

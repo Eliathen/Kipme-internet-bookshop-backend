@@ -3,10 +3,10 @@ package com.bookshop.features.order.data.entity;
 
 import com.bookshop.features.payment.data.entity.PaymentEntity;
 import com.bookshop.features.user.data.entity.UserEntity;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -44,6 +44,7 @@ public class OrderEntity {
     private DeliveryEntity deliveryEntity;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR")
     private OrderStatus orderStatus;
 
     private BigDecimal fullPrice;

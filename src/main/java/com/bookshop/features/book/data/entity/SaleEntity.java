@@ -1,9 +1,9 @@
 package com.bookshop.features.book.data.entity;
 
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class SaleEntity {
     @Column(name = "END_AT")
     private LocalDateTime endAt;
 
-    @Column(name = "SALE_UNIT")
+    @Column(name = "SALE_UNIT", columnDefinition = "VARCHAR")
     @Enumerated(value = EnumType.STRING)
     private SALE_UNIT saleUnit;
 

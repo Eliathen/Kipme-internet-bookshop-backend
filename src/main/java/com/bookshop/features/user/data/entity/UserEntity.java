@@ -5,9 +5,9 @@ import com.bookshop.features.basket.data.entity.BasketEntity;
 import com.bookshop.features.book.data.entity.BookEntity;
 import com.bookshop.features.book.data.entity.OpinionEntity;
 import com.bookshop.features.order.data.entity.OrderEntity;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Getter
@@ -15,7 +15,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Entity(name = "USER")
 public class UserEntity {
 
@@ -51,7 +50,7 @@ public class UserEntity {
     )
     private List<BookEntity> favouriteBooks;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR")
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
