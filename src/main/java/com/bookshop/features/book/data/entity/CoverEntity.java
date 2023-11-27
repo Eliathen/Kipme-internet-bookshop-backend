@@ -1,9 +1,10 @@
 package com.bookshop.features.book.data.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
 
-import javax.persistence.*;
 
 @Getter
 @Setter

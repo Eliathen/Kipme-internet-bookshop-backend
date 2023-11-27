@@ -2,9 +2,9 @@ package com.bookshop.features.basket.data.entity;
 
 
 import com.bookshop.features.user.data.entity.UserEntity;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

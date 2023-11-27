@@ -1,9 +1,9 @@
 package com.bookshop.features.book.data.entity;
 
 import com.bookshop.features.user.data.entity.UserEntity;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 

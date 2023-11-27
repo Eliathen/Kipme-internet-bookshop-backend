@@ -5,9 +5,9 @@ import com.bookshop.features.basket.data.entity.BasketEntity;
 import com.bookshop.features.book.data.entity.BookEntity;
 import com.bookshop.features.book.data.entity.OpinionEntity;
 import com.bookshop.features.order.data.entity.OrderEntity;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Getter

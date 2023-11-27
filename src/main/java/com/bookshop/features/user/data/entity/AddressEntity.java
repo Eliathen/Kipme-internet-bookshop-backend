@@ -1,9 +1,9 @@
 package com.bookshop.features.user.data.entity;
 
 import com.bookshop.features.order.data.entity.OrderEntity;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.List;
 
 

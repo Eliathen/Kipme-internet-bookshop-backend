@@ -1,10 +1,10 @@
 package com.bookshop.features.payment.data.entity;
 
 import com.bookshop.features.order.data.entity.OrderEntity;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;

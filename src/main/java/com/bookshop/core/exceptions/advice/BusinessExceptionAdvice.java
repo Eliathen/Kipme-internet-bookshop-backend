@@ -4,12 +4,12 @@ import com.bookshop.core.exceptions.ErrorInfo;
 import com.bookshop.core.exceptions.base.ResourceAlreadyExists;
 import com.bookshop.core.exceptions.base.ResourceNotFoundException;
 import com.bookshop.features.user.exception.InvalidEmailAddress;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 
 @ControllerAdvice

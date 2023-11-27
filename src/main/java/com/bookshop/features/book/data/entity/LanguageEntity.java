@@ -1,8 +1,8 @@
 package com.bookshop.features.book.data.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.Collections;
 import java.util.Set;
 
