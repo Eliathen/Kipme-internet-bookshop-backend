@@ -13,30 +13,22 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 @ControllerAdvice
 public class AuthExceptionAdvice {
 
     private final Logger logger = LoggerFactory.getLogger(AuthExceptionAdvice.class);
 
-    @ExceptionHandler(InvalidEmailOrPassword.class)
+    @ExceptionHandler({
+            InvalidEmailOrPassword.class,
+            BadCredentialsException.class,
+            HttpClientErrorException.Unauthorized.class
+    })
     public ResponseEntity<ErrorInfo> authException(InvalidEmailOrPassword exception) {
         logger.error(exception.getMessage());
-        ErrorInfo errorInfo = new ErrorInfo(LocalDateTime.now(), exception.getMessage());
+        ErrorInfo errorInfo = new ErrorInfo(LocalDateTime.now(), Collections.singletonList(ExceptionMessages.INVALID_EMAIL_ADDRESS_OR_PASSWORD));
         return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ErrorInfo> badCredentials(BadCredentialsException exception) {
-        logger.error(exception.getMessage());
-        ErrorInfo errorInfo = new ErrorInfo(LocalDateTime.now(), ExceptionMessages.INVALID_EMAIL_ADDRESS_OR_PASSWORD);
-        return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(HttpClientErrorException.Unauthorized.class)
-    public ResponseEntity<ErrorInfo> badCredentials(HttpClientErrorException.Unauthorized exception) {
-        logger.error(exception.getMessage());
-        ErrorInfo errorInfo = new ErrorInfo(LocalDateTime.now(), ExceptionMessages.INVALID_EMAIL_ADDRESS_OR_PASSWORD);
-        return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
-    }
 }
