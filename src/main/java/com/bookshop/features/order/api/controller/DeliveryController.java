@@ -22,6 +22,11 @@ public class DeliveryController {
 
     @GetMapping("/methods")
     public ResponseEntity<List<DeliveryMethodResponse>> getDeliveryMethods() {
-        return ResponseEntity.ok(orderService.getDeliveryMethods().stream().map(OrderMapper::mapToDeliveryMethodResponse).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                orderService.getDeliveryMethods()
+                        .stream()
+                        .map(OrderMapper::mapToDeliveryMethodResponse)
+                        .toList()
+        );
     }
 }

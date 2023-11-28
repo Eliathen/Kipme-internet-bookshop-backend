@@ -23,7 +23,13 @@ public class AddressController {
 
     @GetMapping
     public ResponseEntity<List<AddressResponse>> getUserAddresses(@PathVariable Long userId) {
-        return new ResponseEntity<>(addressService.getUserAddresses(userId).stream().map(AddressMapper::mapToAddressResponse).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<>(
+                addressService.getUserAddresses(userId)
+                        .stream()
+                        .map(AddressMapper::mapToAddressResponse)
+                        .toList(),
+                HttpStatus.OK
+        );
     }
 
     @Transactional

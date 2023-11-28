@@ -29,8 +29,9 @@ public class CategoryController {
     public ResponseEntity<List<CategoryResponse>> getCategories() {
         return new ResponseEntity<>(
                 categoryService.getCategories()
-                        .stream().map(CategoryMapper::mapToCategoryResponse)
-                        .collect(Collectors.toList()),
+                        .stream()
+                        .map(CategoryMapper::mapToCategoryResponse)
+                        .toList(),
                 HttpStatus.OK);
     }
 

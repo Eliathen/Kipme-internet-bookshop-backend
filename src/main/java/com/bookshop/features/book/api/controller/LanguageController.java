@@ -23,6 +23,10 @@ public class LanguageController {
     @GetMapping
     private List<LanguageResponse> getLanguages() {
         return service.getLanguages().stream().map(LanguageMapper::mapToLanguageResponse).toList();
+        return service.getLanguages()
+                .stream()
+                .map(LanguageMapper::mapToLanguageResponse)
+                .toList();
     }
 
     @GetMapping("/{id}")

@@ -22,6 +22,11 @@ public class PaymentController {
 
     @GetMapping("/methods")
     public ResponseEntity<List<PaymentMethodResponse>> getPaymentsMethods() {
-        return ResponseEntity.ok(paymentService.getPaymentMethods().stream().map(PaymentMapper::mapToPaymentMethodResponse).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                paymentService.getPaymentMethods()
+                        .stream()
+                        .map(PaymentMapper::mapToPaymentMethodResponse)
+                        .toList()
+        );
     }
 }

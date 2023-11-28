@@ -28,6 +28,11 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<List<OrderResponse>> getUserOrders() {
-        return ResponseEntity.ok(orderService.getUserOrders().stream().map(OrderMapper::mapToOrderResponse).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                orderService.getUserOrders()
+                        .stream()
+                        .map(OrderMapper::mapToOrderResponse)
+                        .toList()
+        );
     }
 }
