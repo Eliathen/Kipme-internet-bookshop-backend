@@ -11,6 +11,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
@@ -20,6 +21,14 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException {
         logger.error(e.getMessage());
-        httpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN, objectMapper.writeValueAsString(new ErrorInfo(LocalDateTime.now(), e.getMessage())));
+        httpServletResponse.sendError(
+                HttpServletResponse.SC_FORBIDDEN,
+                objectMapper.writeValueAsString(
+                        new ErrorInfo(
+                                LocalDateTime.now(),
+                                Collections.singletonList(e.getMessage())
+                        )
+                )
+        );
     }
 }
