@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,6 +21,11 @@ public class DeliveryController {
 
     @GetMapping("/methods")
     public ResponseEntity<List<DeliveryMethodResponse>> getDeliveryMethods() {
-        return ResponseEntity.ok(orderService.getDeliveryMethods().stream().map(OrderMapper::mapToDeliveryMethodResponse).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                orderService.getDeliveryMethods()
+                        .stream()
+                        .map(OrderMapper::mapToDeliveryMethodResponse)
+                        .toList()
+        );
     }
 }

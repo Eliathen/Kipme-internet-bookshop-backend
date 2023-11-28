@@ -21,20 +21,23 @@ public class LanguageController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    private List<LanguageResponse> getLanguages() {
-        return service.getLanguages().stream().map(LanguageMapper::mapToLanguageResponse).toList();
+    public List<LanguageResponse> getLanguages() {
+        return service.getLanguages()
+                .stream()
+                .map(LanguageMapper::mapToLanguageResponse)
+                .toList();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    private LanguageResponse getLanguage(@PathVariable Integer id) {
+    public LanguageResponse getLanguage(@PathVariable Integer id) {
         return LanguageMapper.mapToLanguageResponse(service.getLanguage(id));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    private LanguageResponse saveLanguage(@RequestBody @Valid SaveLanguageRequest request) {
+    public LanguageResponse saveLanguage(@RequestBody @Valid SaveLanguageRequest request) {
         return LanguageMapper.mapToLanguageResponse(service.saveLanguage(request));
     }
 }

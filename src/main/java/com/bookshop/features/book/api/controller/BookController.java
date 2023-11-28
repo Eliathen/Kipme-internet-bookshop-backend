@@ -9,6 +9,7 @@ import com.bookshop.features.book.api.response.BookResponse;
 import com.bookshop.features.book.data.entity.CoverEntity;
 import com.bookshop.features.book.domain.service.port.BookService;
 import com.bookshop.features.book.mapper.BookMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,7 +32,8 @@ public class BookController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<BookResponse> saveBook(@ModelAttribute SaveBookRequest request, MultipartFile cover) throws IOException {
+    public ResponseEntity<BookResponse> saveBook(@ModelAttribute @Valid SaveBookRequest request,
+                                                 MultipartFile cover) throws IOException {
         return ResponseEntity.ok(BookMapper.mapToBookResponse(bookService.saveBook(request, cover)));
     }
 
@@ -51,7 +52,8 @@ public class BookController {
 
     @Transactional
     @PostMapping("/{bookId}/opinions")
-    public ResponseEntity<Void> saveOpinion(@PathVariable Long bookId, @RequestBody AddOpinionRequest request) {
+    public ResponseEntity<Void> saveOpinion(@PathVariable Long bookId,
+                                            @RequestBody @Valid AddOpinionRequest request) {
         bookService.saveOpinion(bookId, request);
         return ResponseEntity.noContent().build();
     }
@@ -59,7 +61,8 @@ public class BookController {
 
     @Transactional
     @DeleteMapping("/{bookId}/opinions/{opinionId}")
-    public ResponseEntity<Void> removeOpinion(@PathVariable("bookId") Long bookId, @PathVariable("opinionId") Integer opinionId) {
+    public ResponseEntity<Void> removeOpinion(@PathVariable("bookId") Long bookId,
+                                              @PathVariable("opinionId") Integer opinionId) {
         bookService.removeOpinion(bookId, opinionId);
         return ResponseEntity.noContent().build();
     }
@@ -69,20 +72,20 @@ public class BookController {
         return ResponseEntity.ok(bookService.getFavouriteBooks()
                 .stream()
                 .map(BookMapper::mapToBookBaseResponse)
-                .collect(Collectors.toList())
+                .toList()
         );
     }
 
     @Transactional
     @PostMapping("/favorites")
-    public ResponseEntity<Void> addFavouriteBooks(@RequestBody AddRemoveBookFavouriteRequest request) {
+    public ResponseEntity<Void> addFavouriteBooks(@RequestBody @Valid AddRemoveBookFavouriteRequest request) {
         bookService.addBookToFavorites(request);
         return ResponseEntity.noContent().build();
     }
 
     @Transactional
     @DeleteMapping("/favorites")
-    public ResponseEntity<Void> removeBookFromFavorites(@RequestBody AddRemoveBookFavouriteRequest request) {
+    public ResponseEntity<Void> removeBookFromFavorites(@RequestBody @Valid AddRemoveBookFavouriteRequest request) {
         bookService.removeBookFromFavorites(request);
         return ResponseEntity.noContent().build();
     }
@@ -93,38 +96,69 @@ public class BookController {
     ) {
         return ResponseEntity.ok(
                 bookService.searchBooks(query)
-                        .stream().map(BookMapper::mapToBookBaseResponse)
-                        .collect(Collectors.toList())
+                        .stream()
+                        .map(BookMapper::mapToBookBaseResponse)
+                        .toList()
         );
     }
 
     @GetMapping("/categories/{categoryId}")
     public ResponseEntity<List<BookBaseResponse>> getBooksByCategoryId(@PathVariable("categoryId") Integer categoryId) {
-        return ResponseEntity.ok(bookService.getBooksByCategoryId(categoryId).stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                bookService.getBooksByCategoryId(categoryId)
+                        .stream()
+                        .map(BookMapper::mapToBookBaseResponse)
+                        .toList()
+        );
     }
 
     @GetMapping("/subcategories/{subcategoryId}")
     public ResponseEntity<List<BookBaseResponse>> getBooksBySubcategoryId(@PathVariable("subcategoryId") Integer categoryId) {
-        return ResponseEntity.ok(bookService.getBooksBySubcategoryId(categoryId).stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                bookService.getBooksBySubcategoryId(categoryId)
+                        .stream()
+                        .map(BookMapper::mapToBookBaseResponse)
+                        .toList()
+        );
     }
 
     @GetMapping("/recent")
     public ResponseEntity<List<BookBaseResponse>> getRecentViewBooks() {
-        return ResponseEntity.ok(bookService.getRecentViewBooks().stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                bookService.getRecentViewBooks()
+                        .stream()
+                        .map(BookMapper::mapToBookBaseResponse)
+                        .toList()
+        );
     }
 
     @GetMapping("/top")
     public ResponseEntity<List<BookBaseResponse>> getTopBooks() {
-        return ResponseEntity.ok(bookService.getTopBooks().stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                bookService.getTopBooks()
+                        .stream()
+                        .map(BookMapper::mapToBookBaseResponse)
+                        .toList()
+        );
     }
 
     @GetMapping("/best-offer")
     public ResponseEntity<List<BookBaseResponse>> getBooksWithBestOffer() {
-        return ResponseEntity.ok(bookService.getBookWithBestOffer().stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                bookService.getBookWithBestOffer()
+                        .stream()
+                        .map(BookMapper::mapToBookBaseResponse)
+                        .toList()
+        );
     }
 
     @GetMapping("/new")
     public ResponseEntity<List<BookBaseResponse>> getNewestBooks() {
-        return ResponseEntity.ok(bookService.getNewBooks().stream().map(BookMapper::mapToBookBaseResponse).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                bookService.getNewBooks()
+                        .stream()
+                        .map(BookMapper::mapToBookBaseResponse)
+                        .toList()
+        );
     }
 }
