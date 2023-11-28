@@ -3,6 +3,7 @@ package com.bookshop.core.exceptions.advice;
 import com.bookshop.core.exceptions.ErrorInfo;
 import com.bookshop.core.exceptions.base.ResourceAlreadyExists;
 import com.bookshop.core.exceptions.base.ResourceNotFoundException;
+import com.bookshop.features.book.exception.EmptyCoverException;
 import com.bookshop.features.user.exception.InvalidEmailAddress;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
@@ -53,6 +54,15 @@ public class BusinessExceptionAdvice {
         ErrorInfo errorInfo = new ErrorInfo(LocalDateTime.now(), Collections.singletonList(message));
         return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(EmptyCoverException.class)
+    public ResponseEntity<ErrorInfo> handleEmptyCoverException(EmptyCoverException exception) {
+        String errorMessage = exception.getMessage();
+        logger.error(errorMessage);
+        ErrorInfo errorInfo = new ErrorInfo(LocalDateTime.now(), Collections.singletonList(errorMessage));
+        return new ResponseEntity<>(errorInfo, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorInfo> argumentsNotValid(MethodArgumentNotValidException exception) {
         List<String> errorMessage = getErrorMessagesFromException(exception);

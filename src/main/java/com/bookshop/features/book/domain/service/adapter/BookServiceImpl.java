@@ -1,6 +1,7 @@
 package com.bookshop.features.book.domain.service.adapter;
 
 import com.bookshop.core.config.CacheConfig;
+import com.bookshop.core.exceptions.ExceptionMessages;
 import com.bookshop.features.book.api.request.AddOpinionRequest;
 import com.bookshop.features.book.api.request.AddRemoveBookFavouriteRequest;
 import com.bookshop.features.book.api.request.SaveBookRequest;
@@ -15,7 +16,7 @@ import com.bookshop.features.book.domain.service.port.PublisherService;
 import com.bookshop.features.book.exception.BookNotFound;
 import com.bookshop.features.book.exception.BookWithIsbnAlreadyExists;
 import com.bookshop.features.book.exception.CoverNotFound;
-import com.bookshop.features.book.exception.EmptyCover;
+import com.bookshop.features.book.exception.EmptyCoverException;
 import com.bookshop.features.book.mapper.BookMapper;
 import com.bookshop.features.book.mapper.OpinionMapper;
 import com.bookshop.features.user.api.UserService;
@@ -191,7 +192,7 @@ public class BookServiceImpl implements BookService {
     }
 
     private CoverEntity getCoverFromMultipartFile(MultipartFile cover) throws IOException {
-        if (cover == null) throw new EmptyCover();
+        if (cover == null || cover.isEmpty()) throw new EmptyCoverException(ExceptionMessages.EMPTY_COVER);
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(cover.getOriginalFilename()));
         return CoverEntity.builder()
                 .name(fileName)
