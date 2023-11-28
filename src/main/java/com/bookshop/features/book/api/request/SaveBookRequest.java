@@ -2,6 +2,7 @@ package com.bookshop.features.book.api.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,26 +16,42 @@ import java.util.Set;
 @NoArgsConstructor
 public class SaveBookRequest {
 
+    @NotBlank(message = "Provide title")
     private String title;
 
+    @NotBlank(message = "Provide isbn")
     private String isbn;
 
+    @NotNull(message = "Provide published year")
+    @Positive(message = "Invalid published year")
     private Integer publishedYear;
 
+    @NotBlank(message = "Provide description")
     private String description;
 
+    @NotNull(message = "Provide quantity")
+    @Min(value = 0, message = "Quantity should be greater or equal 0")
     private Integer quantity;
 
+    @DecimalMin(value = "0.0", message = "Price should be greater or equal 0.00")
     private BigDecimal price;
 
+    @Size(min = 1, message = "Provide authors")
+    @NotNull(message = "Provide at least one author")
     private List<AuthorRequest> bookAuthors;
 
+    @Size(min = 1, message = "Provide publishers' ids")
+    @NotNull(message = "Provide at least one publisher")
     private Set<Integer> bookPublishersIds;
 
+    @NotNull(message = "Provide language id")
     private Integer languageId;
 
+    @NotNull(message = "Provide category id")
     private Integer categoryId;
 
+    @Size(min = 1, message = "Provide subcategories' ids")
+    @NotNull(message = "Provide at least one subcategory")
     private List<Integer> subcategoriesIds;
 
     @JsonCreator

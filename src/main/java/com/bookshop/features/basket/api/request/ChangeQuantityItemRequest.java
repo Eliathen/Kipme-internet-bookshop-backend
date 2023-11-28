@@ -2,6 +2,7 @@ package com.bookshop.features.basket.api.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,8 +10,10 @@ import lombok.Getter;
 @Builder
 public class ChangeQuantityItemRequest {
 
+    @NotNull(message = "Provide book's id")
     private Long bookId;
 
+    @NotNull(message = "Provide book's quantity")
     private Integer quantity;
 
     @JsonCreator

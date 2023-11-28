@@ -15,7 +15,6 @@ public class SaveSubcategoryRequest {
     private String name;
 
     @JsonCreator
-
     public SaveSubcategoryRequest(@JsonProperty(value = "name", required = true) String name) {
         this.name = name;
     }
