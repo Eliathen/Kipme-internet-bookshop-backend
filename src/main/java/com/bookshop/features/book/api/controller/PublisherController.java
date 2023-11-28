@@ -5,6 +5,7 @@ import com.bookshop.features.book.api.request.SavePublisherRequest;
 import com.bookshop.features.book.api.response.PublisherResponse;
 import com.bookshop.features.book.domain.service.port.PublisherService;
 import com.bookshop.features.book.mapper.PublisherMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,6 +33,7 @@ public class PublisherController {
     @PostMapping
     public ResponseEntity<PublisherResponse> savePublisher(@RequestBody SavePublisherRequest request) {
         return new ResponseEntity<>(PublisherMapper.mapToPublisherResponse(service.savePublisher(PublisherMapper.mapToPublisher(request))), HttpStatus.CREATED);
+    public ResponseEntity<PublisherResponse> savePublisher(@RequestBody @Valid SavePublisherRequest request) {
     }
 
     @GetMapping("/{id}")

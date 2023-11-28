@@ -9,6 +9,7 @@ import com.bookshop.features.book.api.response.BookResponse;
 import com.bookshop.features.book.data.entity.CoverEntity;
 import com.bookshop.features.book.domain.service.port.BookService;
 import com.bookshop.features.book.mapper.BookMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,7 +32,7 @@ public class BookController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<BookResponse> saveBook(@ModelAttribute SaveBookRequest request, MultipartFile cover) throws IOException {
+    public ResponseEntity<BookResponse> saveBook(@ModelAttribute @Valid SaveBookRequest request, MultipartFile cover) throws IOException {
         return ResponseEntity.ok(BookMapper.mapToBookResponse(bookService.saveBook(request, cover)));
     }
 
@@ -51,7 +51,7 @@ public class BookController {
 
     @Transactional
     @PostMapping("/{bookId}/opinions")
-    public ResponseEntity<Void> saveOpinion(@PathVariable Long bookId, @RequestBody AddOpinionRequest request) {
+    public ResponseEntity<Void> saveOpinion(@PathVariable Long bookId, @RequestBody @Valid AddOpinionRequest request) {
         bookService.saveOpinion(bookId, request);
         return ResponseEntity.noContent().build();
     }
@@ -75,14 +75,14 @@ public class BookController {
 
     @Transactional
     @PostMapping("/favorites")
-    public ResponseEntity<Void> addFavouriteBooks(@RequestBody AddRemoveBookFavouriteRequest request) {
+    public ResponseEntity<Void> addFavouriteBooks(@RequestBody @Valid AddRemoveBookFavouriteRequest request) {
         bookService.addBookToFavorites(request);
         return ResponseEntity.noContent().build();
     }
 
     @Transactional
     @DeleteMapping("/favorites")
-    public ResponseEntity<Void> removeBookFromFavorites(@RequestBody AddRemoveBookFavouriteRequest request) {
+    public ResponseEntity<Void> removeBookFromFavorites(@RequestBody @Valid AddRemoveBookFavouriteRequest request) {
         bookService.removeBookFromFavorites(request);
         return ResponseEntity.noContent().build();
     }

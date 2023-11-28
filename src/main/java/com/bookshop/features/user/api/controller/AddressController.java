@@ -5,6 +5,7 @@ import com.bookshop.features.order.mapper.AddressMapper;
 import com.bookshop.features.user.api.AddressService;
 import com.bookshop.features.user.api.request.SaveUpdateAddressRequest;
 import com.bookshop.features.user.api.response.AddressResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -36,6 +36,7 @@ public class AddressController {
     @PostMapping
     public ResponseEntity<AddressResponse> saveAddress(@PathVariable Long userId, @RequestBody SaveUpdateAddressRequest request){
         return new ResponseEntity<>(AddressMapper.mapToAddressResponse(addressService.saveAddress(userId, request)), HttpStatus.CREATED);
+    public ResponseEntity<AddressResponse> saveAddress(@PathVariable Long userId, @RequestBody @Valid SaveUpdateAddressRequest request) {
     }
 
     @GetMapping("/{addressId}")

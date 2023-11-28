@@ -8,6 +8,7 @@ import com.bookshop.features.book.api.response.SubcategoryResponse;
 import com.bookshop.features.book.domain.service.port.CategoryService;
 import com.bookshop.features.book.mapper.CategoryMapper;
 import com.bookshop.features.book.mapper.SubcategoryMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class CategoryController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     @PostMapping
-    public ResponseEntity<CategoryResponse> saveCategory(@RequestBody SaveCategoryRequest request) {
+    public ResponseEntity<CategoryResponse> saveCategory(@RequestBody @Valid SaveCategoryRequest request) {
         return new ResponseEntity<>(
                 CategoryMapper.mapToCategoryResponse(categoryService.saveCategory(CategoryMapper.mapSaveCategoryRequestsToCategoryEntity(request))
                 ), HttpStatus.CREATED);
@@ -53,7 +54,7 @@ public class CategoryController {
 
     @Transactional
     @PostMapping("/{id}/subcategories")
-    public ResponseEntity<SubcategoryResponse> saveSubcategory(@PathVariable int id, @RequestBody SaveSubcategoryRequest request){
+    public ResponseEntity<SubcategoryResponse> saveSubcategory(@PathVariable int id, @RequestBody @Valid SaveSubcategoryRequest request) {
         return new ResponseEntity<>(
                 SubcategoryMapper.mapToSubcategoryResponse(categoryService.saveSubcategory(id, request))
         , HttpStatus.CREATED);
