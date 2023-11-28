@@ -3,6 +3,7 @@ package com.bookshop.features.user.api.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,14 +13,19 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SaveUpdateAddressRequest {
 
+    @NotBlank(message = "Provide voivodeship")
     private String voivodeship;
 
+    @NotBlank(message = "Provide postal code")
     private String postalCode;
 
+    @NotBlank(message = "Provide city")
     private String city;
 
+    @NotBlank(message = "Provide street")
     private String street;
 
+    @NotBlank(message = "Provide building number")
     private String buildingNumber;
 
     private String flatNumber;

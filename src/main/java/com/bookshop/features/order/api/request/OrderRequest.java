@@ -2,6 +2,7 @@ package com.bookshop.features.order.api.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,10 +10,13 @@ import lombok.Getter;
 @Builder
 public class OrderRequest {
 
+    @NotNull(message = "Provide payment method's id")
     private Integer paymentMethodId;
 
+    @NotNull(message = "Provide delivery method's id")
     private Integer deliveryMethodId;
 
+    @NotNull(message = "Provide delivery address' id")
     private Long deliveryAddressId;
 
     @JsonCreator
