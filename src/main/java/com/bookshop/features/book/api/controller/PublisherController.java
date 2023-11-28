@@ -25,15 +25,23 @@ public class PublisherController {
 
     @GetMapping
     public ResponseEntity<List<PublisherResponse>> getPublishers() {
-        return ResponseEntity.ok(service.getPublishers().stream().map(PublisherMapper::mapToPublisherResponse).collect(Collectors.toList()));
+        return ResponseEntity.ok(
+                service.getPublishers()
+                        .stream()
+                        .map(PublisherMapper::mapToPublisherResponse)
+                        .toList()
+        );
     }
 
     @Transactional
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
-    public ResponseEntity<PublisherResponse> savePublisher(@RequestBody SavePublisherRequest request) {
-        return new ResponseEntity<>(PublisherMapper.mapToPublisherResponse(service.savePublisher(PublisherMapper.mapToPublisher(request))), HttpStatus.CREATED);
     public ResponseEntity<PublisherResponse> savePublisher(@RequestBody @Valid SavePublisherRequest request) {
+        return new ResponseEntity<>(
+                PublisherMapper.mapToPublisherResponse(
+                        service.savePublisher(PublisherMapper.mapToPublisher(request))),
+                HttpStatus.CREATED
+        );
     }
 
     @GetMapping("/{id}")

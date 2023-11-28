@@ -34,25 +34,32 @@ public class AddressController {
 
     @Transactional
     @PostMapping
-    public ResponseEntity<AddressResponse> saveAddress(@PathVariable Long userId, @RequestBody SaveUpdateAddressRequest request){
-        return new ResponseEntity<>(AddressMapper.mapToAddressResponse(addressService.saveAddress(userId, request)), HttpStatus.CREATED);
-    public ResponseEntity<AddressResponse> saveAddress(@PathVariable Long userId, @RequestBody @Valid SaveUpdateAddressRequest request) {
+    public ResponseEntity<AddressResponse> saveAddress(@PathVariable Long userId,
+                                                       @RequestBody @Valid SaveUpdateAddressRequest request) {
+        return new ResponseEntity<>(
+                AddressMapper.mapToAddressResponse(addressService.saveAddress(userId, request)),
+                HttpStatus.CREATED
+        );
     }
 
     @GetMapping("/{addressId}")
-    public ResponseEntity<AddressResponse> getAddressById(@PathVariable Long userId, @PathVariable Long addressId) {
+    public ResponseEntity<AddressResponse> getAddressById(@PathVariable Long userId,
+                                                          @PathVariable Long addressId) {
         return ResponseEntity.ok(AddressMapper.mapToAddressResponse(addressService.getAddressById(addressId)));
     }
 
     @Transactional
     @PatchMapping("/{addressId}")
-    public ResponseEntity<AddressResponse> updateAddress(@PathVariable Long userId, @PathVariable Long addressId, @RequestBody SaveUpdateAddressRequest request) {
+    public ResponseEntity<AddressResponse> updateAddress(@PathVariable Long userId,
+                                                         @PathVariable Long addressId,
+                                                         @RequestBody @Valid SaveUpdateAddressRequest request) {
         return ResponseEntity.ok(AddressMapper.mapToAddressResponse(addressService.updateAddress(addressId, request)));
     }
 
     @Transactional
     @DeleteMapping("/{addressId}")
-    public ResponseEntity<Void> deleteAddress(@PathVariable Long userId, @PathVariable Long addressId) {
+    public ResponseEntity<Void> deleteAddress(@PathVariable Long userId,
+                                              @PathVariable Long addressId) {
         addressService.removeAddress(addressId);
         return ResponseEntity.noContent().build();
     }

@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -41,12 +40,15 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<CategoryResponse> saveCategory(@RequestBody @Valid SaveCategoryRequest request) {
         return new ResponseEntity<>(
-                CategoryMapper.mapToCategoryResponse(categoryService.saveCategory(CategoryMapper.mapSaveCategoryRequestsToCategoryEntity(request))
-                ), HttpStatus.CREATED);
+                CategoryMapper.mapToCategoryResponse(
+                        categoryService.saveCategory(CategoryMapper.mapSaveCategoryRequestsToCategoryEntity(request))
+                ),
+                HttpStatus.CREATED
+        );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryResponse> getCategory(@PathVariable Integer id){
+    public ResponseEntity<CategoryResponse> getCategory(@PathVariable Integer id) {
         return ResponseEntity.ok(
                 CategoryMapper.mapToCategoryResponse(categoryService.getCategory(id))
         );
@@ -56,8 +58,9 @@ public class CategoryController {
     @PostMapping("/{id}/subcategories")
     public ResponseEntity<SubcategoryResponse> saveSubcategory(@PathVariable int id, @RequestBody @Valid SaveSubcategoryRequest request) {
         return new ResponseEntity<>(
-                SubcategoryMapper.mapToSubcategoryResponse(categoryService.saveSubcategory(id, request))
-        , HttpStatus.CREATED);
+                SubcategoryMapper.mapToSubcategoryResponse(categoryService.saveSubcategory(id, request)),
+                HttpStatus.CREATED
+        );
     }
 
 }

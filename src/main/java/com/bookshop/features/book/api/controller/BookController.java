@@ -32,7 +32,8 @@ public class BookController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<BookResponse> saveBook(@ModelAttribute @Valid SaveBookRequest request, MultipartFile cover) throws IOException {
+    public ResponseEntity<BookResponse> saveBook(@ModelAttribute @Valid SaveBookRequest request,
+                                                 MultipartFile cover) throws IOException {
         return ResponseEntity.ok(BookMapper.mapToBookResponse(bookService.saveBook(request, cover)));
     }
 
@@ -51,7 +52,8 @@ public class BookController {
 
     @Transactional
     @PostMapping("/{bookId}/opinions")
-    public ResponseEntity<Void> saveOpinion(@PathVariable Long bookId, @RequestBody @Valid AddOpinionRequest request) {
+    public ResponseEntity<Void> saveOpinion(@PathVariable Long bookId,
+                                            @RequestBody @Valid AddOpinionRequest request) {
         bookService.saveOpinion(bookId, request);
         return ResponseEntity.noContent().build();
     }
@@ -59,7 +61,8 @@ public class BookController {
 
     @Transactional
     @DeleteMapping("/{bookId}/opinions/{opinionId}")
-    public ResponseEntity<Void> removeOpinion(@PathVariable("bookId") Long bookId, @PathVariable("opinionId") Integer opinionId) {
+    public ResponseEntity<Void> removeOpinion(@PathVariable("bookId") Long bookId,
+                                              @PathVariable("opinionId") Integer opinionId) {
         bookService.removeOpinion(bookId, opinionId);
         return ResponseEntity.noContent().build();
     }

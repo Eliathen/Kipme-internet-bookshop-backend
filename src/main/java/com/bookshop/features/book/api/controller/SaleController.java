@@ -20,7 +20,8 @@ public class SaleController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     @PostMapping("/categories/{categoryId}")
-    public ResponseEntity<Void> setSaleForCategory(@PathVariable Integer categoryId, @RequestBody @Valid SetSaleRequest request) {
+    public ResponseEntity<Void> setSaleForCategory(@PathVariable Integer categoryId,
+                                                   @RequestBody @Valid SetSaleRequest request) {
         saleService.setSaleForCategory(request, categoryId);
         return ResponseEntity.noContent().build();
     }
@@ -28,7 +29,8 @@ public class SaleController {
     @Transactional
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/books/{bookId}")
-    public ResponseEntity<Void> setSaleForBook(@PathVariable Long bookId, @RequestBody @Valid SetSaleRequest request) {
+    public ResponseEntity<Void> setSaleForBook(@PathVariable Long bookId,
+                                               @RequestBody @Valid SetSaleRequest request) {
         saleService.setSaleForBook(request, bookId);
         return ResponseEntity.noContent().build();
     }

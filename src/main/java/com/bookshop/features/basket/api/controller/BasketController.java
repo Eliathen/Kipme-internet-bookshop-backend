@@ -25,7 +25,9 @@ public class BasketController {
     @Transactional
     @PostMapping("/items/{bookId}")
     public ResponseEntity<BasketItemResponse> addBookToBasket(@PathVariable(name = "bookId") Long bookId) {
-        return ResponseEntity.ok(BasketMapper.mapBasketItemEntityToBasketResponse(basketService.addBookToBasket(bookId)));
+        return ResponseEntity.ok(
+                BasketMapper.mapBasketItemEntityToBasketResponse(basketService.addBookToBasket(bookId))
+        );
     }
 
     @Transactional
@@ -38,12 +40,16 @@ public class BasketController {
     @Transactional
     @PatchMapping("/items/{bookId}/increase")
     public ResponseEntity<BasketItemResponse> increaseQuantityOfBook(@PathVariable(name = "bookId") Long bookId) {
-        return ResponseEntity.ok(BasketMapper.mapBasketItemEntityToBasketResponse(basketService.increaseQuantityOfBook(bookId)));
+        return ResponseEntity.ok(
+                BasketMapper.mapBasketItemEntityToBasketResponse(basketService.increaseQuantityOfBook(bookId))
+        );
     }
 
     @Transactional
     @PatchMapping("/items/{bookId}/decrease")
     public ResponseEntity<BasketItemResponse> decreaseQuantityOfBook(@PathVariable(name = "bookId") Long bookId) {
-        return ResponseEntity.ok(BasketMapper.mapBasketItemEntityToBasketResponse(basketService.decreaseQuantityOfBook(bookId)));
+        return ResponseEntity.ok(
+                BasketMapper.mapBasketItemEntityToBasketResponse(basketService.decreaseQuantityOfBook(bookId))
+        );
     }
 }
