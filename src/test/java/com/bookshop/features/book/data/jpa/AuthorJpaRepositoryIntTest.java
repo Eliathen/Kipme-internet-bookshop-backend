@@ -1,13 +1,12 @@
 package com.bookshop.features.book.data.jpa;
 
-import com.bookshop.features.book.base.MariaDbContainerBaseTest;
+import com.bookshop.features.base.MariaDbContainerBaseTest;
 import com.bookshop.features.book.data.entity.AuthorEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +38,6 @@ class AuthorJpaRepositoryIntTest extends MariaDbContainerBaseTest {
     }
 
     @Test
-    @Rollback
     void shouldSaveAuthor() {
         AuthorEntity author = AuthorEntity.builder().name("John Ronald Reuel").surname("Tolkien").build();
         AuthorEntity saved = sut.save(author);
@@ -58,7 +56,6 @@ class AuthorJpaRepositoryIntTest extends MariaDbContainerBaseTest {
     }
 
     @Test
-    @Rollback
     void shouldReturnAuthorsWhenGivenSurname() {
         sut.save(AuthorEntity.builder().name("Peter").surname("Brett").build());
 

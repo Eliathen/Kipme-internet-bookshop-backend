@@ -1,4 +1,4 @@
-package com.bookshop.features.book.base;
+package com.bookshop.features.base;
 
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.containers.MariaDBContainer;

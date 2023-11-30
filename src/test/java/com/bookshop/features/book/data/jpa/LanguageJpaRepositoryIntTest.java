@@ -1,6 +1,6 @@
 package com.bookshop.features.book.data.jpa;
 
-import com.bookshop.features.book.base.MariaDbContainerBaseTest;
+import com.bookshop.features.base.MariaDbContainerBaseTest;
 import com.bookshop.features.book.data.entity.LanguageEntity;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
