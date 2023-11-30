@@ -93,7 +93,7 @@ class AuthorRepositoryImplTest {
 
         when(jpa.findFirstByNameIgnoreCaseAndSurnameIgnoreCase(author.getName(), author.getSurname()))
                 .thenReturn(Optional.empty());
-        when(jpa.saveAndFlush(saved)).thenReturn(saved);
+        when(jpa.saveAndFlush(any(AuthorEntity.class))).thenReturn(saved);
 
         AuthorEntity result = sut.getAuthorByNameAndSurnameOrSave(author.getName(), author.getSurname());
 

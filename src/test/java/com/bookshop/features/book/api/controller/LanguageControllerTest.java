@@ -14,11 +14,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,9 +42,6 @@ class LanguageControllerTest {
     private List<LanguageEntity> languages;
 
     @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Autowired
     private ObjectMapper mapper;
 
     @BeforeEach
@@ -63,7 +58,6 @@ class LanguageControllerTest {
     }
 
     @Test
-    @WithMockUser
     void shouldFindAllLanguages() throws Exception {
         String expectedJson = getListOfLanguageResponsesAsJsonString();
         when(languageService.getLanguages()).thenReturn(languages);
@@ -74,7 +68,6 @@ class LanguageControllerTest {
     }
 
     @Test
-    @WithMockUser
     void shouldFindLanguageWhenGivenValidId() throws Exception {
         var language = languages.get(0);
         String json = getEnglishLanguageResponseAsJsonString();
@@ -87,7 +80,6 @@ class LanguageControllerTest {
     }
 
     @Test
-    @WithMockUser
     void shouldNotFindLanguageWhenGivenInvalidId() throws Exception {
         when(languageService.getLanguage(999)).thenThrow(new LanguageNotFound(999));
 
@@ -95,10 +87,7 @@ class LanguageControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = {"ADMIN"})
     void shouldCreateNewLanguageWhenLanguageIsValid() throws Exception {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-
         SaveLanguageRequest saveLanguageRequest = new SaveLanguageRequest("Spanish");
         LanguageEntity language = new LanguageEntity(3, "Spanish", Set.of());
 
@@ -116,10 +105,7 @@ class LanguageControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = {"ADMIN"})
     void shouldNotCreateNewLanguageWhenLanguageIsInvalid() throws Exception {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-
         String request = """
                     {
                         "name": ""
@@ -133,7 +119,6 @@ class LanguageControllerTest {
         ).andExpect(status().isBadRequest());
     }
 
-    @NotNull
     private String getListOfLanguageResponsesAsJsonString() {
         return """
                 [
