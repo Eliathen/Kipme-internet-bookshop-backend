@@ -30,7 +30,8 @@ docker-compose -f docker/docker-compose.yml up -d
 - Spring boot
 - MariaDB
 - Redis (only for storage indexes of last visited books)
-
+- TestContainers
+- Flyway
 
 ## Features
 - Admin:
