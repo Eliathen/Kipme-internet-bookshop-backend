@@ -51,17 +51,17 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookEntity saveBook(SaveBookRequest request, MultipartFile cover) throws IOException {
-        bookRepository.getBookByIsbn(request.getIsbn()).ifPresent((isbn) -> {
-            throw new BookWithIsbnAlreadyExists(request.getIsbn());
+        bookRepository.getBookByIsbn(request.isbn()).ifPresent((isbn) -> {
+            throw new BookWithIsbnAlreadyExists(request.isbn());
         });
         BookEntity book = BookMapper.mapToBookEntity(request);
         CoverEntity newCover = getCoverFromMultipartFile(cover);
-        LanguageEntity language = languageService.getLanguage(request.getLanguageId());
-        List<PublisherEntity> publisherList = publisherService.getPublishers(new LinkedList<>(request.getBookPublishersIds()));
-        CategoryEntity category = categoryService.getCategory(request.getCategoryId());
-        List<SubcategoryEntity> subcategories = category.getSubcategories().stream().filter(sub -> request.getSubcategoriesIds().contains(sub.getId())).collect(Collectors.toList());
-        List<AuthorEntity> authors = request.getBookAuthors().stream().map(
-                author -> authorRepository.getAuthorByNameAndSurnameOrSave(author.getName(), author.getSurname())
+        LanguageEntity language = languageService.getLanguage(request.languageId());
+        List<PublisherEntity> publisherList = publisherService.getPublishers(new LinkedList<>(request.bookPublishersIds()));
+        CategoryEntity category = categoryService.getCategory(request.categoryId());
+        List<SubcategoryEntity> subcategories = category.getSubcategories().stream().filter(sub -> request.subcategoriesIds().contains(sub.getId())).collect(Collectors.toList());
+        List<AuthorEntity> authors = request.bookAuthors().stream().map(
+                author -> authorRepository.getAuthorByNameAndSurnameOrSave(author.name(), author.surname())
         ).collect(Collectors.toList());
         book.setAddedAt(LocalDateTime.now());
         book.setIsAvailable(true);
@@ -124,14 +124,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void addBookToFavorites(AddRemoveBookFavouriteRequest request) {
-        var book = getBookById(request.getBookId());
+        var book = getBookById(request.bookId());
         var user = userService.getCurrentUser();
         addBookToFavorites(user, book);
     }
 
     @Override
     public void removeBookFromFavorites(AddRemoveBookFavouriteRequest request) {
-        var book = getBookById(request.getBookId());
+        var book = getBookById(request.bookId());
         var user = userService.getCurrentUser();
         user.getFavouriteBooks().removeIf(bookEntity -> bookEntity.getId().equals(book.getId()));
         userRepository.saveUser(user);

@@ -21,9 +21,9 @@ class PublisherMapperTest {
 
         var response = PublisherMapper.mapToPublisherResponse(entity);
 
-        assertThat(response.getId()).isEqualTo(entity.getId());
-        assertThat(response.getPublisherName()).isEqualTo(entity.getPublisherName());
-        assertThat(response.getPublisherCity()).isEqualTo(entity.getPublisherCity());
+        assertThat(response.id()).isEqualTo(entity.getId());
+        assertThat(response.name()).isEqualTo(entity.getPublisherName());
+        assertThat(response.city()).isEqualTo(entity.getPublisherCity());
     }
 
     @Test
@@ -32,7 +32,7 @@ class PublisherMapperTest {
 
         var entity = PublisherMapper.mapToPublisher(request);
 
-        assertThat(entity.getPublisherName()).isEqualTo(request.getPublisherName());
-        assertThat(entity.getPublisherCity()).isEqualTo(request.getPublisherCity());
+        assertThat(entity.getPublisherName()).isEqualTo(request.publisherName());
+        assertThat(entity.getPublisherCity()).isEqualTo(request.publisherCity());
     }
 }

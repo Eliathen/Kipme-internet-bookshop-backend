@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
     public JwtAuthenticationResponse getJwt(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(),
-                        String.valueOf(loginRequest.getPassword())
+                        loginRequest.email(),
+                        String.valueOf(loginRequest.password())
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -84,8 +84,8 @@ public class UserServiceImpl implements UserService {
     }
 
     private void validateUser(RegisterUserRequest userRequest) {
-        EmailValidator.validate(userRequest.getEmail());
-        userRepository.getUserByEmail(userRequest.getEmail()).ifPresent(user -> {
+        EmailValidator.validate(userRequest.email());
+        userRepository.getUserByEmail(userRequest.email()).ifPresent(user -> {
             throw new UserAlreadyExists();
         });
     }

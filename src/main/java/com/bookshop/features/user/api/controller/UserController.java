@@ -34,7 +34,7 @@ public class UserController {
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
         return new ResponseEntity<>(
                 LoginResponse.of(
-                        userService.getUserByEmail(request.getEmail()), userService.getJwt(request)),
+                        userService.getUserByEmail(request.email()), userService.getJwt(request)),
                 HttpStatus.OK);
     }
 
