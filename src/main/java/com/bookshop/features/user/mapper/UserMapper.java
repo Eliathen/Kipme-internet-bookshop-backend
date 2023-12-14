@@ -4,17 +4,20 @@ import com.bookshop.features.user.api.request.RegisterUserRequest;
 import com.bookshop.features.user.api.response.BaseUserResponse;
 import com.bookshop.features.user.api.response.UserResponse;
 import com.bookshop.features.user.data.entity.UserEntity;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapper {
 
     public static UserEntity mapToUser(RegisterUserRequest registerUser) {
         return UserEntity.builder()
                 .enabled(true)
-                .email(registerUser.getEmail())
-                .password(registerUser.getPassword())
-                .name(registerUser.getName())
-                .surname(registerUser.getSurname())
-                .phoneNumber(registerUser.getPhoneNumber())
+                .email(registerUser.email())
+                .password(registerUser.password())
+                .name(registerUser.name())
+                .surname(registerUser.surname())
+                .phoneNumber(registerUser.phoneNumber())
                 .build();
     }
 
