@@ -12,7 +12,7 @@ public class LanguageMapper {
 
     public static LanguageEntity mapToLanguageEntity(SaveLanguageRequest request) {
         return LanguageEntity.builder()
-                .name(request.getName())
+                .name(request.name())
                 .build();
     }
 

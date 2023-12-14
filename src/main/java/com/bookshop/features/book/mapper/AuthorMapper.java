@@ -19,8 +19,8 @@ public class AuthorMapper {
 
     public static AuthorEntity mapAuthorRequestToAuthor(AuthorRequest author) {
         return AuthorEntity.builder()
-                .name(author.getName())
-                .surname(author.getSurname())
+                .name(author.name())
+                .surname(author.surname())
                 .build();
     }
 }

@@ -12,8 +12,8 @@ public class OpinionMapper {
     public static OpinionEntity mapToOpinionEntity(AddOpinionRequest request) {
         return OpinionEntity.builder()
                 .date(LocalDateTime.now())
-                .description(request.getDescription())
-                .rating(request.getRating())
+                .description(request.description())
+                .rating(request.rating())
                 .build();
     }
 
