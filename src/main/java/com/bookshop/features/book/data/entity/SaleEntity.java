@@ -35,7 +35,7 @@ public class SaleEntity {
 
     @Column(name = "SALE_UNIT", columnDefinition = "VARCHAR")
     @Enumerated(value = EnumType.STRING)
-    private SALE_UNIT saleUnit;
+    private SaleUnit saleUnit;
 
     @JoinTable(name = "BOOK_SALE",
             joinColumns = {@JoinColumn(name = "SALE_ID")},
