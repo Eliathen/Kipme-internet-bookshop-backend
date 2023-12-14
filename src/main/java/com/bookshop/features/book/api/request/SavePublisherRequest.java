@@ -1,25 +1,16 @@
 package com.bookshop.features.book.api.request;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
 
-@Data
-public class SavePublisherRequest {
+public record SavePublisherRequest(
+        @NotBlank(message = "Provide publisher's city")
+        @JsonProperty(value = "city", required = true)
+        String publisherCity,
+        @NotBlank(message = "Provide publisher's name")
+        @JsonProperty(value = "name", required = true)
+        String publisherName
 
-    @NotBlank(message = "Provide publisher's name")
-    private String publisherName;
+) {
 
-    @NotBlank(message = "Provide publisher's city")
-    private String publisherCity;
-
-
-    @JsonCreator
-    public SavePublisherRequest(
-            @JsonProperty(value = "name", required = true) String publisherName,
-            @JsonProperty(value = "city", required = true) String publisherCity) {
-        this.publisherName = publisherName;
-        this.publisherCity = publisherCity;
-    }
 }

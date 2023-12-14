@@ -10,9 +10,10 @@ import com.bookshop.features.order.data.entity.DeliveryMethodEntity;
 import com.bookshop.features.order.data.entity.OrderEntity;
 import com.bookshop.features.order.data.entity.OrderPositionEntity;
 import com.bookshop.features.payment.mapper.PaymentMapper;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-import java.util.stream.Collectors;
-
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrderMapper {
 
 
@@ -47,7 +48,7 @@ public class OrderMapper {
                 .orderStatus(order.getOrderStatus())
                 .fullPrice(order.getFullPrice())
                 .payment(PaymentMapper.mapToPaymentDetailsResponse(order.getPayment()))
-                .books(order.getOrderPositions().stream().map(OrderMapper::mapToOrderPositionResponse).collect(Collectors.toList()))
+                .books(order.getOrderPositions().stream().map(OrderMapper::mapToOrderPositionResponse).toList())
                 .delivery(mapToDeliveryDetailsResponse(order.getDeliveryEntity()))
                 .build();
     }

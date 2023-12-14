@@ -1,27 +1,41 @@
 package com.bookshop.features.user.api.request;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@Data
-public class LoginRequest {
+import java.util.Arrays;
+import java.util.Objects;
 
-    @NotBlank(message = "Provide email address")
-    private String email;
+public record LoginRequest(
+        @NotBlank(message = "Provide email address")
+        @JsonProperty(value = "email")
+        String email,
 
-    @NotEmpty(message = "Provide password")
-    private char[] password;
+        @NotEmpty(message = "Provide password")
+        @JsonProperty(value = "password")
+        char[] password
+) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LoginRequest that = (LoginRequest) o;
+        return Objects.equals(email, that.email) && Arrays.equals(password, that.password);
+    }
 
-    @JsonCreator
-    public LoginRequest(
-            @JsonProperty(value = "email", required = true) String email,
-            @JsonProperty(value = "password", required = true) char[] password) {
-        this.email = email;
-        this.password = password;
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(email);
+        result = 31 * result + Arrays.hashCode(password);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginRequest{" +
+                "email='" + email + '\'' +
+                ", password=" + Arrays.toString(password) +
+                '}';
     }
 }

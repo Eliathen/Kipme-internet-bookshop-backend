@@ -1,44 +1,29 @@
 package com.bookshop.features.book.api.request;
 
 
-import com.bookshop.features.book.data.entity.SALE_UNIT;
-import com.fasterxml.jackson.annotation.JsonCreator;
+import com.bookshop.features.book.data.entity.SaleUnit;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@Getter
-public class SetSaleRequest {
+public record SetSaleRequest(
+        @NotBlank(message = "Provide sale's value")
+        @JsonProperty(value = "value", required = true)
+        BigDecimal value,
+        @NotBlank(message = "Provide sale's unit")
+        @JsonProperty(value = "unit", required = true)
+        SaleUnit unit,
+        @NotBlank(message = "Provide start date")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonProperty(value = "start_at", required = true)
+        LocalDateTime startAt,
+        @NotBlank(message = "Provide end date")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonProperty(value = "end_at", required = true)
+        LocalDateTime endAt
+) {
 
-    @NotBlank(message = "Provide sale's value")
-    private BigDecimal value;
-
-    @NotBlank(message = "Provide sale's unit")
-    private SALE_UNIT unit;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @NotBlank(message = "Provide start date")
-    private LocalDateTime startAt;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @NotBlank(message = "Provide end date")
-    private LocalDateTime endAt;
-
-    @JsonCreator
-    public SetSaleRequest(
-            @JsonProperty(value = "value", required = true) BigDecimal value,
-            @JsonProperty(value = "unit", required = true) SALE_UNIT unit,
-            @JsonProperty(value = "start_at", required = true) LocalDateTime startAt,
-            @JsonProperty(value = "end_at", required = true) LocalDateTime endAt) {
-        this.value = value;
-        this.unit = unit;
-        this.startAt = startAt;
-        this.endAt = endAt;
-    }
 }

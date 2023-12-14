@@ -4,10 +4,13 @@ import com.bookshop.features.book.api.request.SaveCategoryRequest;
 import com.bookshop.features.book.api.response.CategoryResponse;
 import com.bookshop.features.book.api.response.CategoryResponseWithoutSubcategories;
 import com.bookshop.features.book.data.entity.CategoryEntity;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CategoryMapper {
 
     public static CategoryResponse mapToCategoryResponse(CategoryEntity category) {
@@ -20,7 +23,7 @@ public class CategoryMapper {
 
     public static CategoryEntity mapSaveCategoryRequestsToCategoryEntity(SaveCategoryRequest request) {
         return CategoryEntity.builder()
-                .name(request.getName())
+                .name(request.name())
                 .subcategories(new ArrayList<>())
                 .build();
     }

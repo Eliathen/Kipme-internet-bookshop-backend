@@ -20,9 +20,9 @@ class AuthorMapperTest {
         var response = AuthorMapper.mapToAuthorResponse(entity);
 
         //then
-        assertThat(response.getId()).isEqualTo(entity.getId());
-        assertThat(response.getName()).isEqualTo(entity.getName());
-        assertThat(response.getSurname()).isEqualTo(entity.getSurname());
+        assertThat(response.id()).isEqualTo(entity.getId());
+        assertThat(response.name()).isEqualTo(entity.getName());
+        assertThat(response.surname()).isEqualTo(entity.getSurname());
     }
 
     @Test
@@ -32,8 +32,8 @@ class AuthorMapperTest {
         //when
         var result = AuthorMapper.mapAuthorRequestToAuthor(request);
         //then
-        assertThat(result.getName()).isEqualTo(request.getName());
-        assertThat(result.getSurname()).isEqualTo(request.getSurname());
+        assertThat(result.getName()).isEqualTo(request.name());
+        assertThat(result.getSurname()).isEqualTo(request.surname());
     }
 
 }

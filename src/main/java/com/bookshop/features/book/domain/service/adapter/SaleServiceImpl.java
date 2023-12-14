@@ -2,8 +2,8 @@ package com.bookshop.features.book.domain.service.adapter;
 
 import com.bookshop.features.book.api.request.SetSaleRequest;
 import com.bookshop.features.book.data.entity.BookEntity;
-import com.bookshop.features.book.data.entity.SALE_UNIT;
 import com.bookshop.features.book.data.entity.SaleEntity;
+import com.bookshop.features.book.data.entity.SaleUnit;
 import com.bookshop.features.book.domain.repository.SaleRepository;
 import com.bookshop.features.book.domain.service.port.BookService;
 import com.bookshop.features.book.domain.service.port.SaleService;
@@ -36,7 +36,7 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public void setSaleForCategory(SetSaleRequest request, Integer categoryId) {
         SaleEntity sale = SaleMapper.mapToSaleEntity(request);
-        if (sale.getSaleUnit() == SALE_UNIT.VALUE) throw new InvalidCategorySaleUnitException();
+        if (sale.getSaleUnit() == SaleUnit.VALUE) throw new InvalidCategorySaleUnitException();
         for (BookEntity bookEntity : bookService.getBooksByCategoryId(categoryId)) {
             validateSale(sale, bookEntity);
             sale.addBook(bookEntity);
@@ -50,7 +50,7 @@ public class SaleServiceImpl implements SaleService {
     }
 
     private void validateSale(SaleEntity sale, BookEntity book) {
-        if (sale.getSaleUnit() == SALE_UNIT.PERCENT) {
+        if (sale.getSaleUnit() == SaleUnit.PERCENT) {
             validatePercentSale(sale);
             return;
         }

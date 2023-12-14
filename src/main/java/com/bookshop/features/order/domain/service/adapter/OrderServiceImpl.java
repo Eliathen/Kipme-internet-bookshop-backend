@@ -48,9 +48,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderEntity makeOrder(OrderRequest request) {
         var basket = basketService.getUserBasket();
-        var paymentMethod = paymentService.getPaymentMethodById(request.getPaymentMethodId());
-        var deliveryMethod = getDeliveryMethodById(request.getDeliveryMethodId());
-        var addressDelivery = addressService.getAddressById(request.getDeliveryAddressId());
+        var paymentMethod = paymentService.getPaymentMethodById(request.paymentMethodId());
+        var deliveryMethod = getDeliveryMethodById(request.deliveryMethodId());
+        var addressDelivery = addressService.getAddressById(request.deliveryAddressId());
         var currentUser = userService.getCurrentUser();
 
         validateBasket(basket);

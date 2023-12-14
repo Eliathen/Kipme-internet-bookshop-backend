@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
     public SubcategoryEntity saveSubcategory(int categoryId, SaveSubcategoryRequest request) {
         CategoryEntity category = categoryRepository.getCategory(categoryId).orElseThrow(() -> new CategoryNotFound(categoryId));
         category.getSubcategories().add(SubcategoryMapper.mapToSubcategoryEntity(request));
-        return categoryRepository.saveCategory(category).getSubcategories().stream().filter(sub -> sub.getName().equals(request.getName())).findFirst().orElseThrow(AssertionError::new);
+        return categoryRepository.saveCategory(category).getSubcategories().stream().filter(sub -> sub.getName().equals(request.name())).findFirst().orElseThrow(AssertionError::new);
     }
 
     @Override

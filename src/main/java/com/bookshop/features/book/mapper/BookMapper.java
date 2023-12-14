@@ -4,21 +4,33 @@ import com.bookshop.features.book.api.request.SaveBookRequest;
 import com.bookshop.features.book.api.response.BookBaseResponse;
 import com.bookshop.features.book.api.response.BookResponse;
 import com.bookshop.features.book.data.entity.BookEntity;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BookMapper {
 
     public static BookResponse mapToBookResponse(BookEntity book) {
         return BookResponse.builder()
                 .id(book.getId())
                 .rating(book.getAvgRating())
-                .bookAuthors(book.getBookAuthors().stream().map(AuthorMapper::mapToAuthorResponse).collect(Collectors.toList()))
-                .bookPublishers(book.getBookPublishers().stream().map(PublisherMapper::mapToPublisherResponse).collect(Collectors.toList()))
+                .bookAuthors(book.getBookAuthors().stream()
+                        .map(AuthorMapper::mapToAuthorResponse)
+                        .toList()
+                )
+                .bookPublishers(book.getBookPublishers().stream()
+                        .map(PublisherMapper::mapToPublisherResponse)
+                        .toList()
+                )
                 .bookOpinions((book.getOpinions() != null) ?
-                        book.getOpinions().stream().map(OpinionMapper::mapOpinionEntityToOpinionResponse).collect(Collectors.toList()) :
-                        new ArrayList<>())
+                        book.getOpinions().stream()
+                                .map(OpinionMapper::mapOpinionEntityToOpinionResponse)
+                                .toList() :
+                        new ArrayList<>()
+                )
                 .category(CategoryMapper.mapToCategoryWithoutSubcategoriesResponse(book.getCategory()))
                 .description(book.getDescription())
                 .salePrice(book.getCurrentPrice())
@@ -30,18 +42,18 @@ public class BookMapper {
                 .numberOfRatings((book.getOpinions() != null) ? book.getOpinions().size() : 0)
                 .quantity(book.getQuantity())
                 .title(book.getTitle())
-                .subcategories(book.getSubcategories().stream().map(SubcategoryMapper::mapToSubcategoryResponse).collect(Collectors.toList()))
+                .subcategories(book.getSubcategories().stream().map(SubcategoryMapper::mapToSubcategoryResponse).toList())
                 .build();
     }
 
     public static BookEntity mapToBookEntity(SaveBookRequest request) {
         return BookEntity.builder()
-                .title(request.getTitle())
-                .isbn(request.getIsbn())
-                .publishedYear(request.getPublishedYear())
-                .description(request.getDescription())
-                .quantity(request.getQuantity())
-                .price(request.getPrice())
+                .title(request.title())
+                .isbn(request.isbn())
+                .publishedYear(request.publishedYear())
+                .description(request.description())
+                .quantity(request.quantity())
+                .price(request.price())
                 .build();
     }
 

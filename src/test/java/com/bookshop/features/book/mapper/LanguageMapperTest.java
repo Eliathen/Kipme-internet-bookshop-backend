@@ -19,8 +19,8 @@ class LanguageMapperTest {
         var response = LanguageMapper.mapToLanguageResponse(entity);
 
         //then
-        assertThat(response.getId()).isEqualTo(entity.getId());
-        assertThat(response.getName()).isEqualTo(entity.getName());
+        assertThat(response.id()).isEqualTo(entity.getId());
+        assertThat(response.name()).isEqualTo(entity.getName());
 
     }
 
@@ -32,7 +32,7 @@ class LanguageMapperTest {
         var response = LanguageMapper.mapToLanguageEntity(request);
         //then
 
-        assertThat(response.getName()).isEqualTo(request.getName());
+        assertThat(response.getName()).isEqualTo(request.name());
     }
 
 }
