@@ -1,18 +1,17 @@
 package com.bookshop.features.order.api.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
-import lombok.Getter;
 
 import java.math.BigDecimal;
 
 @Builder
-@Getter
-public class DeliveryMethodResponse {
-
-    private Integer id;
-
-    private String name;
-
-    private BigDecimal price;
-
+public record DeliveryMethodResponse(
+        @JsonProperty(value = "id")
+        Integer id,
+        @JsonProperty(value = "name")
+        String name,
+        @JsonProperty(value = "price")
+        BigDecimal price
+) {
 }
