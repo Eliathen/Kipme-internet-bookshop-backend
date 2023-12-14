@@ -155,8 +155,8 @@ public class BookEntity {
         return currentSale;
     }
 
-    private BigDecimal resolvePrice(BigDecimal price, BigDecimal value, SALE_UNIT type) {
-        if (type == SALE_UNIT.VALUE) {
+    private BigDecimal resolvePrice(BigDecimal price, BigDecimal value, SaleUnit type) {
+        if (type == SaleUnit.VALUE) {
             return price.subtract(value);
         }
         var saleValue = price.multiply(value.divide(BigDecimal.valueOf(100.00), RoundingMode.HALF_EVEN));
