@@ -161,4 +161,11 @@ public class BookEntity {
         this.category = category;
         category.addBook(this);
     }
+
+    public void addAuthor(AuthorEntity authorEntity) {
+        if (bookAuthors == null) bookAuthors = new ArrayList<>();
+
+        this.bookAuthors.add(authorEntity);
+        authorEntity.addBook(this);
+    }
 }
