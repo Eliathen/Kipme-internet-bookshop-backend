@@ -154,6 +154,12 @@ public class BookEntity {
             }
         }
         return currentSale;
+    public void addPublisher(PublisherEntity publisher) {
+        if (bookPublishers == null) {
+            bookPublishers = new ArrayList<>();
+        }
+        bookPublishers.add(publisher);
+    }
     }
 
     private BigDecimal resolvePrice(BigDecimal price, BigDecimal value, SaleUnit type) {
