@@ -160,6 +160,9 @@ public class BookEntity {
         }
         bookPublishers.add(publisher);
     }
+    public void changeLanguage(LanguageEntity newLanguage) {
+        language = newLanguage;
+        newLanguage.addBook(this);
     }
 
     private BigDecimal resolvePrice(BigDecimal price, BigDecimal value, SaleUnit type) {
