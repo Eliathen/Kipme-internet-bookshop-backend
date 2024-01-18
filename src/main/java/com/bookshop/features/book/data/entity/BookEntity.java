@@ -168,4 +168,8 @@ public class BookEntity {
         this.bookAuthors.add(authorEntity);
         authorEntity.addBook(this);
     }
+
+    public void markFavorite() {
+        isFavorite = true;
+    }
 }

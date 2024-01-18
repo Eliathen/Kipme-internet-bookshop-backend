@@ -180,14 +180,7 @@ public class BookServiceImpl implements BookService {
     }
 
     private void addBookToFavorites(UserEntity user, BookEntity book) {
-        if (getFavouriteBooks().stream().anyMatch(bookEntity -> bookEntity.getId().equals(book.getId()))) {
-            return;
-        }
-        if (getFavouriteBooks() == null) {
-            user.setFavouriteBooks(List.of(book));
-        }
-        user.getFavouriteBooks().add(book);
-        userRepository.saveUser(user);
+        user.addBookToFavorites(book);
     }
 
     private CoverEntity getCoverFromMultipartFile(MultipartFile cover) throws IOException {
@@ -207,9 +200,10 @@ public class BookServiceImpl implements BookService {
     }
 
     private BookEntity markBookIfFavorite(BookEntity book, Long userId) {
-        book.getUsers().stream().filter(userEntity -> userEntity.getId().equals(userId)).findFirst().ifPresent(
-                (userEntity) -> book.setFavorite(true)
-        );
+        book.getUsers().stream()
+                .filter(userEntity -> userEntity.getId().equals(userId))
+                .findFirst()
+                .ifPresent(userEntity -> book.markFavorite());
         return book;
     }
 }
