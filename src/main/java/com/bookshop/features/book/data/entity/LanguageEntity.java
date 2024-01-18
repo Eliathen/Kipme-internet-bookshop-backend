@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @Builder
@@ -23,4 +24,8 @@ public class LanguageEntity {
     @OneToMany(mappedBy = "language")
     private Set<BookEntity> books = Collections.emptySet();
 
+    public void addBook(BookEntity bookEntity) {
+        if (books == null) books = new HashSet<>();
+        books.add(bookEntity);
+    }
 }

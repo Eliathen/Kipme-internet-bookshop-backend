@@ -3,15 +3,16 @@ package com.bookshop.features.book.data.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Entity(name = "AUTHOR")
 public class AuthorEntity {
 
@@ -26,4 +27,10 @@ public class AuthorEntity {
     @ManyToMany(mappedBy = "bookAuthors")
     private List<BookEntity> authorsBooks;
 
+    public void addBook(BookEntity book) {
+        if (authorsBooks == null) {
+            authorsBooks = new ArrayList<>();
+        }
+        authorsBooks.add(book);
+    }
 }

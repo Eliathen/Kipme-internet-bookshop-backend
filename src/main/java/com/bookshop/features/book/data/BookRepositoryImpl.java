@@ -14,7 +14,6 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -46,7 +45,7 @@ public class BookRepositoryImpl implements BookRepository {
         for (String s : query.split(" ")) {
             result.addAll(jpa.getBookEntityByTitleQuery(s));
         }
-        return result.stream().filter(BookEntity::getIsAvailable).distinct().collect(Collectors.toList());
+        return result.stream().filter(BookEntity::isAvailable).distinct().toList();
     }
 
     @Override
@@ -83,18 +82,18 @@ public class BookRepositoryImpl implements BookRepository {
             return Collections.emptyList();
         }
         if (result != null) {
-            System.out.println(result);
             List<String> ids = new ArrayList<>(Arrays.asList(objectMapper.readValue(result, String[].class)));
-            return jpa.findAllById(ids.stream().mapToLong(Long::valueOf).boxed().collect(Collectors.toList()))
-                    .stream().filter(BookEntity::getIsAvailable)
-                    .collect(Collectors.toList());
+            return jpa.findAllById(ids.stream().mapToLong(Long::valueOf).boxed().toList())
+                    .stream().filter(BookEntity::isAvailable)
+                    .toList();
         }
         return Collections.emptyList();
     }
 
     @Override
     public List<BookEntity> getTopBooks() {
-        return jpa.getTopBooks().stream().filter(BookEntity::getIsAvailable).collect(Collectors.toList());
+        return jpa.getTopBooks().stream().filter(BookEntity::isAvailable)
+                .toList();
     }
 
     @Override

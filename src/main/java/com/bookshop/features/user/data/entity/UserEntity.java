@@ -67,6 +67,12 @@ public class UserEntity {
             addresses.add(address);
         }
     }
-
-
+    
+    public void addBookToFavorites(BookEntity book) {
+        favouriteBooks.forEach(fav -> {
+            if (fav.equals(book)) {
+                fav.markFavorite();
+            }
+        });
+    }
 }

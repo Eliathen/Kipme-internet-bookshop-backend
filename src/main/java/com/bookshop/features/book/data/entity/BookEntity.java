@@ -5,19 +5,19 @@ import com.bookshop.features.order.data.entity.OrderEntity;
 import com.bookshop.features.order.data.entity.OrderPositionEntity;
 import com.bookshop.features.user.data.entity.UserEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Getter
 @Builder
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "BOOK")
@@ -46,7 +46,7 @@ public class BookEntity {
     private LocalDateTime addedAt;
 
     @Column(name = "IS_AVAILABLE", nullable = false)
-    private Boolean isAvailable;
+    private boolean isAvailable;
 
     @ManyToMany(
             cascade = CascadeType.ALL
@@ -111,55 +111,69 @@ public class BookEntity {
     private boolean isFavorite = false;
 
     public Double getAvgRating() {
-        return getOpinions() != null ? getOpinions().stream().mapToDouble(OpinionEntity::getRating).average().orElse(0.0) : (0.0);
+        if (getOpinions() == null) return 0.0;
+        return getOpinions().stream().mapToDouble(OpinionEntity::getRating).average().orElse(0.0);
     }
 
     @ManyToMany(mappedBy = "books", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     private List<SaleEntity> sales;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BookEntity that = (BookEntity) o;
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
     public BigDecimal getCurrentPrice() {
         var currentPrice = price;
-        var sales = (getSales() != null) ? getSales().stream()
+        var currentSales = (getSales() != null) ? getSales().stream()
                 .filter(SaleEntity::isActive)
-                .collect(Collectors.toList()) : new ArrayList<SaleEntity>();
-        if (!sales.isEmpty()) {
-            var sale = resolveSale(currentPrice, sales);
-            currentPrice = resolvePrice(currentPrice, sale.getValue(), sale.getSaleUnit());
+                .toList() : new ArrayList<SaleEntity>();
+        if (!currentSales.isEmpty()) {
+            currentPrice = currentSales.stream().map(sale -> sale.getDiscountedPrice(price)).min(BigDecimal::compareTo).orElse(price);
         }
         return currentPrice.setScale(2, RoundingMode.HALF_EVEN);
     }
 
-    private SaleEntity resolveSale(BigDecimal currentPrice, List<SaleEntity> sales) {
-        var currentSale = sales.get(0);
-        var theLowerPrice = resolvePrice(currentPrice, currentSale.getValue(), currentSale.getSaleUnit());
-        for (SaleEntity sale : sales) {
-            BigDecimal newPrice = resolvePrice(currentPrice, sale.getValue(), sale.getSaleUnit());
-            if (theLowerPrice.compareTo(newPrice) > 0) {
-                currentPrice = newPrice;
-                currentSale = sale;
-            }
-        }
-        return currentSale;
+    public void addSubcategory(SubcategoryEntity subcategory) {
+        if (subcategories == null) subcategories = new ArrayList<>();
+
+        subcategories.add(subcategory);
+        subcategory.addBook(this);
     }
 
-    private BigDecimal resolvePrice(BigDecimal price, BigDecimal value, SaleUnit type) {
-        if (type == SaleUnit.VALUE) {
-            return price.subtract(value);
+    public void addPublisher(PublisherEntity publisher) {
+        if (bookPublishers == null) {
+            bookPublishers = new ArrayList<>();
         }
-        var saleValue = price.multiply(value.divide(BigDecimal.valueOf(100.00), RoundingMode.HALF_EVEN));
-        return price.subtract(saleValue);
+        bookPublishers.add(publisher);
+    }
+
+    public void changeCover(CoverEntity newCover) {
+        cover = newCover;
+    }
+
+    public void changeLanguage(LanguageEntity newLanguage) {
+        language = newLanguage;
+        newLanguage.addBook(this);
+    }
+
+    public void setAvailable() {
+        isAvailable = true;
+    }
+
+    public void changeCategory(CategoryEntity category) {
+        if (category == null) return;
+
+        if (this.category != null)
+            this.category.removeBook(this);
+
+        this.category = category;
+        category.addBook(this);
+    }
+
+    public void addAuthor(AuthorEntity authorEntity) {
+        if (bookAuthors == null) bookAuthors = new ArrayList<>();
+
+        this.bookAuthors.add(authorEntity);
+        authorEntity.addBook(this);
+    }
+
+    public void markFavorite() {
+        isFavorite = true;
     }
 }

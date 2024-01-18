@@ -24,13 +24,12 @@ import com.bookshop.features.user.data.entity.UserEntity;
 import com.bookshop.features.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -49,35 +48,32 @@ public class BookServiceImpl implements BookService {
 
     private final CacheConfig cacheConfig;
 
+    @Transactional
     @Override
     public BookEntity saveBook(SaveBookRequest request, MultipartFile cover) throws IOException {
-        bookRepository.getBookByIsbn(request.isbn()).ifPresent((isbn) -> {
+        bookRepository.getBookByIsbn(request.isbn()).ifPresent(isbn -> {
             throw new BookWithIsbnAlreadyExists(request.isbn());
         });
         BookEntity book = BookMapper.mapToBookEntity(request);
         CoverEntity newCover = getCoverFromMultipartFile(cover);
         LanguageEntity language = languageService.getLanguage(request.languageId());
-        List<PublisherEntity> publisherList = publisherService.getPublishers(new LinkedList<>(request.bookPublishersIds()));
+        List<PublisherEntity> publisherList = publisherService.getPublishers(request.bookPublishersIds().stream().toList());
         CategoryEntity category = categoryService.getCategory(request.categoryId());
-        List<SubcategoryEntity> subcategories = category.getSubcategories().stream().filter(sub -> request.subcategoriesIds().contains(sub.getId())).collect(Collectors.toList());
-        List<AuthorEntity> authors = request.bookAuthors().stream().map(
-                author -> authorRepository.getAuthorByNameAndSurnameOrSave(author.name(), author.surname())
-        ).collect(Collectors.toList());
-        book.setAddedAt(LocalDateTime.now());
-        book.setIsAvailable(true);
-        book.setCover(newCover);
-        book.setLanguage(language);
-        book.setBookPublishers(publisherList);
-        book.setCategory(category);
-        book.setSubcategories(subcategories);
-        book.setBookAuthors(authors);
-        authors.forEach(author -> {
-            if (author.getAuthorsBooks() != null) {
-                author.getAuthorsBooks().add(book);
-            } else {
-                author.setAuthorsBooks(List.of(book));
-            }
-        });
+        List<SubcategoryEntity> subcategories = category.getSubcategories().stream()
+                .filter(sub -> request.subcategoriesIds().contains(sub.getId()))
+                .toList();
+        List<AuthorEntity> authors = request.bookAuthors().stream()
+                .map(
+                        author -> authorRepository.getAuthorByNameAndSurnameOrSave(author.name(), author.surname())
+                )
+                .toList();
+        book.setAvailable();
+        book.changeCover(newCover);
+        book.changeLanguage(language);
+        publisherList.forEach(book::addPublisher);
+        book.changeCategory(category);
+        subcategories.forEach(book::addSubcategory);
+        authors.forEach(book::addAuthor);
         return bookRepository.saveBook(book);
     }
 
@@ -98,6 +94,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public void saveOpinion(Long bookId, AddOpinionRequest request) {
         var book = getBookById(bookId);
         var user = userService.getCurrentUser();
@@ -108,6 +105,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public void removeOpinion(Long bookId, Integer opinionId) {
         var user = userService.getCurrentUser();
         var book = getBookById(bookId);
@@ -123,6 +121,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public void addBookToFavorites(AddRemoveBookFavouriteRequest request) {
         var book = getBookById(request.bookId());
         var user = userService.getCurrentUser();
@@ -172,7 +171,7 @@ public class BookServiceImpl implements BookService {
                 .distinct()
                 .sorted(Comparator.comparing(BookEntity::getCurrentPrice))
                 .limit(10)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -181,14 +180,7 @@ public class BookServiceImpl implements BookService {
     }
 
     private void addBookToFavorites(UserEntity user, BookEntity book) {
-        if (getFavouriteBooks().stream().anyMatch(bookEntity -> bookEntity.getId().equals(book.getId()))) {
-            return;
-        }
-        if (getFavouriteBooks() == null) {
-            user.setFavouriteBooks(List.of(book));
-        }
-        user.getFavouriteBooks().add(book);
-        userRepository.saveUser(user);
+        user.addBookToFavorites(book);
     }
 
     private CoverEntity getCoverFromMultipartFile(MultipartFile cover) throws IOException {
@@ -208,9 +200,10 @@ public class BookServiceImpl implements BookService {
     }
 
     private BookEntity markBookIfFavorite(BookEntity book, Long userId) {
-        book.getUsers().stream().filter(userEntity -> userEntity.getId().equals(userId)).findFirst().ifPresent(
-                (userEntity) -> book.setFavorite(true)
-        );
+        book.getUsers().stream()
+                .filter(userEntity -> userEntity.getId().equals(userId))
+                .findFirst()
+                .ifPresent(userEntity -> book.markFavorite());
         return book;
     }
 }

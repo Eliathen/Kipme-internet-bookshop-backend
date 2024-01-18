@@ -5,10 +5,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -46,13 +46,20 @@ public class SaleEntity {
 
     public void addBook(BookEntity book) {
         if (books == null) {
-            books = new ArrayList<>(List.of(book));
-            return;
+            books = new ArrayList<>();
         }
         books.add(book);
     }
 
     public List<BookEntity> getAvailableBooks() {
-        return books.stream().filter(BookEntity::getIsAvailable).collect(Collectors.toList());
+        return books.stream().filter(BookEntity::isAvailable).toList();
+    }
+
+    public BigDecimal getDiscountedPrice(BigDecimal price) {
+        if (saleUnit == SaleUnit.VALUE) {
+            return price.subtract(value);
+        }
+        var saleValue = price.multiply(value.divide(BigDecimal.valueOf(100.00), RoundingMode.HALF_EVEN));
+        return price.subtract(saleValue);
     }
 }

@@ -4,6 +4,7 @@ services:
   db:
     image: mariadb:11.0.3
     container_name: kipme-db
+    restart: always
     environment:
       MARIADB_ROOT_USER: ${DB_ROOT_USER}
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -13,7 +14,7 @@ services:
     volumes:
       - ./init-scripts:/docker-entrypoint-initdb.d
     ports:
-      - ${DB_PORT}:3306
+      - ${DB_PORT}:${DB_PORT}
     networks:
       - kipme-network
 
@@ -21,7 +22,7 @@ services:
     image: redis:7.2
     container_name: "kipme-redis"
     ports:
-      - ${REDIS_PORT}:6379
+      - ${REDIS_PORT}:${REDIS_PORT}
     networks:
       - kipme-network
 
@@ -40,7 +41,7 @@ services:
       DB_URL: jdbc:mariadb://kipme-db:${DB_PORT}/${DB_NAME}
       REDIS_URL: redis://kipme-redis:${REDIS_PORT}
     ports:
-      - ${KIPME_PORT}:443
+      - ${KIPME_PORT}:${KIPME_PORT}
     networks:
       - kipme-network
 

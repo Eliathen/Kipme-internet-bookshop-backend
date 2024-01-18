@@ -2,13 +2,16 @@ package com.bookshop.features.book.data.entity;
 
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,6 +31,16 @@ public class SubcategoryEntity {
     private List<BookEntity> books;
 
     public List<BookEntity> getAvailableBooks() {
-        return books.stream().filter(BookEntity::isFavorite).collect(Collectors.toList());
+        if (books == null) return Collections.emptyList();
+        return books.stream().filter(BookEntity::isFavorite).toList();
+    }
+
+    public void addBook(BookEntity bookEntity) {
+        if (books == null) books = new ArrayList<>();
+        books.add(bookEntity);
+    }
+
+    public void changeCategory(CategoryEntity categoryEntity) {
+        category = categoryEntity;
     }
 }
