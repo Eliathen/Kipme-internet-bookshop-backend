@@ -5,19 +5,19 @@ import com.bookshop.features.order.data.entity.OrderEntity;
 import com.bookshop.features.order.data.entity.OrderPositionEntity;
 import com.bookshop.features.user.data.entity.UserEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Getter
 @Builder
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "BOOK")
@@ -118,27 +118,13 @@ public class BookEntity {
     @ManyToMany(mappedBy = "books", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     private List<SaleEntity> sales;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BookEntity that = (BookEntity) o;
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
     public BigDecimal getCurrentPrice() {
         var currentPrice = price;
-        var sales = (getSales() != null) ? getSales().stream()
+        var currentSales = (getSales() != null) ? getSales().stream()
                 .filter(SaleEntity::isActive)
-                .collect(Collectors.toList()) : new ArrayList<SaleEntity>();
-        if (!sales.isEmpty()) {
-            var sale = resolveSale(currentPrice, sales);
-            currentPrice = resolvePrice(currentPrice, sale.getValue(), sale.getSaleUnit());
+                .toList() : new ArrayList<SaleEntity>();
+        if (!currentSales.isEmpty()) {
+            currentPrice = currentSales.stream().map(sale -> sale.getDiscountedPrice(price)).min(BigDecimal::compareTo).orElse(price);
         }
         return currentPrice.setScale(2, RoundingMode.HALF_EVEN);
     }
