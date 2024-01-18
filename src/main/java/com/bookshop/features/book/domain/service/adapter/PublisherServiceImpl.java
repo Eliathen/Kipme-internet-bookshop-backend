@@ -6,6 +6,7 @@ import com.bookshop.features.book.domain.service.port.PublisherService;
 import com.bookshop.features.book.exception.PublisherNotFound;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
+    @Transactional
     public PublisherEntity savePublisher(PublisherEntity publisher) {
         return repository.save(publisher);
     }
