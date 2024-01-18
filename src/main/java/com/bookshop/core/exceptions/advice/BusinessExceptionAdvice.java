@@ -60,7 +60,7 @@ public class BusinessExceptionAdvice {
         String errorMessage = exception.getMessage();
         logger.error(errorMessage);
         ErrorInfo errorInfo = new ErrorInfo(LocalDateTime.now(), Collections.singletonList(errorMessage));
-        return new ResponseEntity<>(errorInfo, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
