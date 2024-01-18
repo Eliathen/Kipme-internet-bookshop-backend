@@ -6,6 +6,7 @@ import com.bookshop.features.book.api.request.AddRemoveBookFavouriteRequest;
 import com.bookshop.features.book.api.request.SaveBookRequest;
 import com.bookshop.features.book.api.response.BookBaseResponse;
 import com.bookshop.features.book.api.response.BookResponse;
+import com.bookshop.features.book.data.entity.BookEntity;
 import com.bookshop.features.book.data.entity.CoverEntity;
 import com.bookshop.features.book.domain.service.port.BookService;
 import com.bookshop.features.book.mapper.BookMapper;
@@ -18,8 +19,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -31,10 +34,12 @@ public class BookController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<BookResponse> saveBook(@ModelAttribute @Valid SaveBookRequest request,
-                                                 MultipartFile cover) throws IOException {
-        return ResponseEntity.ok(BookMapper.mapToBookResponse(bookService.saveBook(request, cover)));
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Void> saveBook(@RequestPart("request") @Valid SaveBookRequest request,
+                                         @RequestPart("cover") MultipartFile cover) throws IOException {
+        BookEntity result = bookService.saveBook(request, cover);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/" + result.getId()).build().toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @GetMapping("/{id}")
@@ -50,7 +55,6 @@ public class BookController {
                 .body(cover.getData());
     }
 
-    @Transactional
     @PostMapping("/{bookId}/opinions")
     public ResponseEntity<Void> saveOpinion(@PathVariable Long bookId,
                                             @RequestBody @Valid AddOpinionRequest request) {
@@ -59,7 +63,6 @@ public class BookController {
     }
 
 
-    @Transactional
     @DeleteMapping("/{bookId}/opinions/{opinionId}")
     public ResponseEntity<Void> removeOpinion(@PathVariable("bookId") Long bookId,
                                               @PathVariable("opinionId") Integer opinionId) {
