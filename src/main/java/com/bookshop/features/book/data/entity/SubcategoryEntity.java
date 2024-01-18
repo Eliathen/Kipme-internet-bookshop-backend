@@ -39,4 +39,8 @@ public class SubcategoryEntity {
         if (books == null) books = new ArrayList<>();
         books.add(bookEntity);
     }
+
+    public void changeCategory(CategoryEntity categoryEntity) {
+        category = categoryEntity;
+    }
 }
