@@ -111,7 +111,8 @@ public class BookEntity {
     private boolean isFavorite = false;
 
     public Double getAvgRating() {
-        return getOpinions() != null ? getOpinions().stream().mapToDouble(OpinionEntity::getRating).average().orElse(0.0) : (0.0);
+        if (getOpinions() == null) return 0.0;
+        return getOpinions().stream().mapToDouble(OpinionEntity::getRating).average().orElse(0.0);
     }
 
     @ManyToMany(mappedBy = "books", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
