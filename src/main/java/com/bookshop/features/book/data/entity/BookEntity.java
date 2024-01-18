@@ -160,6 +160,11 @@ public class BookEntity {
         }
         bookPublishers.add(publisher);
     }
+
+    public void changeCover(CoverEntity newCover) {
+        cover = newCover;
+    }
+
     public void changeLanguage(LanguageEntity newLanguage) {
         language = newLanguage;
         newLanguage.addBook(this);
