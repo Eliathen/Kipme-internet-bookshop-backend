@@ -46,8 +46,7 @@ public class SaleEntity {
 
     public void addBook(BookEntity book) {
         if (books == null) {
-            books = new ArrayList<>(List.of(book));
-            return;
+            books = new ArrayList<>();
         }
         books.add(book);
     }
