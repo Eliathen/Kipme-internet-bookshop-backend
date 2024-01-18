@@ -31,7 +31,8 @@ public class SubcategoryEntity {
     private List<BookEntity> books;
 
     public List<BookEntity> getAvailableBooks() {
-        return books.stream().filter(BookEntity::isFavorite).collect(Collectors.toList());
+        if (books == null) return Collections.emptyList();
+        return books.stream().filter(BookEntity::isFavorite).toList();
     }
 
     public void addBook(BookEntity bookEntity) {
