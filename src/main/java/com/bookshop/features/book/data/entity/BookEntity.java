@@ -157,7 +157,11 @@ public class BookEntity {
     }
 
     public void changeCategory(CategoryEntity category) {
-        this.category.removeBook(this);
+        if (category == null) return;
+
+        if (this.category != null)
+            this.category.removeBook(this);
+
         this.category = category;
         category.addBook(this);
     }
