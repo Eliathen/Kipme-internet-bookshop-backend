@@ -143,17 +143,13 @@ public class BookEntity {
         return currentPrice.setScale(2, RoundingMode.HALF_EVEN);
     }
 
-    private SaleEntity resolveSale(BigDecimal currentPrice, List<SaleEntity> sales) {
-        var currentSale = sales.get(0);
-        var theLowerPrice = resolvePrice(currentPrice, currentSale.getValue(), currentSale.getSaleUnit());
-        for (SaleEntity sale : sales) {
-            BigDecimal newPrice = resolvePrice(currentPrice, sale.getValue(), sale.getSaleUnit());
-            if (theLowerPrice.compareTo(newPrice) > 0) {
-                currentPrice = newPrice;
-                currentSale = sale;
-            }
-        }
-        return currentSale;
+    public void addSubcategory(SubcategoryEntity subcategory) {
+        if (subcategories == null) subcategories = new ArrayList<>();
+
+        subcategories.add(subcategory);
+        subcategory.addBook(this);
+    }
+
     public void addPublisher(PublisherEntity publisher) {
         if (bookPublishers == null) {
             bookPublishers = new ArrayList<>();
