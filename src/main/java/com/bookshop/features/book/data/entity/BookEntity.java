@@ -170,11 +170,7 @@ public class BookEntity {
         newLanguage.addBook(this);
     }
 
-    private BigDecimal resolvePrice(BigDecimal price, BigDecimal value, SaleUnit type) {
-        if (type == SaleUnit.VALUE) {
-            return price.subtract(value);
-        }
-        var saleValue = price.multiply(value.divide(BigDecimal.valueOf(100.00), RoundingMode.HALF_EVEN));
-        return price.subtract(saleValue);
+    public void setAvailable() {
+        isAvailable = true;
     }
 }
