@@ -2,6 +2,7 @@ package com.bookshop.features.book.api.response;
 
 
 import com.bookshop.features.user.api.response.BaseUserResponse;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
@@ -13,6 +14,7 @@ public record OpinionResponse(
         Integer id,
         @JsonProperty("description")
         String description,
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         @JsonProperty("date")
         LocalDateTime date,
         @JsonProperty("user")
