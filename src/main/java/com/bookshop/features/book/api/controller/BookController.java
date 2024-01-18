@@ -33,7 +33,6 @@ public class BookController {
     private final BookService bookService;
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @Transactional
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Void> saveBook(@RequestPart("request") @Valid SaveBookRequest request,
                                          @RequestPart("cover") MultipartFile cover) throws IOException {

@@ -24,13 +24,12 @@ import com.bookshop.features.user.data.entity.UserEntity;
 import com.bookshop.features.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -49,6 +48,7 @@ public class BookServiceImpl implements BookService {
 
     private final CacheConfig cacheConfig;
 
+    @Transactional
     @Override
     public BookEntity saveBook(SaveBookRequest request, MultipartFile cover) throws IOException {
         bookRepository.getBookByIsbn(request.isbn()).ifPresent((isbn) -> {
@@ -98,6 +98,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public void saveOpinion(Long bookId, AddOpinionRequest request) {
         var book = getBookById(bookId);
         var user = userService.getCurrentUser();
@@ -108,6 +109,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public void removeOpinion(Long bookId, Integer opinionId) {
         var user = userService.getCurrentUser();
         var book = getBookById(bookId);
@@ -123,6 +125,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public void addBookToFavorites(AddRemoveBookFavouriteRequest request) {
         var book = getBookById(request.bookId());
         var user = userService.getCurrentUser();
