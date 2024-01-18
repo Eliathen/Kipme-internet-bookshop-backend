@@ -51,33 +51,29 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public BookEntity saveBook(SaveBookRequest request, MultipartFile cover) throws IOException {
-        bookRepository.getBookByIsbn(request.isbn()).ifPresent((isbn) -> {
+        bookRepository.getBookByIsbn(request.isbn()).ifPresent(isbn -> {
             throw new BookWithIsbnAlreadyExists(request.isbn());
         });
         BookEntity book = BookMapper.mapToBookEntity(request);
         CoverEntity newCover = getCoverFromMultipartFile(cover);
         LanguageEntity language = languageService.getLanguage(request.languageId());
-        List<PublisherEntity> publisherList = publisherService.getPublishers(new LinkedList<>(request.bookPublishersIds()));
+        List<PublisherEntity> publisherList = publisherService.getPublishers(request.bookPublishersIds().stream().toList());
         CategoryEntity category = categoryService.getCategory(request.categoryId());
-        List<SubcategoryEntity> subcategories = category.getSubcategories().stream().filter(sub -> request.subcategoriesIds().contains(sub.getId())).collect(Collectors.toList());
-        List<AuthorEntity> authors = request.bookAuthors().stream().map(
-                author -> authorRepository.getAuthorByNameAndSurnameOrSave(author.name(), author.surname())
-        ).collect(Collectors.toList());
-        book.setAddedAt(LocalDateTime.now());
-        book.setIsAvailable(true);
-        book.setCover(newCover);
-        book.setLanguage(language);
-        book.setBookPublishers(publisherList);
-        book.setCategory(category);
-        book.setSubcategories(subcategories);
-        book.setBookAuthors(authors);
-        authors.forEach(author -> {
-            if (author.getAuthorsBooks() != null) {
-                author.getAuthorsBooks().add(book);
-            } else {
-                author.setAuthorsBooks(List.of(book));
-            }
-        });
+        List<SubcategoryEntity> subcategories = category.getSubcategories().stream()
+                .filter(sub -> request.subcategoriesIds().contains(sub.getId()))
+                .toList();
+        List<AuthorEntity> authors = request.bookAuthors().stream()
+                .map(
+                        author -> authorRepository.getAuthorByNameAndSurnameOrSave(author.name(), author.surname())
+                )
+                .toList();
+        book.setAvailable();
+        book.changeCover(newCover);
+        book.changeLanguage(language);
+        publisherList.forEach(book::addPublisher);
+        book.changeCategory(category);
+        subcategories.forEach(book::addSubcategory);
+        authors.forEach(book::addAuthor);
         return bookRepository.saveBook(book);
     }
 
