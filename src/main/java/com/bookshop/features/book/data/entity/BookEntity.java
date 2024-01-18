@@ -46,7 +46,7 @@ public class BookEntity {
     private LocalDateTime addedAt;
 
     @Column(name = "IS_AVAILABLE", nullable = false)
-    private Boolean isAvailable;
+    private boolean isAvailable;
 
     @ManyToMany(
             cascade = CascadeType.ALL
