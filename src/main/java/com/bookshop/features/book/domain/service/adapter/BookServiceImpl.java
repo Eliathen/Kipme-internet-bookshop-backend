@@ -175,7 +175,7 @@ public class BookServiceImpl implements BookService {
                 .distinct()
                 .sorted(Comparator.comparing(BookEntity::getCurrentPrice))
                 .limit(10)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

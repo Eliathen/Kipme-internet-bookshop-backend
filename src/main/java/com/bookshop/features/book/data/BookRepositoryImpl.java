@@ -46,7 +46,7 @@ public class BookRepositoryImpl implements BookRepository {
         for (String s : query.split(" ")) {
             result.addAll(jpa.getBookEntityByTitleQuery(s));
         }
-        return result.stream().filter(BookEntity::getIsAvailable).distinct().collect(Collectors.toList());
+        return result.stream().filter(BookEntity::isAvailable).distinct().toList();
     }
 
     @Override
@@ -88,6 +88,7 @@ public class BookRepositoryImpl implements BookRepository {
             return jpa.findAllById(ids.stream().mapToLong(Long::valueOf).boxed().collect(Collectors.toList()))
                     .stream().filter(BookEntity::getIsAvailable)
                     .collect(Collectors.toList());
+                    .toList();
         }
         return Collections.emptyList();
     }
@@ -95,6 +96,7 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public List<BookEntity> getTopBooks() {
         return jpa.getTopBooks().stream().filter(BookEntity::getIsAvailable).collect(Collectors.toList());
+                .toList();
     }
 
     @Override
