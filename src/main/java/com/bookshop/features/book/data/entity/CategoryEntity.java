@@ -42,4 +42,13 @@ public class CategoryEntity {
         subcategory.changeCategory(this);
 
     }
+
+    public void addBook(BookEntity bookEntity) {
+        if (books == null) books = new ArrayList<>();
+        books.add(bookEntity);
+    }
+
+    public void removeBook(BookEntity bookEntity) {
+        this.books.remove(bookEntity);
+    }
 }

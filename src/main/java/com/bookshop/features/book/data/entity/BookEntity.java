@@ -155,4 +155,10 @@ public class BookEntity {
     public void setAvailable() {
         isAvailable = true;
     }
+
+    public void changeCategory(CategoryEntity category) {
+        this.category.removeBook(this);
+        this.category = category;
+        category.addBook(this);
+    }
 }
