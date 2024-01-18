@@ -38,6 +38,7 @@ import org.testcontainers.utility.DockerImageName;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -227,7 +228,7 @@ public class BookControllerIntTest extends MariaDbContainerBaseTest {
                                 BookUtils.getAuthorDmitryJemerow().getSurname()
                         )
                 ),
-                List.of(publisher.getId()),
+                Set.of(publisher.getId()),
                 language.getId(),
                 category.getId(),
                 List.of(category.getSubcategories().get(0).getId())
@@ -250,7 +251,7 @@ public class BookControllerIntTest extends MariaDbContainerBaseTest {
                                 BookUtils.getAuthorDmitryJemerow().getSurname()
                         )
                 ),
-                List.of(),
+                Set.of(),
                 language.getId(),
                 category.getId(),
                 List.of(category.getSubcategories().get(0).getId())
