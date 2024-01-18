@@ -29,7 +29,7 @@ public class CategoryEntity {
     private List<BookEntity> books;
 
     public List<BookEntity> getAvailableBooks() {
-        return books.stream().filter(BookEntity::getIsAvailable).toList();
+        return books.stream().filter(BookEntity::isAvailable).toList();
     }
 
     public void addSubcategory(SubcategoryEntity subcategory) {
