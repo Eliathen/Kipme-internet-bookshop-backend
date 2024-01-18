@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +53,14 @@ public class SaleEntity {
     }
 
     public List<BookEntity> getAvailableBooks() {
-        return books.stream().filter(BookEntity::getIsAvailable).collect(Collectors.toList());
         return books.stream().filter(BookEntity::isAvailable).toList();
     }
+
+    public BigDecimal getDiscountedPrice(BigDecimal price) {
+        if (saleUnit == SaleUnit.VALUE) {
+            return price.subtract(value);
+        }
+        var saleValue = price.multiply(value.divide(BigDecimal.valueOf(100.00), RoundingMode.HALF_EVEN));
+        return price.subtract(saleValue);
     }
 }
